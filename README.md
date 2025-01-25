@@ -1,6 +1,6 @@
 # MuCuteRelay 🚀
 
-<img align="right" width="159px" src="https://i.postimg.cc/fyhnrTms/1000073308-removebg-preview.png">
+<img align="middle" width="159px" src="./logo.png">
 
 MuCuteRelay is your go-to implementation for Android, designed specifically for Minecraft Bedrock! 🎮✨
 
