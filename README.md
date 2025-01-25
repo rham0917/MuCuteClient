@@ -42,7 +42,7 @@ MuCuteRelay is **ANDROID ONLY**, girl! 📱💥
 
 To set up MuCuteRelay, follow these steps:
 
-1. **Fork** the repository.
+1. **Fork** or **Clone** the repository.
 2. **Open** the MuCuteRelay project.
 3. In the gradle tasks, find the **publishAppToMavenLocal** task.
 4. **Publish** and you're all set!
@@ -53,7 +53,7 @@ To set up MuCuteRelay, follow these steps:
 3. Full control of the packet layer—own it! 💪
 
 ## Contributing 🤝
-We’re all about those contributions to MuCuteRelay! If you wanna get involved, just fork the repo and make some changes. Pull requests are totally welcome! 🙌
+We’re all about those contributions to MuCuteRelay! If you wanna get involved, just fork or clone the repo and make some changes. Pull requests are totally welcome! 🙌
 
 ## Disclaimer ⚠️
 Use MuCuteRelay at your own risk, girl! We **DON'T** take responsibility for any bans or punishments that may pop up from using this cheat. Any losses you face are totally on you! 😅💔 Jiafei is coming for you, flop! 💅✨
