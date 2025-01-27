@@ -10,16 +10,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Echo workspace
-      run: echo $GITHUB_WORKSPACE
     - name: Checkout MuCuteRelay
       uses: actions/checkout@v4
       with:
         repository: CaiMuCheng/MuCuteRelay
+        path: .
     - name: Checkout MuCuteClient
       uses: actions/checkout@v4
       with:
         repository: CaiMuCheng/MuCuteClient
+        path: .
+    - name: List Repositories
+      run: ls
         
     - name: set up JDK 21
       uses: actions/setup-java@v4
