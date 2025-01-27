@@ -10,15 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout MuCuteRelay
-      uses: actions/checkout@v4
-      with:
-        repository: CaiMuCheng/MuCuteRelay
-        path: MuCuteRelay
     - name: Checkout MuCuteClient
       uses: actions/checkout@v4
       with:
         repository: CaiMuCheng/MuCuteClient
+    - name: Clone MuCuteRelay
+      run: git clone --recursive https://github.com/CaiMuCheng/MuCuteRelay.git --depth=1 && git lfs pull
     - name: List Repositories
       run: ls
         
@@ -30,7 +27,12 @@ jobs:
         cache: gradle
         
     - name: Publish MuCuteRelay to Maven Local
-      run: cd MuCuteRelay && chmod +x gradlew && ./gradlew publishAppPublicationToMavenLocal && cd ..
+      run: |
+        cd MuCuteRelay
+        chmod +x gradlew
+        ./gradlew publishAppPublicationToMavenLocal
+        cd ..
+        
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build Debug APK with Gradle
