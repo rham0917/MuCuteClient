@@ -17,7 +17,7 @@ jobs:
     - name: Clone MuCuteRelay
       run: git clone https://github.com/CaiMuCheng/MuCuteRelay --depth=1
     - name: Publish MuCuteRelay to Maven Local
-      run: chmod +x MuCuteRelay/gradlew && MuCuteRelay/gradlew publishAppPublicationToMavenLocal
+      run: cd MuCuteRelay && chmod +x gradlew && gradlew publishAppPublicationToMavenLocal && cd ..
     - name: set up JDK 21
       uses: actions/setup-java@v4
       with:
