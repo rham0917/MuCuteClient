@@ -10,8 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout latest version
+    - name: Checkout MuCuteRelay
       uses: actions/checkout@v4
+      with:
+        repository: MuCuteRelay
     - name: Clone MuCuteRelay
       run: git clone https://github.com/CaiMuCheng/MuCuteRelay --depth=1
     - name: set up JDK 21
@@ -22,6 +24,10 @@ jobs:
         cache: gradle
     - name: Publish MuCuteRelay to Maven Local
       run: cd MuCuteRelay && chmod +x gradlew && ./gradlew publishAppPublicationToMavenLocal && cd ..
+    - name: Checkout MuCuteClient
+      uses: actions/checkout@v4
+      with:
+        repository: MuCuteClient
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build Debug APK with Gradle
