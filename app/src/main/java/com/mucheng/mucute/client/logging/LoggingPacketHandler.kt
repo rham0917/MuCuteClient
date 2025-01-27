@@ -1,7 +1,7 @@
 package com.mucheng.mucute.client.logging
 
 import android.util.Log
-import com.mucheng.mucute.relay.handler.MinecraftRelayPacketHandler
+import com.mucheng.mucute.relay.listener.MuCuteRelayPacketListener
 import org.cloudburstmc.protocol.bedrock.packet.AddPlayerPacket
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.InteractPacket
@@ -16,11 +16,11 @@ import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.RemoveEntityPacket
 
 @Suppress("MemberVisibilityCanBePrivate")
-open class LoggingPacketHandler : MinecraftRelayPacketHandler {
+open class LoggingPacketHandler : MuCuteRelayPacketListener {
 
     var isEnabled = false
 
-    override fun onReceivedFromClient(packet: BedrockPacket): Boolean {
+    override fun beforeClientBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket) {
             return false
         }
@@ -33,7 +33,7 @@ open class LoggingPacketHandler : MinecraftRelayPacketHandler {
         return false
     }
 
-    override fun onReceivedFromServer(packet: BedrockPacket): Boolean {
+    override fun beforeServerBound(packet: BedrockPacket): Boolean {
         if (packet is MoveEntityAbsolutePacket) {
             return false
         }

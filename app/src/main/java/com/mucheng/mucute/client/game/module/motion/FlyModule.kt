@@ -75,11 +75,11 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
         if (packet is PlayerAuthInputPacket) {
             if (!canFly && isEnabled) {
                 enableFlyAbilitiesPacket.uniqueEntityId = localPlayer.uniqueEntityId
-                session.sendToClient(enableFlyAbilitiesPacket)
+                session.clientBound(enableFlyAbilitiesPacket)
                 canFly = true
             } else if (canFly && !isEnabled) {
                 disableFlyAbilitiesPacket.uniqueEntityId = localPlayer.uniqueEntityId
-                session.sendToClient(disableFlyAbilitiesPacket)
+                session.clientBound(disableFlyAbilitiesPacket)
                 canFly = false
             }
         }

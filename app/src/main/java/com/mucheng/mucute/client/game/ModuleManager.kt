@@ -1,21 +1,18 @@
 package com.mucheng.mucute.client.game
 
-import android.util.Log
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.entity.LocalPlayer
 import com.mucheng.mucute.client.game.module.motion.FlyModule
-import com.mucheng.mucute.relay.MinecraftRelaySession
-import com.mucheng.mucute.relay.handler.MinecraftRelayPacketHandler
+import com.mucheng.mucute.relay.MuCuteRelaySession
+import com.mucheng.mucute.relay.listener.MuCuteRelayPacketListener
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonObject
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
-import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
-object ModuleManager : MinecraftRelayPacketHandler {
+object ModuleManager : MuCuteRelayPacketListener {
 
     private val _modules: MutableList<Module> = ArrayList()
 
@@ -28,7 +25,7 @@ object ModuleManager : MinecraftRelayPacketHandler {
 
     private val localPlayer = LocalPlayer()
 
-    private var session: MinecraftRelaySession? = null
+    private var session: MuCuteRelaySession? = null
 
     init {
         with(_modules) {
@@ -36,11 +33,11 @@ object ModuleManager : MinecraftRelayPacketHandler {
         }
     }
 
-    fun initModules(minecraftRelaySession: MinecraftRelaySession) {
-        this.session = minecraftRelaySession
+    fun initModules(muCuteRelaySession: MuCuteRelaySession) {
+        this.session = muCuteRelaySession
 
         for (module in _modules) {
-            module.session = minecraftRelaySession
+            module.session = muCuteRelaySession
             module.localPlayer = localPlayer
         }
     }
@@ -84,7 +81,7 @@ object ModuleManager : MinecraftRelayPacketHandler {
         }
     }
 
-    override fun onReceivedFromClient(packet: BedrockPacket): Boolean {
+    override fun beforeClientBound(packet: BedrockPacket): Boolean {
         localPlayer.onReceived(packet)
 
         for (module in _modules) {
@@ -96,7 +93,7 @@ object ModuleManager : MinecraftRelayPacketHandler {
         return false
     }
 
-    override fun onReceivedFromServer(packet: BedrockPacket): Boolean {
+    override fun beforeServerBound(packet: BedrockPacket): Boolean {
         localPlayer.onReceived(packet)
 
         for (module in _modules) {

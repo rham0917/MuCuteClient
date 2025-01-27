@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mucheng.mucute.client.game.entity.LocalPlayer
 import com.mucheng.mucute.client.overlay.OverlayShortcutButton
-import com.mucheng.mucute.relay.MinecraftRelaySession
+import com.mucheng.mucute.relay.MuCuteRelaySession
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -16,7 +16,7 @@ import kotlinx.serialization.json.put
 
 abstract class Module(val name: String, val category: ModuleCategory) : ComposedPacketHandler, Configurable {
 
-    open lateinit var session: MinecraftRelaySession
+    open lateinit var session: MuCuteRelaySession
 
     open lateinit var localPlayer: LocalPlayer
 

@@ -21,12 +21,11 @@ import com.mucheng.mucute.client.R
 import com.mucheng.mucute.client.activity.MainActivity
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.ModuleManager
-import com.mucheng.mucute.client.logging.LoggingPacketHandler
 import com.mucheng.mucute.client.model.GameSettingsModel
 import com.mucheng.mucute.client.overlay.OverlayManager
-import com.mucheng.mucute.relay.MinecraftRelay
-import com.mucheng.mucute.relay.handler.packet.NecessaryPacketHandler
-import org.cloudburstmc.protocol.bedrock.data.PacketCompressionAlgorithm
+import com.mucheng.mucute.relay.MuCuteRelay
+import com.mucheng.mucute.relay.listener.NecessaryPacketListener
+import com.mucheng.mucute.relay.util.captureMuCuteRelay
 import java.net.InetSocketAddress
 import kotlin.concurrent.thread
 
@@ -46,7 +45,7 @@ class MuCuteRelayService : Service() {
 
     private lateinit var notificationManagerCompat: NotificationManagerCompat
 
-    private var minecraftRelay: MinecraftRelay? = null
+    private var muCuteRelay: MuCuteRelay? = null
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -94,7 +93,7 @@ class MuCuteRelayService : Service() {
     }
 
     private fun stopMuCuteRelay() {
-        minecraftRelay?.stop()
+        muCuteRelay?.disconnect()
         isActive = false
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
@@ -115,42 +114,38 @@ class MuCuteRelayService : Service() {
             val captureModeModel = gameSettingsModel.captureModeModel
 
             ModuleManager.loadConfig()
-            minecraftRelay = MinecraftRelay(
-                authSession = gameSettingsModel.selectedAccount
-            ) {
-                ModuleManager.initModules(it)
 
-                it.listeners.add(ModuleManager)
-                it.listeners.add(NecessaryPacketHandler(it))
-            }.also {
-                isActive = true
-                if (Build.VERSION.SDK_INT >= 34) {
-                    startForeground(
-                        1,
-                        createNotification(),
-                        ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
-                    )
-                } else {
-                    startForeground(
-                        1,
-                        createNotification()
-                    )
-                }
+            runCatching {
+                muCuteRelay = captureMuCuteRelay(
+                    authSession = gameSettingsModel.selectedAccount,
+                    remoteAddress = InetSocketAddress(
+                        captureModeModel.serverHostName,
+                        captureModeModel.serverPort
+                    ),
+                    beforeCapture = {
+                        isActive = true
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            startForeground(
+                                1,
+                                createNotification(),
+                                ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+                            )
+                        } else {
+                            startForeground(
+                                1,
+                                createNotification()
+                            )
+                        }
 
-                handler.post {
-                    OverlayManager.show(this)
-                }
+                        handler.post {
+                            OverlayManager.show(this)
+                        }
+                    }
+                ) {
+                    ModuleManager.initModules(this)
 
-                try {
-                    it.start(
-                        minecraftRelayAddress = InetSocketAddress("0.0.0.0", 19132),
-                        connectAddress = InetSocketAddress(
-                            captureModeModel.serverHostName,
-                            captureModeModel.serverPort
-                        )
-                    )
-                } catch (e: Throwable) {
-                    e.printStackTrace()
+                    listeners.add(ModuleManager)
+                    listeners.add(NecessaryPacketListener(this))
                 }
             }
         }
