@@ -20,8 +20,6 @@ class MainActivity : ComponentActivity() {
                 Navigation()
             }
         }
-
-        throw IllegalArgumentException()
     }
 
 }

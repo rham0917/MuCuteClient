@@ -36,10 +36,10 @@ class OverlayShortcutButton(
 
     private val _layoutParams by lazy {
         super.layoutParams.apply {
-            if (Build.VERSION.SDK_INT >= 30) {
-                layoutInDisplayCutoutMode =
-                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-            }
+
+            layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+
             windowAnimations = android.R.style.Animation_Toast
             x = module.shortcutX
             y = module.shortcutY
@@ -57,7 +57,9 @@ class OverlayShortcutButton(
         val configuration = LocalConfiguration.current
         val isLandScape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         val color by animateColorAsState(
-            targetValue = if (module.isEnabled) MaterialTheme.colorScheme.primary else contentColorFor(MaterialTheme.colorScheme.surfaceContainerLow),
+            targetValue = if (module.isEnabled) MaterialTheme.colorScheme.primary else contentColorFor(
+                MaterialTheme.colorScheme.surfaceContainerLow
+            ),
             label = "animateColor"
         )
 

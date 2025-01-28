@@ -27,10 +27,9 @@ class OverlayButton : OverlayWindow() {
 
     private val _layoutParams by lazy {
         super.layoutParams.apply {
-            if (Build.VERSION.SDK_INT >= 30) {
-                layoutInDisplayCutoutMode =
-                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-            }
+            layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+
             windowAnimations = android.R.style.Animation_Toast
             x = 0
             y = 100

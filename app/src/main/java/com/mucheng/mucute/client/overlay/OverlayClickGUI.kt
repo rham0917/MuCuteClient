@@ -45,10 +45,10 @@ class OverlayClickGUI : OverlayWindow() {
             if (Build.VERSION.SDK_INT >= 31) {
                 blurBehindRadius = 15
             }
-            if (Build.VERSION.SDK_INT >= 30) {
-                layoutInDisplayCutoutMode =
-                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-            }
+
+            layoutInDisplayCutoutMode =
+                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+
             dimAmount = 0.4f
             windowAnimations = android.R.style.Animation_Dialog
             width = WindowManager.LayoutParams.MATCH_PARENT
