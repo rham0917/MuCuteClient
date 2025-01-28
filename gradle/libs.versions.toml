@@ -7,13 +7,9 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 kotlinxSerializationJsonJvm = "1.7.3"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.9.3"
-composeBom = "2024.12.01"
+activityCompose = "1.10.0"
+composeBom = "2025.01.00"
 materialIconsExtended = "1.7.6"
-mucute-relay = "1.0-SNAPSHOT"
-bedrock-protocol = "3.0.0.Beta5-SNAPSHOT"
-minecraft-auth = "4.0.1"
-log4j = "2.24.2"
 navigationCompose = "2.8.5"
 
 [libraries]
@@ -33,14 +29,6 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 kotlinx-serialization-json-jvm = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm", version.ref = "kotlinxSerializationJsonJvm" }
-mucute-relay = { module = "com.mucheng.mucute.relay:MuCuteRelay", version.ref = "mucute-relay" }
-bedrock-codec = { group = "org.cloudburstmc.protocol", name = "bedrock-codec", version.ref = "bedrock-protocol" }
-bedrock-common = { group = "org.cloudburstmc.protocol", name = "common", version.ref = "bedrock-protocol" }
-bedrock-connection = { group = "org.cloudburstmc.protocol", name = "bedrock-connection", version.ref = "bedrock-protocol" }
-minecraftauth = { group = "net.raphimc", name = "MinecraftAuth", version.ref = "minecraft-auth" }
-log4j-bom = { group = "org.apache.logging.log4j", name = "log4j-bom", version.ref = "log4j" }
-log4j-api = { group = "org.apache.logging.log4j", name = "log4j-api" }
-log4j-core = { group = "org.apache.logging.log4j", name = "log4j-core" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
 [plugins]

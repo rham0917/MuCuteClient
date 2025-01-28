@@ -88,19 +88,8 @@ configurations.all {
 }
 
 dependencies {
-    implementation(libs.mucute.relay) {
-        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-        exclude(group = "org.jetbrains", module = "annotations")
-    }
-    // implementation(libs.core)
+    implementation(files("libs/MuCuteRelay.jar"))
     implementation(libs.kotlinx.serialization.json.jvm)
-    implementation(platform(libs.log4j.bom))
-    implementation(libs.log4j.api)
-    implementation(libs.log4j.core)
-    implementation(libs.bedrock.codec)
-    implementation(libs.bedrock.common)
-    implementation(libs.bedrock.connection)
-    implementation(libs.minecraftauth)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
