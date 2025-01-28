@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="Theme.MuCuteClient" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowLayoutInDisplayCutoutMode" tools:ignore="NewApi">always</item>
-    </style>
+    <style name="Theme.MuCuteClient" parent="android:Theme.Material.Light.NoActionBar" />
+
 </resources>

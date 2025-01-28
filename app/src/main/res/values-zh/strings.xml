@@ -53,4 +53,6 @@
     <string name="ignore_battery_optimization_denied">忽略电池优化权限被拒绝</string>
     <string name="current_language">zh</string>
     <string name="shortcut">快捷方式</string>
+    <string name="crash_happened">发生崩溃</string>
+    <string name="cannot_back">崩溃已发生不允许返回，你只能重启应用</string>
 </resources>

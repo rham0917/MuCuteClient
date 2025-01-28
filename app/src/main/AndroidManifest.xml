@@ -35,6 +35,8 @@
 
         </activity>
 
+        <activity android:name=".activity.CrashHandlerActivity" />
+
         <service
             android:name=".service.MuCuteRelayService"
             android:exported="false"
