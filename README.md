@@ -4,6 +4,9 @@
 
 MuCuteRelay is your go-to implementation for Android, designed specifically for Minecraft Bedrock! 🎮✨
 
+## Notice
+MuCuteClient does not take amy code from protohax. It is independently developed, Any person trying to take down the repo because of this reason cannot. 💜
+
 ## Features
 1. No modifications to the Minecraft client—like, seriously! 🙌
 2. Seamless switching and adapting between multiple versions—no more hassle, girl! 🌈
