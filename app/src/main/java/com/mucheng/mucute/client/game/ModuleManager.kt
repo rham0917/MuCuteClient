@@ -3,8 +3,8 @@ package com.mucheng.mucute.client.game
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.entity.LocalPlayer
 import com.mucheng.mucute.client.game.module.motion.FlyModule
-import com.mucheng.mucute.client.game.module.Misc.NoClipModule
-import com.mucheng.mucute.client.game.module.motion.ZoomModule
+import com.mucheng.mucute.client.game.module.misc.NoClipModule
+import com.mucheng.mucute.client.game.module.visual.ZoomModule
 import com.mucheng.mucute.relay.MuCuteRelaySession
 import com.mucheng.mucute.relay.listener.MuCuteRelayPacketListener
 import kotlinx.serialization.encodeToString

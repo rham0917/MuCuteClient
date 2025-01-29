@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.motion
+package com.mucheng.mucute.client.game.module.visual
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
@@ -10,7 +10,7 @@ import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 import org.cloudburstmc.protocol.bedrock.data.Ability
 import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
 
-class ZoomModule : Module("Zoom", ModuleCategory.Visual) {
+class ZoomModule : Module("zoom", ModuleCategory.Visual) {
 
     // Packet to enable zooming
     private val enableZoomPacket = UpdateAbilitiesPacket().apply {

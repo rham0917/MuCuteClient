@@ -89,6 +89,11 @@ configurations.all {
 
 dependencies {
     implementation(files("libs/MuCuteRelay.jar"))
+    debugImplementation(platform(libs.log4j.bom))
+    debugImplementation(libs.log4j.api)
+    debugImplementation(libs.log4j.core)
+    implementation(libs.minecraftauth)
+    implementation(libs.nukkitx.natives)
     implementation(libs.kotlinx.serialization.json.jvm)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

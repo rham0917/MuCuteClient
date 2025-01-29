@@ -24,6 +24,7 @@ import com.mucheng.mucute.client.game.ModuleManager
 import com.mucheng.mucute.client.model.GameSettingsModel
 import com.mucheng.mucute.client.overlay.OverlayManager
 import com.mucheng.mucute.relay.MuCuteRelay
+import com.mucheng.mucute.relay.definition.Definitions
 import com.mucheng.mucute.relay.listener.NecessaryPacketListener
 import com.mucheng.mucute.relay.util.captureMuCuteRelay
 import java.net.InetSocketAddress
@@ -116,6 +117,7 @@ class MuCuteRelayService : Service() {
             ModuleManager.loadConfig()
 
             runCatching {
+                Definitions.loadBlockPalette()
                 muCuteRelay = captureMuCuteRelay(
                     authSession = gameSettingsModel.selectedAccount,
                     remoteAddress = InetSocketAddress(

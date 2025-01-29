@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.Misc
+package com.mucheng.mucute.client.game.module.misc
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
@@ -10,7 +10,7 @@ import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
-class NoClipModule : Module("NoClip", ModuleCategory.Misc) {
+class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
 
     private val enableNoClipAbilitiesPacket = UpdateAbilitiesPacket().apply {
         playerPermission = PlayerPermission.OPERATOR
