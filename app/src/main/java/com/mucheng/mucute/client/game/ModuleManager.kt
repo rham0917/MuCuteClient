@@ -45,7 +45,7 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(ZoomModule())
             add(AirJumpModule())
             add(NoClipModule())
-            add(SpeedHackModule())
+            /*add(SpeedHackModule())*/
 
         }
     }
