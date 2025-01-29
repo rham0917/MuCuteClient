@@ -5,6 +5,7 @@ import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.entity.LocalPlayer
 import com.mucheng.mucute.client.game.module.motion.FlyModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
+import com.mucheng.mucute.client.game.module.visual.NightVisionModule
 import com.mucheng.mucute.client.game.module.motion.SpeedHackModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
 import com.mucheng.mucute.relay.MuCuteRelaySession
@@ -45,6 +46,7 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(ZoomModule())
             add(AirJumpModule())
             add(NoClipModule())
+            add(NightVisionModule())
             /*add(SpeedHackModule())*/
 
         }
