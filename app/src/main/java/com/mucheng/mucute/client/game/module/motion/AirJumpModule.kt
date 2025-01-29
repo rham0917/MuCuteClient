@@ -1,3 +1,5 @@
+package com.mucheng.mucute.client.game.module.motion
+
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import kotlinx.coroutines.GlobalScope
