@@ -11,7 +11,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 
-class AirJumpModule : Module("air_jump", ModuleCategory.Motion) {
+class AirJumpModule : Module("AirJump", ModuleCategory.Motion) {
 
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
