@@ -18,6 +18,7 @@ object TranslationManager {
         put("speed_hack", "Speed Boost")
         put("full_bright", "Fullbright")
         put("haste", "Haste")
+        put("jetpack", "Jetpack")
 
     }
 
@@ -30,6 +31,7 @@ object TranslationManager {
         put("speed_hack", "提升速度")
         put("full_bright", "夜视仪")
         put("haste", "快攻")
+        put("jetpack", "喷气背包")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {
