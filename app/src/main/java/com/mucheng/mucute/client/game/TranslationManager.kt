@@ -15,6 +15,9 @@ object TranslationManager {
         put("no_clip", "No Clip")
         put("zoom", "Zoom")
         put("air_jump",  "AirJump")
+        put("speed_hack", "Speed Boost")
+        put("full_bright", "Fullbright")
+        put("haste", "Haste")
 
     }
 
@@ -24,7 +27,9 @@ object TranslationManager {
         put("no_clip", "穿墙")
         put("zoom", "缩放")
         put("air_jump",  "空中跳跃")
-
+        put("speed_hack", "提升速度")
+        put("full_bright", "夜视仪")
+        put("haste", "快攻")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {

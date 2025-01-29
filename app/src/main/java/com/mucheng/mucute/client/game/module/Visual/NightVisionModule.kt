@@ -8,7 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityDataPacket
 
-class NightVisionModule : Module("Night Vision", ModuleCategory.Visual) {
+class NightVisionModule : Module("full_bright", ModuleCategory.Visual) {
 
     private val nightVision = boolValue("nightvision", true)
     private val removeFire = boolValue("removefire", false)

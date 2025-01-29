@@ -7,7 +7,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
-class HasteModule : Module("Haste", ModuleCategory.Misc) {
+class HasteModule : Module("haste", ModuleCategory.Misc) {
 
     private val amplifier = 5
 
