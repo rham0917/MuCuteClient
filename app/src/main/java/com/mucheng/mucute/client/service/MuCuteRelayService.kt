@@ -117,7 +117,6 @@ class MuCuteRelayService : Service() {
             ModuleManager.loadConfig()
 
             runCatching {
-                Definitions.loadBlockPalette()
                 muCuteRelay = captureMuCuteRelay(
                     authSession = gameSettingsModel.selectedAccount,
                     remoteAddress = InetSocketAddress(

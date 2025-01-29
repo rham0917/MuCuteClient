@@ -41,7 +41,8 @@ object ModuleManager : MuCuteRelayPacketListener {
         with(_modules) {
             add(FlyModule())
             add(ZoomModule())
-            add(NoClipModule())      }
+            add(NoClipModule())
+        }
     }
 
 

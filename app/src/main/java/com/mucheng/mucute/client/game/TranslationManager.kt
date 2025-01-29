@@ -14,6 +14,7 @@ object TranslationManager {
         put("speed", "Speed")
         put("no_clip", "No Clip")
         put("zoom", "Zoom")
+
     }
 
     private fun zh() = buildMap {
@@ -21,6 +22,7 @@ object TranslationManager {
         put("speed", "速度")
         put("no_clip", "穿墙")
         put("zoom", "缩放")
+
     }
 
     fun getTranslationMap(language: String): Map<String, String> {

@@ -50,6 +50,7 @@ class ZoomModule : Module("zoom", ModuleCategory.Visual) {
                     Ability.ATTACK_PLAYERS,
                     Ability.ATTACK_MOBS,
                     Ability.OPERATOR_COMMANDS
+
                 )
             )
 
@@ -59,8 +60,17 @@ class ZoomModule : Module("zoom", ModuleCategory.Visual) {
 
     private var isZoomEnabled = false
 
+    private var lastZoomPacketTime = System.currentTimeMillis()
+
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket) {
+            val currentTime = System.currentTimeMillis()
+
+            // Prevent sending too many packets in a short amount of time
+            if (currentTime - lastZoomPacketTime < 200) {
+                return false
+            }
+
             if (!isZoomEnabled && isEnabled) {
                 // Enable zoom
                 enableZoomPacket.uniqueEntityId = localPlayer.uniqueEntityId
@@ -72,7 +82,10 @@ class ZoomModule : Module("zoom", ModuleCategory.Visual) {
                 session.clientBound(disableZoomPacket)
                 isZoomEnabled = false
             }
+
+            lastZoomPacketTime = currentTime
         }
         return false
     }
+
 }

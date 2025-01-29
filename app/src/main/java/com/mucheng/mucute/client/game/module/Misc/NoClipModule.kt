@@ -26,11 +26,16 @@ class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
                     Ability.OPEN_CONTAINERS,
                     Ability.ATTACK_PLAYERS,
                     Ability.ATTACK_MOBS,
+                    Ability.MAY_FLY,
+                    Ability.FLY_SPEED,
+                    Ability.WALK_SPEED,
                     Ability.OPERATOR_COMMANDS
                 )
             )
             // Adding the NoClip ability
             abilityValues.add(Ability.NO_CLIP)
+            walkSpeed = 0.1f
+            flySpeed = 0.15f
         })
     }
 
@@ -48,18 +53,30 @@ class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
                     Ability.OPEN_CONTAINERS,
                     Ability.ATTACK_PLAYERS,
                     Ability.ATTACK_MOBS,
+                    Ability.FLY_SPEED,
+                    Ability.WALK_SPEED,
                     Ability.OPERATOR_COMMANDS
                 )
             )
             // Removing the NoClip ability
             abilityValues.remove(Ability.NO_CLIP)
+            walkSpeed = 0.1f
         })
     }
 
     private var noClipEnabled = false
 
+    private var lastNoClipPacketTime = System.currentTimeMillis()
+
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket) {
+            val currentTime = System.currentTimeMillis()
+
+            // Prevent sending too many packets in a short amount of time
+            if (currentTime - lastNoClipPacketTime < 200) {
+                return false
+            }
+
             if (!noClipEnabled && isEnabled) {
                 enableNoClipAbilitiesPacket.uniqueEntityId = localPlayer.uniqueEntityId
                 session.clientBound(enableNoClipAbilitiesPacket)
@@ -69,8 +86,10 @@ class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
                 session.clientBound(disableNoClipAbilitiesPacket)
                 noClipEnabled = false
             }
-        }
 
+            lastNoClipPacketTime = currentTime
+        }
         return false
     }
+
 }
