@@ -1,5 +1,6 @@
 package com.mucheng.mucute.client.game
 
+import AirJumpModule
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.entity.LocalPlayer
 import com.mucheng.mucute.client.game.module.motion.FlyModule
@@ -42,6 +43,7 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(FlyModule())
             add(ZoomModule())
             add(NoClipModule())
+            add(AirJumpModule())
         }
     }
 
