@@ -21,6 +21,7 @@ object TranslationManager {
         put("jetpack", "Jetpack")
         put("levitation", "Levitation")
         put("high_jump", "High Jump")
+        put("slow_fall", "Slow Fall")
 
     }
 
@@ -36,6 +37,7 @@ object TranslationManager {
         put("jetpack", "喷气背包")
         put("levitate", "悬浮")
         put("high_jump", "跳高")
+        put("slow_fall", "慢速下落")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {
