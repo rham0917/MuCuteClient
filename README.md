@@ -1,4 +1,4 @@
-# MuCuteRelay 🚀
+# MuCuteClient 🚀
 
 <img src="logo.png" alt="Logo" width="30%" />
 
