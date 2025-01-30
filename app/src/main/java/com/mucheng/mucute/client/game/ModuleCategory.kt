@@ -21,6 +21,10 @@ enum class ModuleCategory(
         iconResId = R.drawable.view_in_ar_24px,
         labelResId = R.string.visual
     ),
+    Player(
+        iconResId = R.drawable.falling,
+        labelResId = R.string.player
+    ),
     Misc(
         iconResId = R.drawable.toc_24px,
         labelResId = R.string.misc
