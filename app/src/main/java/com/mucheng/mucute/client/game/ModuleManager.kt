@@ -7,6 +7,7 @@ import com.mucheng.mucute.client.game.entity.LocalPlayer
 import com.mucheng.mucute.client.game.module.motion.FlyModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
 import com.mucheng.mucute.client.game.module.misc.HasteModule
+import com.mucheng.mucute.client.game.module.misc.RegenModule
 import com.mucheng.mucute.client.game.module.motion.JetPackModule
 import com.mucheng.mucute.client.game.module.motion.SpeedHackModule
 import com.mucheng.mucute.client.game.module.motion.HighJumpModule
@@ -63,6 +64,8 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(SlowFallModule())
             add(PoseidonModule())
             add(AntiKnockbackModule())
+            add(RegenModule())
+
 
 
         
