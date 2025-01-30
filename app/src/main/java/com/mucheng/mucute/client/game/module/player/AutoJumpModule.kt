@@ -8,7 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.math.vector.Vector3f
 
-class AutoJumpModule : Module("auto_jump", ModuleCategory.Motion) {
+class AutoJumpModule : Module("auto_jump", ModuleCategory.Player) {
 
     private val jumpHeight = 0.42f   // Higher than normal jump (normal is 0.42f)
     private val motionInterval = 120 // Interval between upward and downward motion adjustments in milliseconds
