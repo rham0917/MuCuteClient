@@ -1,5 +1,6 @@
 package com.mucheng.mucute.client.game
 
+import androidx.compose.ui.unit.Velocity
 import com.mucheng.mucute.client.game.module.motion.AirJumpModule
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.entity.LocalPlayer
@@ -12,6 +13,8 @@ import com.mucheng.mucute.client.game.module.motion.HighJumpModule
 import com.mucheng.mucute.client.game.module.visual.NightVisionModule
 import com.mucheng.mucute.client.game.module.motion.SlowFallModule
 import com.mucheng.mucute.client.game.module.motion.LevitationModule
+import com.mucheng.mucute.client.game.module.player.AntiKnockbackModule
+import com.mucheng.mucute.client.game.module.player.PoseidonModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
 import com.mucheng.mucute.relay.MuCuteRelaySession
 import com.mucheng.mucute.relay.listener.MuCuteRelayPacketListener
@@ -58,6 +61,11 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(LevitationModule())
             add(HighJumpModule())
             add(SlowFallModule())
+            add(PoseidonModule())
+            add(AntiKnockbackModule())
+
+
+        
 
         }
     }
