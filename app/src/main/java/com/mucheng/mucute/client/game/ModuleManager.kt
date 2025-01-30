@@ -9,7 +9,7 @@ import com.mucheng.mucute.client.game.module.misc.HasteModule
 import com.mucheng.mucute.client.game.module.motion.JetPackModule
 import com.mucheng.mucute.client.game.module.motion.SpeedHackModule
 import com.mucheng.mucute.client.game.module.visual.NightVisionModule
-// import com.mucheng.mucute.client.game.module.motion.SpeedHackModule
+import com.mucheng.mucute.client.game.module.motion.LevitationModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
 import com.mucheng.mucute.relay.MuCuteRelaySession
 import com.mucheng.mucute.relay.listener.MuCuteRelayPacketListener
@@ -53,6 +53,7 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(HasteModule())
             add(SpeedHackModule())
             add(JetPackModule())
+            add(LevitationModule())
 
         }
     }
