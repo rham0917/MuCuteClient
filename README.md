@@ -2,65 +2,110 @@
 
 <img src="logo.png" alt="Logo" width="30%" />
 
-MuCuteRelay is your go-to implementation for Android, designed specifically for Minecraft Bedrock! 🎮✨
+MuCuteRelay is a powerful and efficient implementation for Android, specifically tailored for Minecraft Bedrock Edition. Our goal is to enhance your gaming experience while maintaining the integrity of the original client. 🎮✨
 
 ## Notice
-MuCuteClient does not take any code from protohax. It is independently developed, Any person trying to take down the repo because of this reason cannot. girl 💜
+MuCuteClient is developed independently and does not utilize any code from protohax. Any attempts to take down this repository based on this claim will not be entertained. We value originality and innovation in our development process. 🚫
 
 ## Features
-1. No modifications to the Minecraft client—like, seriously! 🙌
-2. Seamless switching and adapting between multiple versions—no more hassle, girl! 🌈
-3. Full control of the packet layer—because you deserve it! 🔥
-4. Super updated with no pesky connection issues—smooth sailing all the way! 🚀
+1. **No Modifications to the Minecraft Client**: Our solution ensures that the original client remains untouched, providing a safe and reliable gaming experience. 🙌
+2. **Seamless Version Management**: Effortlessly switch and adapt between multiple versions without hassle, allowing you to enjoy the latest features and updates. 🌈
+3. **Comprehensive Packet Layer Control**: Gain full control over the packet layer for enhanced gameplay, enabling you to customize your experience to your liking. 🔥
+4. **Reliable Connectivity**: Enjoy a smooth experience with minimal connection issues, ensuring that your gameplay is uninterrupted and enjoyable. 🚀
+5. **User-Friendly Interface**: Designed with the user in mind, our interface is intuitive and easy to navigate, making it accessible for players of all skill levels. 🖥️
+6. **Active Community Support**: Join a vibrant community of players and developers who are eager to help and share their experiences. 🤝
+
+## App Screenshots 📸
+Here are some screenshots of the app in action:
+
+![Screenshot 1](https://i.postimg.cc/SN71ZKyN/image.png)
+*Screenshot of the main interface.*
+
+![Screenshot 2](https://i.postimg.cc/7h19QBrQ/image.png)
+*Screenshot showcasing features in use.*
 
 ## Issues 🤔
-Spot any bugs or missing features? Hit us up through these channels:
-- Connect with us on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134) for consistent chat and discussions! 💬  
-- Join us on [Telegram](https://t.me/mucuteclient) for global updates and chat! 📱
+If you encounter any bugs or have suggestions for features, please reach out through the following channels:
+- Connect with us on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134) for ongoing discussions. 💬  
+- Join our [Telegram](https://t.me/mucuteclient) channel for updates and community interaction. 📱
 
 ## License 📝
-This project is rocking the [Mozilla Public License v2.0]. This applies only to the source code located directly in this repository. Any extra code used during development might not be covered by this license.
+This project is licensed under the [Mozilla Public License v2.0]. This license applies solely to the source code within this repository. Additional code utilized during development may not fall under this license.
 
-For those who might not be familiar with the license, here’s a quick rundown. This is not legal advice, just chill info!
+### Key Points of the License:
+*Actions you are permitted to do:*
+- **Use**: Feel free to use the code for personal or commercial projects.
+- **Share**: Share the code with others while respecting the license terms.
+- **Modify**: Customize the code to fit your needs.
 
-*Actions you can totally do:*
-
-- Use
-- Share
-- Modify
-
-*If you decide to snag ANY code from the source:*
-
-- **You gotta disclose the source code of your modified work if you distribute it. All modifications must be available under the same terms—no sneaky business!** 🔑
-  
-- **You can totally mix this code with proprietary code, but keep the MPL-licensed parts open and accessible. Just make sure to clearly separate the MPL components from your proprietary code.** 🔍
-
-- **Don’t forget to include a copy of the MPL with any distribution of your modified code.** 📄
+*If you choose to use any code from the source:*
+- **You must disclose the source code of your modified work if you distribute it. All modifications must be made available under the same terms.** 🔑
+- **You may integrate this code with proprietary code, but ensure that MPL-licensed components remain open and accessible. Clearly separate MPL components from proprietary code.** 🔍
+- **Include a copy of the MPL with any distribution of your modified code.** 📄
 
 ## Platform-specific Implementations
+MuCuteRelay is designed exclusively for **ANDROID**. 📱💥
 
-MuCuteRelay is **ANDROID ONLY**, girl! 📱💥
+## Setting Up the Workspace in Android Studio 🛠️
 
-## Setting Up a Workspace 🛠️
+To set up MuCuteRelay in Android Studio, please follow these detailed steps:
 
-To set up MuCuteRelay, follow these steps:
+1. **Install Android Studio**: 
+   - Download and install Android Studio from the [official website](https://developer.android.com/studio).
 
-1. **Fork** or **Clone** the repository.
-2. **Open** the MuCuteRelay project.
-3. In the gradle tasks, find the **publishAppToMavenLocal** task.
-4. **Publish** and you're all set!
+2. **Clone the Repository**: 
+   - Open Android Studio and select **Get from Version Control**.
+   - Enter the repository URL: `https://github.com/CaiMuCheng/MuCuteRelay` and click **Clone**.
 
-## Features
-1. No modifications to the Minecraft client—like, for real! 🙌
-2. Seamless switching/adapting between multiple versions—what a breeze, flop! 🌬️
-3. Full control of the packet layer—own it! 💪
+3. **Open the Project**: 
+   - Once cloned, Android Studio will prompt you to open the project. Click **Open**.
+
+4. **Sync Gradle**: 
+   - After opening the project, Android Studio may prompt you to sync Gradle. Click on **Sync Now** to ensure all dependencies are downloaded.
+
+5. **Locate the `publishAppToMavenLocal` Task**: 
+   - In the right sidebar, open the **Gradle** tab.
+   - Navigate to `Tasks` > `build` and locate the `publishAppToMavenLocal` task.
+
+6. **Publish the Application**: 
+   - Right-click on the `publishAppToMavenLocal` task and select **Run**. This will publish the application locally.
+
+7. **Run the Application**: 
+   - Connect your Android device or start an emulator.
+   - Click on the **Run** button (green play icon) in the toolbar to build and run the application.
+
+8. **Enjoy MuCuteRelay**: 
+   - Once the app is installed on your device or emulator, you can start using MuCuteRelay! 🚀
 
 ## Contributing 🤝
-We’re all about those contributions to MuCuteRelay! If you wanna get involved, just fork or clone the repo and make some changes. Pull requests are totally welcome! 🙌
+We welcome contributions to MuCuteRelay! If you wish to get involved, please fork or clone the repository, make your changes, and submit a pull request. Your contributions are greatly appreciated and help us improve the project for everyone! 🙌
 
 ## Disclaimer ⚠️
-Use MuCuteRelay at your own risk, girl! We **DON'T** take responsibility for any bans or punishments that may pop up from using this cheat. Any losses you face are totally on you! 😅💔 Jiafei is coming for you, flop! 💅✨
+Use MuCuteRelay at your own risk. We **DO NOT** take responsibility for any bans or penalties that may arise from using this tool. Any losses incurred are solely your responsibility. Please use responsibly and enjoy the game! 🎮💔
+
+
+## Installation Tutorial for APKs 📦
+
+To install the APK for MuCuteRelay, please follow these steps:
+
+1. **Download the APK**: Go to the [Releases](https://github.com/CaiMuCheng/MuCuteClient/releases) tab on our GitHub repository and download the latest APK file.
+
+2. **Enable Unknown Sources**: 
+   - On your Android device, go to **Settings** > **Security**.
+   - Enable **Unknown Sources** to allow installations from sources other than the Google Play Store.
+
+3. **Locate the APK**: Use a file manager app to navigate to the folder where you downloaded the APK file.
+
+4. **Install the APK**: Tap on the APK file and follow the on-screen instructions to install the application.
+
+5. **Launch the App**: Once installed, you can find MuCuteRelay in your app drawer. Tap to launch and enjoy!
+
+**Note**: Ensure that you have sufficient storage space and that your device meets the minimum requirements for running the app. 
+
 
 ## Social Links 🌐
-- Connect with us on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134) for consistent chat and discussions! 💬  
-- Join us on [Telegram](https://t.me/mucuteclient) for global updates and chat! 📱
+- Connect with us on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134) for ongoing discussions. 💬  
+- Join our [Telegram](https://t.me/mucuteclient) channel for updates and community interaction. 📱
+
+## Badges
+![License](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg) ![GitHub issues](https://img.shields.io/github/issues/CaiMuCheng/MuCuteRelay.svg) ![GitHub stars](https://img.shields.io/github/stars/CaiMuCheng/MuCuteRelay.svg)
