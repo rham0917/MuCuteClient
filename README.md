@@ -24,7 +24,7 @@ Here are some screenshots of the app in action:
 ![Screenshot 2](https://i.postimg.cc/7h19QBrQ/image.png)
 *Screenshot showcasing features in use.*
 
-[![image.png](https://i.postimg.cc/3xjhFhqg/image.png)]
+![image.png](https://i.postimg.cc/3xjhFhqg/image.png)
 *Screenshot showcasing Homepage of App.*
 
 ## Issues 🤔
