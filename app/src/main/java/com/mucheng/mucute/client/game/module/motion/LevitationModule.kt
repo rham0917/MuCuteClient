@@ -16,7 +16,7 @@ class LevitationModule : Module("levitation", ModuleCategory.Motion) {
                     runtimeEntityId = localPlayer.runtimeEntityId
                     event = MobEffectPacket.Event.ADD
                     effectId = Effect.LEVITATION
-                    amplifier = 0
+                    amplifier = 5
                     isParticles = false
                     duration = 21 * 20
                 })
