@@ -29,6 +29,163 @@ If you encounter any bugs or have suggestions for features, please reach out thr
 - Connect with us on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134) for ongoing discussions. 💬  
 - Join our [Telegram](https://t.me/mucuteclient) channel for updates and community interaction. 📱
 
+## Project Structure
+
+
+```
+📦 
+├─ .gitattributes
+├─ .gitignore
+├─ LICENSE
+├─ README.md
+├─ app
+│  ├─ .gitignore
+│  ├─ build.gradle.kts
+│  ├─ libs
+│  │  └─ MuCuteRelay.jar
+│  ├─ proguard-rules.pro
+│  ├─ release
+│  │  ├─ baselineProfiles
+│  │  │  ├─ 0
+│  │  │  │  └─ app-release.dm
+│  │  │  └─ 1
+│  │  │     └─ app-release.dm
+│  │  └─ output-metadata.json
+│  └─ src
+│     └─ main
+│        ├─ AndroidManifest.xml
+│        ├─ java
+│        │  └─ com
+│        │     └─ mucheng
+│        │        └─ mucute
+│        │           └─ client
+│        │              ├─ activity
+│        │              │  ├─ CrashHandlerActivity.kt
+│        │              │  └─ MainActivity.kt
+│        │              ├─ application
+│        │              │  └─ AppContext.kt
+│        │              ├─ game
+│        │              │  ├─ ComposedPacketHandler.kt
+│        │              │  ├─ Module.kt
+│        │              │  ├─ ModuleCategory.kt
+│        │              │  ├─ ModuleContent.kt
+│        │              │  ├─ ModuleManager.kt
+│        │              │  ├─ ModuleValues.kt
+│        │              │  ├─ TranslationManager.kt
+│        │              │  ├─ data
+│        │              │  │  └─ Effect.kt
+│        │              │  ├─ entity
+│        │              │  │  ├─ Entity.kt
+│        │              │  │  ├─ LocalPlayer.kt
+│        │              │  │  └─ Player.kt
+│        │              │  └─ module
+│        │              │     ├─ Misc
+│        │              │     │  ├─ HasteModule.kt
+│        │              │     │  └─ NoClipModule.kt
+│        │              │     ├─ Visual
+│        │              │     │  ├─ NightVisionModule.kt
+│        │              │     │  └─ ZoomModule.kt
+│        │              │     ├─ motion
+│        │              │     │  ├─ AirJumpModule.kt
+│        │              │     │  ├─ FlyModule.kt
+│        │              │     │  ├─ HighJumpModule.kt
+│        │              │     │  ├─ JetPackModule.kt
+│        │              │     │  ├─ LevitationModule.kt
+│        │              │     │  ├─ SlowFallModule.kt
+│        │              │     │  └─ SpeedHackModule.kt
+│        │              │     └─ player
+│        │              │        ├─ AntiKnockbackModule.kt
+│        │              │        └─ PoseidonModule.kt
+│        │              ├─ logging
+│        │              │  └─ LoggingPacketHandler.kt
+│        │              ├─ model
+│        │              │  ├─ CaptureModeModel.kt
+│        │              │  └─ GameSettingsModel.kt
+│        │              ├─ navigation
+│        │              │  └─ Navigation.kt
+│        │              ├─ overlay
+│        │              │  ├─ OverlayButton.kt
+│        │              │  ├─ OverlayClickGUI.kt
+│        │              │  ├─ OverlayLifecycleOwner.kt
+│        │              │  ├─ OverlayManager.kt
+│        │              │  ├─ OverlayShortcutButton.kt
+│        │              │  └─ OverlayWindow.kt
+│        │              ├─ router
+│        │              │  └─ main
+│        │              │     ├─ AboutPage.kt
+│        │              │     ├─ AccountPage.kt
+│        │              │     ├─ HomePage.kt
+│        │              │     ├─ MainScreen.kt
+│        │              │     └─ SettingsPage.kt
+│        │              ├─ service
+│        │              │  └─ MuCuteRelayService.kt
+│        │              ├─ ui
+│        │              │  ├─ component
+│        │              │  │  └─ NavigationRailX.kt
+│        │              │  └─ theme
+│        │              │     └─ Theme.kt
+│        │              ├─ util
+│        │              │  ├─ MinecraftUtils.kt
+│        │              │  ├─ SnackBarUtils.kt
+│        │              │  ├─ TranslationUtil.kt
+│        │              │  ├─ WindowUtil.kt
+│        │              │  └─ WorkModes.kt
+│        │              └─ viewmodel
+│        │                 └─ MainScreenViewModel.kt
+│        └─ res
+│           ├─ drawable
+│           │  ├─ falling.xml
+│           │  ├─ ic_launcher_background.xml
+│           │  ├─ ic_launcher_foreground.xml
+│           │  ├─ manufacturing_24px.xml
+│           │  ├─ sprint_24px.xml
+│           │  ├─ swords_24px.xml
+│           │  ├─ toc_24px.xml
+│           │  └─ view_in_ar_24px.xml
+│           ├─ mipmap-anydpi-v26
+│           │  ├─ ic_launcher.xml
+│           │  └─ ic_launcher_round.xml
+│           ├─ mipmap-hdpi
+│           │  ├─ ic_launcher.webp
+│           │  ├─ ic_launcher_round.webp
+│           │  └─ minecraft_icon.png
+│           ├─ mipmap-mdpi
+│           │  ├─ ic_launcher.webp
+│           │  └─ ic_launcher_round.webp
+│           ├─ mipmap-xhdpi
+│           │  ├─ ic_launcher.webp
+│           │  └─ ic_launcher_round.webp
+│           ├─ mipmap-xxhdpi
+│           │  ├─ ic_launcher.webp
+│           │  └─ ic_launcher_round.webp
+│           ├─ mipmap-xxxhdpi
+│           │  ├─ ic_launcher.webp
+│           │  └─ ic_launcher_round.webp
+│           ├─ values-v27
+│           │  └─ themes.xml
+│           ├─ values-zh
+│           │  └─ strings.xml
+│           ├─ values
+│           │  ├─ colors.xml
+│           │  ├─ strings.xml
+│           │  └─ themes.xml
+│           └─ xml
+│              └─ network_security_config.xml
+├─ build.gradle.kts
+├─ buildKey.jks
+├─ gradle.properties
+├─ gradle
+│  ├─ libs.versions.toml
+│  └─ wrapper
+│     ├─ gradle-wrapper.jar
+│     └─ gradle-wrapper.properties
+├─ gradlew
+├─ gradlew.bat
+├─ logo.png
+└─ settings.gradle.kts
+```
+©generated by [Project Tree Generator](https://woochanleee.github.io/project-tree-generator)
+
 ## License 📝
 This project is licensed under the [Mozilla Public License v2.0]. This license applies solely to the source code within this repository. Additional code utilized during development may not fall under this license.
 
