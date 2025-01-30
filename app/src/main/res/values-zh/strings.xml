@@ -49,6 +49,7 @@
     <string name="visual">视觉</string>
     <string name="misc">杂项</string>
     <string name="config">配置</string>
+    <string name="player">玩家</string>
     <string name="request_ignore_battery_optimization">我们需要忽略电池优化以保持连接</string>
     <string name="ignore_battery_optimization_denied">忽略电池优化权限被拒绝</string>
     <string name="current_language">zh</string>
