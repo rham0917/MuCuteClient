@@ -23,7 +23,6 @@ object TranslationManager {
         put("slow_fall", "Slow Fall")
         put("anti_knockback","Velocity")
         put("poseidon","Poseidon")
-        put("regen","Regen")
 
     }
 
@@ -41,7 +40,6 @@ object TranslationManager {
         put("slow_fall", "缓慢下落")
         put("anti_knockback","防击退")
         put("poseidon","海神")
-        put("regen","再生")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {
