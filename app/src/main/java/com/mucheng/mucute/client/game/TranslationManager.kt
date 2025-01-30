@@ -22,7 +22,7 @@ object TranslationManager {
         put("high_jump", "High Jump")
         put("slow_fall", "Slow Fall")
         put("anti_knockback","Velocity")
-        put("poseidon","poseidon")
+        put("poseidon","Poseidon")
 
     }
 
