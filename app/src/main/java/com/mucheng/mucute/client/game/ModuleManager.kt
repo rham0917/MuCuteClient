@@ -8,6 +8,7 @@ import com.mucheng.mucute.client.game.module.misc.NoClipModule
 import com.mucheng.mucute.client.game.module.misc.HasteModule
 import com.mucheng.mucute.client.game.module.motion.JetPackModule
 import com.mucheng.mucute.client.game.module.motion.SpeedHackModule
+import com.mucheng.mucute.client.game.module.motion.HighJumpModule
 import com.mucheng.mucute.client.game.module.visual.NightVisionModule
 import com.mucheng.mucute.client.game.module.motion.LevitationModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
@@ -54,6 +55,7 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(SpeedHackModule())
             add(JetPackModule())
             add(LevitationModule())
+            add(HighJumpModule())
 
         }
     }
