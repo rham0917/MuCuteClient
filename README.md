@@ -24,6 +24,9 @@ Here are some screenshots of the app in action:
 ![Screenshot 2](https://i.postimg.cc/7h19QBrQ/image.png)
 *Screenshot showcasing features in use.*
 
+[![image.png](https://i.postimg.cc/3xjhFhqg/image.png)]
+*Screenshot showcasing Homepage of App.*
+
 ## Issues 🤔
 If you encounter any bugs or have suggestions for features, please reach out through the following channels:
 - Connect with us on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134) for ongoing discussions. 💬  
