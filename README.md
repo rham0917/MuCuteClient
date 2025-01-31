@@ -269,4 +269,4 @@ To install the APK for MuCuteRelay, please follow these steps:
 
 ## Badges
 ![License](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg) ![GitHub issues](https://img.shields.io/github/issues/CaiMuCheng/MuCuteRelay.svg) ![GitHub stars](https://img.shields.io/github/stars/CaiMuCheng/MuCuteRelay.svg)
-https://i.ibb.co/5hn5Fh5h/1000073558-removebg-preview.png
+
