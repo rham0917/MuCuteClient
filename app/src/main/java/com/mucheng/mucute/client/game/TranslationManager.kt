@@ -29,7 +29,7 @@ object TranslationManager {
         put("no_hurt_cam","NoHurtCam")
         put("random_move","Anti AFK")
         put("auto_walk","Auto Walk")
-        put("desync","NoPacket")
+        put("desync","DeSync")
 
 
     }
