@@ -10,9 +10,12 @@ import com.mucheng.mucute.client.game.module.effect.RegenModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
 import com.mucheng.mucute.client.game.module.motion.AirJumpModule
 import com.mucheng.mucute.client.game.module.motion.AutoJumpModule
+import com.mucheng.mucute.client.game.module.motion.AutoWalkModule
+import com.mucheng.mucute.client.game.module.motion.DesyncModule
 import com.mucheng.mucute.client.game.module.motion.FlyModule
 import com.mucheng.mucute.client.game.module.motion.HighJumpModule
 import com.mucheng.mucute.client.game.module.motion.JetPackModule
+import com.mucheng.mucute.client.game.module.motion.RandomMoveModule
 import com.mucheng.mucute.client.game.module.motion.SlowFallModule
 import com.mucheng.mucute.client.game.module.motion.SpeedModule
 import com.mucheng.mucute.client.game.module.motion.SprintModule
@@ -63,6 +66,9 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(AutoJumpModule())
             add(SprintModule())
             add(NoHurtCamModule())
+            add(AutoWalkModule())
+            add(RandomMoveModule())
+            add(DesyncModule())
         }
     }
 
