@@ -1,4 +1,4 @@
-# MuCuteClient 🩷
+# (っ◔◡◔)っ 🩷 MuCuteClient 🩷
 
 <img src="logo.png" alt="Logo" width="30%" />
 
