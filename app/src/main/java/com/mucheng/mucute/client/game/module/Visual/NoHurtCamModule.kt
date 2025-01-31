@@ -6,7 +6,7 @@ import org.cloudburstmc.protocol.bedrock.data.entity.EntityEventType
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.EntityEventPacket
 
-class NoHurtCamModule : Module("no_hurt_cam", ModuleCategory.Visual) {
+class NoHurtCamModule : Module("no_hurt_camera", ModuleCategory.Visual) {
 
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is EntityEventPacket && isEnabled) {
