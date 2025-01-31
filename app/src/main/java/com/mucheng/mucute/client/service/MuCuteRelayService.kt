@@ -141,6 +141,8 @@ class MuCuteRelayService : Service() {
                         handler.post {
                             OverlayManager.show(this)
                         }
+
+                        Definitions.loadBlockPalette()
                     }
                 ) {
                     ModuleManager.initModules(this)

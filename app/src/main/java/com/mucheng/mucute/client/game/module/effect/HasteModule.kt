@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.misc
+package com.mucheng.mucute.client.game.module.effect
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
@@ -7,7 +7,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
-class RegenModule : Module("regen", ModuleCategory.Misc) {
+class HasteModule : Module("haste", ModuleCategory.Effect) {
 
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
@@ -15,10 +15,10 @@ class RegenModule : Module("regen", ModuleCategory.Misc) {
                 session.clientBound(MobEffectPacket().apply {
                     runtimeEntityId = localPlayer.runtimeEntityId
                     event = MobEffectPacket.Event.ADD
-                    effectId = Effect.REGENERATION
-                    this.amplifier = amplifier - 1
+                    effectId = Effect.HASTE
+                    amplifier -= 1
                     isParticles = false
-                    duration = 360000
+                    duration = 21 * 20
                 })
             }
         }
@@ -30,7 +30,7 @@ class RegenModule : Module("regen", ModuleCategory.Misc) {
             session.clientBound(MobEffectPacket().apply {
                 runtimeEntityId = localPlayer.runtimeEntityId
                 event = MobEffectPacket.Event.REMOVE
-                effectId = Effect.REGENERATION
+                effectId = Effect.HASTE
             })
         }
     }

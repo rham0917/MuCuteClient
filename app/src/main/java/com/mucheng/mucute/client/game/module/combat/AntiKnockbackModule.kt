@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.player
+package com.mucheng.mucute.client.game.module.combat
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
@@ -6,7 +6,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.math.vector.Vector3f
 
-class AntiKnockbackModule : Module("anti_knockback", ModuleCategory.Player) {
+class AntiKnockbackModule : Module("anti_knockback", ModuleCategory.Effect) {
 
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is SetEntityMotionPacket) {

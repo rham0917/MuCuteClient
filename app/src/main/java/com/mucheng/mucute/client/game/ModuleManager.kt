@@ -1,23 +1,22 @@
 package com.mucheng.mucute.client.game
 
-import androidx.compose.ui.unit.Velocity
 import com.mucheng.mucute.client.game.module.motion.AirJumpModule
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.entity.LocalPlayer
 import com.mucheng.mucute.client.game.module.motion.FlyModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
-import com.mucheng.mucute.client.game.module.misc.HasteModule
-import com.mucheng.mucute.client.game.module.misc.RegenModule
+import com.mucheng.mucute.client.game.module.effect.HasteModule
+import com.mucheng.mucute.client.game.module.effect.RegenModule
 import com.mucheng.mucute.client.game.module.motion.AutoJumpModule
-import com.mucheng.mucute.client.game.module.motion.AutoSprintModule
+import com.mucheng.mucute.client.game.module.motion.SprintModule
 import com.mucheng.mucute.client.game.module.motion.JetPackModule
-import com.mucheng.mucute.client.game.module.motion.SpeedHackModule
+import com.mucheng.mucute.client.game.module.motion.SpeedModule
 import com.mucheng.mucute.client.game.module.motion.HighJumpModule
 import com.mucheng.mucute.client.game.module.visual.NightVisionModule
 import com.mucheng.mucute.client.game.module.motion.SlowFallModule
-import com.mucheng.mucute.client.game.module.motion.LevitationModule
-import com.mucheng.mucute.client.game.module.player.AntiKnockbackModule
-import com.mucheng.mucute.client.game.module.player.PoseidonModule
+import com.mucheng.mucute.client.game.module.effect.LevitationModule
+import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
+import com.mucheng.mucute.client.game.module.effect.PoseidonModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
 import com.mucheng.mucute.relay.MuCuteRelaySession
 import com.mucheng.mucute.relay.listener.MuCuteRelayPacketListener
@@ -40,13 +39,6 @@ object ModuleManager : MuCuteRelayPacketListener {
     }
 
 
-
-
-
-
-
-
-
     private val localPlayer = LocalPlayer()
 
     private var session: MuCuteRelaySession? = null
@@ -59,7 +51,7 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(NoClipModule())
             add(NightVisionModule())
             add(HasteModule())
-            add(SpeedHackModule())
+            add(SpeedModule())
             add(JetPackModule())
             add(LevitationModule())
             add(HighJumpModule())
@@ -68,23 +60,9 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(AntiKnockbackModule())
             add(RegenModule())
             add(AutoJumpModule())
-            add(AutoSprintModule())
-
-
-
-        
-
+            add(SprintModule())
         }
     }
-
-
-
-
-
-
-
-
-
 
     fun initModules(muCuteRelaySession: MuCuteRelaySession) {
         this.session = muCuteRelaySession

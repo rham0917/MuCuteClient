@@ -1,15 +1,15 @@
 # (っ◔◡◔)っ 🩷 MuCuteClient 🩷
 
-<img src="logo.png" alt="Logo" width="30%" />
+<img src="images/logo.png" alt="Logo" width="30%" />
 
 MuCuteRelay is a powerful and efficient implementation for Android, specifically tailored for Minecraft Bedrock Edition. Our goal is to enhance your gaming experience while maintaining the integrity of the original client. 🎮✨
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 ## Notice
 MuCuteClient is developed independently and does not utilize any code from protohax. Any attempts to take down this repository based on this claim will not be entertained. We value originality and innovation in our development process. 🚫
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 ## Features
 1. **No Modifications to the Minecraft Client**: Our solution ensures that the original client remains untouched, providing a safe and reliable gaming experience. 🙌
@@ -19,192 +19,33 @@ MuCuteClient is developed independently and does not utilize any code from proto
 5. **User-Friendly Interface**: Designed with the user in mind, our interface is intuitive and easy to navigate, making it accessible for players of all skill levels. 🖥️
 6. **Active Community Support**: Join a vibrant community of players and developers who are eager to help and share their experiences. 🤝
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 ## App Screenshots 📸
 Here are some screenshots of the app in action:
 
-![Screenshot 1](https://i.postimg.cc/SN71ZKyN/image.png)
+![Screenshot 1](images/in_game_screenshot.png)
 *Screenshot of the main interface.*
 
-![Screenshot 2](https://i.postimg.cc/7h19QBrQ/image.png)
+![Screenshot 2](images/main_interface_screenshot.png)
 *Screenshot showcasing features in use.*
 
-![image.png](https://i.postimg.cc/3xjhFhqg/image.png)
+![Screenshot 3](images/app_screenshot.jpg)
 *Screenshot showcasing Homepage of App.*
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 ## Issues 🤔
 If you encounter any bugs or have suggestions for features, please reach out through the following channels:
 - Connect with us on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134) for ongoing discussions. 💬  
 - Join our [Telegram](https://t.me/mucuteclient) channel for updates and community interaction. 📱
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
-
-## Project Structure
-
-
-```
-📦 
-├─ .gitattributes
-├─ .gitignore
-├─ LICENSE
-├─ README.md
-├─ app
-│  ├─ .gitignore
-│  ├─ build.gradle.kts
-│  ├─ libs
-│  │  └─ MuCuteRelay.jar
-│  ├─ proguard-rules.pro
-│  ├─ release
-│  │  ├─ baselineProfiles
-│  │  │  ├─ 0
-│  │  │  │  └─ app-release.dm
-│  │  │  └─ 1
-│  │  │     └─ app-release.dm
-│  │  └─ output-metadata.json
-│  └─ src
-│     └─ main
-│        ├─ AndroidManifest.xml
-│        ├─ java
-│        │  └─ com
-│        │     └─ mucheng
-│        │        └─ mucute
-│        │           └─ client
-│        │              ├─ activity
-│        │              │  ├─ CrashHandlerActivity.kt
-│        │              │  └─ MainActivity.kt
-│        │              ├─ application
-│        │              │  └─ AppContext.kt
-│        │              ├─ game
-│        │              │  ├─ ComposedPacketHandler.kt
-│        │              │  ├─ Module.kt
-│        │              │  ├─ ModuleCategory.kt
-│        │              │  ├─ ModuleContent.kt
-│        │              │  ├─ ModuleManager.kt
-│        │              │  ├─ ModuleValues.kt
-│        │              │  ├─ TranslationManager.kt
-│        │              │  ├─ data
-│        │              │  │  └─ Effect.kt
-│        │              │  ├─ entity
-│        │              │  │  ├─ Entity.kt
-│        │              │  │  ├─ LocalPlayer.kt
-│        │              │  │  └─ Player.kt
-│        │              │  └─ module
-│        │              │     ├─ Misc
-│        │              │     │  ├─ HasteModule.kt
-│        │              │     │  └─ NoClipModule.kt
-│        │              │     ├─ Visual
-│        │              │     │  ├─ NightVisionModule.kt
-│        │              │     │  └─ ZoomModule.kt
-│        │              │     ├─ motion
-│        │              │     │  ├─ AirJumpModule.kt
-│        │              │     │  ├─ FlyModule.kt
-│        │              │     │  ├─ HighJumpModule.kt
-│        │              │     │  ├─ JetPackModule.kt
-│        │              │     │  ├─ LevitationModule.kt
-│        │              │     │  ├─ SlowFallModule.kt
-│        │              │     │  └─ SpeedHackModule.kt
-│        │              │     └─ player
-│        │              │        ├─ AntiKnockbackModule.kt
-│        │              │        └─ PoseidonModule.kt
-│        │              ├─ logging
-│        │              │  └─ LoggingPacketHandler.kt
-│        │              ├─ model
-│        │              │  ├─ CaptureModeModel.kt
-│        │              │  └─ GameSettingsModel.kt
-│        │              ├─ navigation
-│        │              │  └─ Navigation.kt
-│        │              ├─ overlay
-│        │              │  ├─ OverlayButton.kt
-│        │              │  ├─ OverlayClickGUI.kt
-│        │              │  ├─ OverlayLifecycleOwner.kt
-│        │              │  ├─ OverlayManager.kt
-│        │              │  ├─ OverlayShortcutButton.kt
-│        │              │  └─ OverlayWindow.kt
-│        │              ├─ router
-│        │              │  └─ main
-│        │              │     ├─ AboutPage.kt
-│        │              │     ├─ AccountPage.kt
-│        │              │     ├─ HomePage.kt
-│        │              │     ├─ MainScreen.kt
-│        │              │     └─ SettingsPage.kt
-│        │              ├─ service
-│        │              │  └─ MuCuteRelayService.kt
-│        │              ├─ ui
-│        │              │  ├─ component
-│        │              │  │  └─ NavigationRailX.kt
-│        │              │  └─ theme
-│        │              │     └─ Theme.kt
-│        │              ├─ util
-│        │              │  ├─ MinecraftUtils.kt
-│        │              │  ├─ SnackBarUtils.kt
-│        │              │  ├─ TranslationUtil.kt
-│        │              │  ├─ WindowUtil.kt
-│        │              │  └─ WorkModes.kt
-│        │              └─ viewmodel
-│        │                 └─ MainScreenViewModel.kt
-│        └─ res
-│           ├─ drawable
-│           │  ├─ falling.xml
-│           │  ├─ ic_launcher_background.xml
-│           │  ├─ ic_launcher_foreground.xml
-│           │  ├─ manufacturing_24px.xml
-│           │  ├─ sprint_24px.xml
-│           │  ├─ swords_24px.xml
-│           │  ├─ toc_24px.xml
-│           │  └─ view_in_ar_24px.xml
-│           ├─ mipmap-anydpi-v26
-│           │  ├─ ic_launcher.xml
-│           │  └─ ic_launcher_round.xml
-│           ├─ mipmap-hdpi
-│           │  ├─ ic_launcher.webp
-│           │  ├─ ic_launcher_round.webp
-│           │  └─ minecraft_icon.png
-│           ├─ mipmap-mdpi
-│           │  ├─ ic_launcher.webp
-│           │  └─ ic_launcher_round.webp
-│           ├─ mipmap-xhdpi
-│           │  ├─ ic_launcher.webp
-│           │  └─ ic_launcher_round.webp
-│           ├─ mipmap-xxhdpi
-│           │  ├─ ic_launcher.webp
-│           │  └─ ic_launcher_round.webp
-│           ├─ mipmap-xxxhdpi
-│           │  ├─ ic_launcher.webp
-│           │  └─ ic_launcher_round.webp
-│           ├─ values-v27
-│           │  └─ themes.xml
-│           ├─ values-zh
-│           │  └─ strings.xml
-│           ├─ values
-│           │  ├─ colors.xml
-│           │  ├─ strings.xml
-│           │  └─ themes.xml
-│           └─ xml
-│              └─ network_security_config.xml
-├─ build.gradle.kts
-├─ buildKey.jks
-├─ gradle.properties
-├─ gradle
-│  ├─ libs.versions.toml
-│  └─ wrapper
-│     ├─ gradle-wrapper.jar
-│     └─ gradle-wrapper.properties
-├─ gradlew
-├─ gradlew.bat
-├─ logo.png
-└─ settings.gradle.kts
-```
-©generated by [Project Tree Generator](https://woochanleee.github.io/project-tree-generator)
-
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 ## License 📝
 This project is licensed under the [Mozilla Public License v2.0]. This license applies solely to the source code within this repository. Additional code utilized during development may not fall under this license.
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 ### Key Points of the License:
 *Actions you are permitted to do:*
@@ -212,14 +53,14 @@ This project is licensed under the [Mozilla Public License v2.0]. This license a
 - **Share**: Share the code with others while respecting the license terms.
 - **Modify**: Customize the code to fit your needs.
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 *If you choose to use any code from the source:*
 - **You must disclose the source code of your modified work if you distribute it. All modifications must be made available under the same terms.** 🔑
 - **You may integrate this code with proprietary code, but ensure that MPL-licensed components remain open and accessible. Clearly separate MPL components from proprietary code.** 🔍
 - **Include a copy of the MPL with any distribution of your modified code.** 📄
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 ## Platform-specific Implementations
 MuCuteRelay is designed exclusively for **ANDROID**. 📱💥
@@ -255,17 +96,17 @@ To set up MuCuteRelay in Android Studio, please follow these detailed steps:
 8. **Enjoy MuCuteRelay**: 
    - Once the app is installed on your device or emulator, you can start using MuCuteRelay! 🚀
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 ## Contributing 🤝
 We welcome contributions to MuCuteRelay! If you wish to get involved, please fork or clone the repository, make your changes, and submit a pull request. Your contributions are greatly appreciated and help us improve the project for everyone! 🙌
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 ## Disclaimer ⚠️
 Use MuCuteRelay at your own risk. We **DO NOT** take responsibility for any bans or penalties that may arise from using this tool. Any losses incurred are solely your responsibility. Please use responsibly and enjoy the game! 🎮💔
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 
 ## Installation Tutorial for APKs 📦
@@ -286,17 +127,17 @@ To install the APK for MuCuteRelay, please follow these steps:
 
 **Note**: Ensure that you have sufficient storage space and that your device meets the minimum requirements for running the app. 
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 
 ## Social Links 🌐
 - Connect with us on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134) for ongoing discussions. 💬  
 - Join our [Telegram](https://t.me/mucuteclient) channel for updates and community interaction. 📱
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
+![Divider](images/divider.png)
 
 ## Badges
 ![License](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg) ![GitHub issues](https://img.shields.io/github/issues/CaiMuCheng/MuCuteRelay.svg) ![GitHub stars](https://img.shields.io/github/stars/CaiMuCheng/MuCuteRelay.svg)
 
-![eee](https://i.ibb.co/5XWt6pkP/1000073563-removebg-preview.png)
-![d](https://i.ibb.co/dYPn2x0/1000073567-removebg-preview.png)
+![Divider](images/divider.png)
+![d](images/background.png)

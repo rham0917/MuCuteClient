@@ -53,11 +53,11 @@
     <string name="visual">Visual</string>
     <string name="misc">Misc</string>
     <string name="config">Config</string>
-    <string name="player">Player</string>
     <string name="request_ignore_battery_optimization">We need to ignore battery optimization to stay connected</string>
     <string name="ignore_battery_optimization_denied">Ignore battery optimization permission denied</string>
     <string name="current_language">en</string>
     <string name="shortcut">Shortcut</string>
     <string name="crash_happened">Crash Happened</string>
     <string name="cannot_back">A crash has occurred and you are not allowed to return. You can only restart the app.</string>
+    <string name="effect">Effect</string>
 </resources>

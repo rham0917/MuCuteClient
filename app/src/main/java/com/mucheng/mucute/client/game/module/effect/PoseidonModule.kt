@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.player
+package com.mucheng.mucute.client.game.module.effect
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
@@ -12,7 +12,7 @@ import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import kotlin.math.cos
 import kotlin.math.sin
 
-class PoseidonModule : Module("poseidon", ModuleCategory.Player) {
+class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
     
     private val speedMultiplier = 1.5f  // How much faster to move in water
 

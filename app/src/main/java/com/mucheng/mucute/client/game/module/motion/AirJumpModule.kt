@@ -2,6 +2,7 @@ package com.mucheng.mucute.client.game.module.motion
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -13,6 +14,7 @@ import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 
 class AirJumpModule : Module("AirJump", ModuleCategory.Motion) {
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
             if (packet.inputData.contains(PlayerAuthInputData.JUMP_DOWN)) {

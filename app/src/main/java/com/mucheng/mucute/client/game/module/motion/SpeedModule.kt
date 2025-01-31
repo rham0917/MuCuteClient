@@ -9,7 +9,7 @@ import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import kotlin.math.cos
 import kotlin.math.sin
 
-class SpeedHackModule : Module("speed_hack", ModuleCategory.Motion) {
+class SpeedModule : Module("speed", ModuleCategory.Motion) {
     
     private val speedValue = 1.4f  // Base speed value
 

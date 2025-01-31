@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.motion
+package com.mucheng.mucute.client.game.module.effect
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
@@ -7,7 +7,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
-class LevitationModule : Module("levitation", ModuleCategory.Motion) {
+class LevitationModule : Module("levitation", ModuleCategory.Effect) {
 
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {

@@ -6,7 +6,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 
-class AutoSprintModule : Module("auto_sprint", ModuleCategory.Player) {
+class SprintModule : Module("sprint", ModuleCategory.Motion) {
 
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {

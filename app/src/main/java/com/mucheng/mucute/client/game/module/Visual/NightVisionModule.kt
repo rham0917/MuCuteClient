@@ -10,11 +10,11 @@ import org.cloudburstmc.protocol.bedrock.packet.SetEntityDataPacket
 
 class NightVisionModule : Module("full_bright", ModuleCategory.Visual) {
 
-    private val nightVision = boolValue("nightvision", true)
-    private val removeFire = boolValue("removefire", false)
+    private val nightVision by boolValue("nightvision", true)
+    private val removeFire by boolValue("removefire", false)
 
     override fun onDisabled() {
-        if (nightVision.value && isInGame) {
+        if (nightVision && isInGame) {
             session.clientBound(MobEffectPacket().apply {
                 event = MobEffectPacket.Event.REMOVE
                 runtimeEntityId = localPlayer.runtimeEntityId
@@ -26,13 +26,13 @@ class NightVisionModule : Module("full_bright", ModuleCategory.Visual) {
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is SetEntityDataPacket) {
             if (packet.runtimeEntityId == localPlayer.runtimeEntityId && packet.metadata?.flags != null) {
-                if (removeFire.value && packet.metadata.flags.contains(EntityFlag.ON_FIRE)) {
+                if (removeFire && packet.metadata.flags.contains(EntityFlag.ON_FIRE)) {
                     packet.metadata.setFlag(EntityFlag.ON_FIRE, false)
                 }
             }
         }
 
-        if (isEnabled && nightVision.value && localPlayer.tickExists % 20 == 0L) {
+        if (isEnabled && nightVision && localPlayer.tickExists % 20 == 0L) {
             session.clientBound(MobEffectPacket().apply {
                 runtimeEntityId = localPlayer.runtimeEntityId
                 event = MobEffectPacket.Event.ADD

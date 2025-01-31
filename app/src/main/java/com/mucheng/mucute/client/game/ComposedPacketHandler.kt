@@ -6,8 +6,6 @@ interface ComposedPacketHandler {
 
     fun onReceived(packet: BedrockPacket): Boolean
 
-    fun onDisconnect(reason: String) {
-
-    }
+    fun onDisconnect(reason: String) {}
 
 }

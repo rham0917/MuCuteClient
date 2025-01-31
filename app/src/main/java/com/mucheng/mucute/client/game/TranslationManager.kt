@@ -13,8 +13,8 @@ object TranslationManager {
         put("fly", "Fly")
         put("no_clip", "No Clip")
         put("zoom", "Zoom")
-        put("air_jump",  "AirJump")
-        put("speed_hack", "Speed Boost")
+        put("air_jump",  "Air Jump")
+        put("speed", "Speed Boost")
         put("full_bright", "Fullbright")
         put("haste", "Haste")
         put("jetpack", "Jetpack")
@@ -25,7 +25,7 @@ object TranslationManager {
         put("poseidon","Poseidon")
         put("regen","Regen")
         put("auto_jump","BHOP")
-        put("auto_sprint","Auto Sprint")
+        put("sprint","Sprint")
 
     }
 
@@ -34,18 +34,18 @@ object TranslationManager {
         put("no_clip", "穿墙")
         put("zoom", "缩放")
         put("air_jump",  "空中跳跃")
-        put("speed_hack", "速度")
+        put("speed", "速度")
         put("full_bright", "夜视")
-        put("haste", "快攻")
+        put("haste", "极速")
         put("jetpack", "喷气背包")
-        put("levitate", "悬浮")
+        put("levitate", "漂浮")
         put("high_jump", "高跳")
         put("slow_fall", "缓慢下落")
         put("anti_knockback","防击退")
         put("poseidon","海神")
         put("regen","再生")
-        put("auto_jump","兔子跳")
-        put("auto_sprint","自动运行")
+        put("auto_jump","自动跳跃")
+        put("sprint","疾跑")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {
