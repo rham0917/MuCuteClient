@@ -60,31 +60,30 @@ channels:
 
 ![Divider](images/divider.png)
 
-## License 📝
+## License 📝  
 
-This project is licensed under the [Mozilla Public License v2.0]. This license applies solely to the
-source code within this repository. Additional code utilized during development may not fall under
-this license.
+The **MuCuteClient** is officially owned by the **MuCuteClient Group**. By using the community name, logo, or any related files, you agree to the following terms:  
 
-![Divider](images/divider.png)
+![Divider](images/divider.png)  
 
-### Key Points of the License:
+### ✅ Permitted Uses:  
+- Use the **MuCuteClient** name and logo in promotional materials (e.g., YouTube videos).  
+- Modify the launcher for **personal use**.  
+- Contribute to development by **forking and working** with the source code on GitHub.  
 
-*Actions you are permitted to do:*
+![Divider](images/divider.png)  
 
-- **Use**: Feel free to use the code for personal or commercial projects.
-- **Share**: Share the code with others while respecting the license terms.
-- **Modify**: Customize the code to fit your needs.
+### ❌ Prohibited Uses:  
+- **Distribute, redistribute, or sell** modified versions of the launcher in any form.  
+- Use the **MuCuteClient** name in a way that implies an **official association** on websites, Discord servers, or other platforms.  
+- Claim **ownership** of the project in any public or private setting.  
 
-![Divider](images/divider.png)
+![Divider](images/divider.png)  
 
-*If you choose to use any code from the source:*
+### ⚠️ Compliance:  
+Failure to follow these terms may result in content removal or enforcement of our rights.  
 
-- **You must disclose the source code of your modified work if you distribute it. All modifications
-  must be made available under the same terms.** 🔑
-- **You may integrate this code with proprietary code, but ensure that MPL-licensed components
-  remain open and accessible. Clearly separate MPL components from proprietary code.** 🔍
-- **Include a copy of the MPL with any distribution of your modified code.** 📄
+Thank you for respecting these guidelines and supporting **MuCuteClient**!
 
 ![Divider](images/divider.png)
 
@@ -173,7 +172,7 @@ requirements for running the app.
 
 ## Badges
 
-![License](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg) ![GitHub issues](https://img.shields.io/github/issues/CaiMuCheng/MuCuteRelay.svg) ![GitHub stars](https://img.shields.io/github/stars/CaiMuCheng/MuCuteRelay.svg)
+![GitHub issues](https://img.shields.io/github/issues/CaiMuCheng/MuCuteRelay.svg) ![GitHub stars](https://img.shields.io/github/stars/CaiMuCheng/MuCuteRelay.svg)
 
 ![Divider](images/divider.png)
 ![Background](images/background.png)
