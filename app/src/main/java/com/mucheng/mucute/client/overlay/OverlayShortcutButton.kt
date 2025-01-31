@@ -1,21 +1,13 @@
 package com.mucheng.mucute.client.overlay
 
 import android.content.res.Configuration
-import android.os.Build
 import android.view.WindowManager
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Construction
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable

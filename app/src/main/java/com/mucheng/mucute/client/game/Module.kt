@@ -14,7 +14,8 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.put
 
-abstract class Module(val name: String, val category: ModuleCategory) : ComposedPacketHandler, Configurable {
+abstract class Module(val name: String, val category: ModuleCategory) : ComposedPacketHandler,
+    Configurable {
 
     open lateinit var session: MuCuteRelaySession
 

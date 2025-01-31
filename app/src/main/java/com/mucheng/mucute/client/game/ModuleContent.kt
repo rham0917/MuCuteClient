@@ -6,6 +6,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,12 +19,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -130,9 +134,45 @@ private fun ModuleCard(module: Module) {
                         is BoolValue -> BoolValueContent(it)
                         is FloatValue -> FloatValueContent(it)
                         is IntValue -> IntValueContent(it)
+                        is ChoiceValue -> ChoiceValueContent(it)
                     }
                 }
                 ShortcutContent(module)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ChoiceValueContent(value: ChoiceValue) {
+    Column(
+        Modifier
+            .padding(start = 10.dp, end = 10.dp, bottom = 5.dp)
+    ) {
+        Text(
+            value.name.translatedSelf,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.surface
+        )
+        Row(Modifier.horizontalScroll(rememberScrollState())) {
+            value.choices.forEach {
+                ElevatedFilterChip(
+                    selected = value.value == it,
+                    onClick = {
+                        if (value.value != it) {
+                            value.value = it
+                        }
+                    },
+                    label = {
+                        Text(it.translatedSelf)
+                    },
+                    modifier = Modifier.height(30.dp),
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = MaterialTheme.colorScheme.outlineVariant,
+                        selectedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        selectedLabelColor = MaterialTheme.colorScheme.primary
+                    )
+                )
             }
         }
     }
@@ -143,7 +183,7 @@ private fun ModuleCard(module: Module) {
 private fun FloatValueContent(value: FloatValue) {
     Column(
         Modifier
-            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
+            .padding(start = 10.dp, end = 10.dp, bottom = 5.dp)
     ) {
         Row {
             Text(
@@ -208,7 +248,7 @@ private fun FloatValueContent(value: FloatValue) {
 private fun IntValueContent(value: IntValue) {
     Column(
         Modifier
-            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
+            .padding(start = 10.dp, end = 10.dp, bottom = 5.dp)
     ) {
         Row {
             Text(
@@ -272,7 +312,7 @@ private fun IntValueContent(value: IntValue) {
 private fun BoolValueContent(value: BoolValue) {
     Row(
         Modifier
-            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
+            .padding(start = 10.dp, end = 10.dp, bottom = 5.dp)
             .toggleable(
                 value = value.value,
                 interactionSource = null,

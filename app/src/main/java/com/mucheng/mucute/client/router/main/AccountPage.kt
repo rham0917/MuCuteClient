@@ -212,7 +212,10 @@ fun AccountPageContent() {
                                     coroutineScope.launch {
                                         snackbarHostState.currentSnackbarData?.dismiss()
                                         snackbarHostState.showSnackbar(
-                                            message = context.getString(R.string.failed_to_fetch_account, throwable.toString())
+                                            message = context.getString(
+                                                R.string.failed_to_fetch_account,
+                                                throwable.toString()
+                                            )
                                         )
                                     }
                                     return@fetchXboxToken

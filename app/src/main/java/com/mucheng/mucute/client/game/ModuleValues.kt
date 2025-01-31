@@ -8,7 +8,6 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.float
 import kotlinx.serialization.json.int
-import kotlinx.serialization.json.jsonPrimitive
 import kotlin.reflect.KProperty
 
 interface Configurable {
@@ -19,9 +18,14 @@ interface Configurable {
 
     fun boolValue(name: String, value: Boolean) = BoolValue(name, value).also { values.add(it) }
 
-    fun floatValue(name: String, value: Float, range: ClosedFloatingPointRange<Float>) = FloatValue(name, value, range).also { values.add(it) }
+    fun floatValue(name: String, value: Float, range: ClosedFloatingPointRange<Float>) =
+        FloatValue(name, value, range).also { values.add(it) }
 
-    fun intValue(name: String, value: Int, range: IntRange) = IntValue(name, value, range).also { values.add(it) }
+    fun intValue(name: String, value: Int, range: IntRange) =
+        IntValue(name, value, range).also { values.add(it) }
+
+    fun choiceValue(name: String, value: String, choices: Set<String>) =
+        ChoiceValue(name, value, choices).also { values.add(it) }
 
 }
 
@@ -60,7 +64,8 @@ class BoolValue(name: String, defaultValue: Boolean) : Value<Boolean>(name, defa
 
 }
 
-class FloatValue(name: String, defaultValue: Float, val range: ClosedFloatingPointRange<Float>) : Value<Float>(name, defaultValue) {
+class FloatValue(name: String, defaultValue: Float, val range: ClosedFloatingPointRange<Float>) :
+    Value<Float>(name, defaultValue) {
 
     override fun toJson() = JsonPrimitive(value)
 
@@ -72,13 +77,27 @@ class FloatValue(name: String, defaultValue: Float, val range: ClosedFloatingPoi
 
 }
 
-class IntValue(name: String, defaultValue: Int, val range: IntRange) : Value<Int>(name, defaultValue) {
+class IntValue(name: String, defaultValue: Int, val range: IntRange) :
+    Value<Int>(name, defaultValue) {
 
     override fun toJson() = JsonPrimitive(value)
 
     override fun fromJson(element: JsonElement) {
         if (element is JsonPrimitive) {
             value = element.int
+        }
+    }
+
+}
+
+class ChoiceValue(name: String, defaultValue: String, val choices: Set<String>) :
+    Value<String>(name, defaultValue) {
+
+    override fun toJson() = JsonPrimitive(name)
+
+    override fun fromJson(element: JsonElement) {
+        if (element is JsonPrimitive) {
+            value = element.content
         }
     }
 

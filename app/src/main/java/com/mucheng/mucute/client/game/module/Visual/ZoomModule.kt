@@ -2,13 +2,13 @@ package com.mucheng.mucute.client.game.module.visual
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
+import org.cloudburstmc.protocol.bedrock.data.Ability
+import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
+import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
+import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
-import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
-import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
-import org.cloudburstmc.protocol.bedrock.data.Ability
-import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
 
 class ZoomModule : Module("zoom", ModuleCategory.Visual) {
 

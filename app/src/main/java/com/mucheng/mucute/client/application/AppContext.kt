@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Process
 import com.mucheng.mucute.client.activity.CrashHandlerActivity
-import java.util.Arrays
 
 
 class AppContext : Application(), Thread.UncaughtExceptionHandler {
@@ -41,7 +40,8 @@ class AppContext : Application(), Thread.UncaughtExceptionHandler {
                     append(name)
                     append(": ")
                     appendLine(value)
-                } catch (_: Throwable) {}
+                } catch (_: Throwable) {
+                }
             }
         }
 

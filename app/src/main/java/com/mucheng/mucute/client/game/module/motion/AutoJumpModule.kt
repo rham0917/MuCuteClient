@@ -2,14 +2,15 @@ package com.mucheng.mucute.client.game.module.motion
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
+import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
-import org.cloudburstmc.math.vector.Vector3f
 
 class AutoJumpModule : Module("auto_jump", ModuleCategory.Motion) {
 
     private val jumpHeight = 0.42f   // Higher than normal jump (normal is 0.42f)
-    private val motionInterval = 120 // Interval between upward and downward motion adjustments in milliseconds
+    private val motionInterval =
+        120 // Interval between upward and downward motion adjustments in milliseconds
     private var lastMotionTime = 0L
 
     override fun onReceived(packet: BedrockPacket): Boolean {

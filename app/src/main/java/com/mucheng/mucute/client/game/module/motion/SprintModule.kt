@@ -2,9 +2,9 @@ package com.mucheng.mucute.client.game.module.motion
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
+import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
-import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 
 class SprintModule : Module("sprint", ModuleCategory.Motion) {
 

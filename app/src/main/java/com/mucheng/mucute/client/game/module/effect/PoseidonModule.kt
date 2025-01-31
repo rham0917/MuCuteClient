@@ -3,17 +3,17 @@ package com.mucheng.mucute.client.game.module.effect
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import com.mucheng.mucute.client.game.data.Effect
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
-import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.math.vector.Vector3f
-import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
-import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
+import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
+import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
+import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import kotlin.math.cos
 import kotlin.math.sin
 
 class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
-    
+
     private val speedMultiplier = 1.5f  // How much faster to move in water
 
     override fun onReceived(packet: BedrockPacket): Boolean {
@@ -21,16 +21,17 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
             // Check for water or sinking
             if (packet.inputData.contains(PlayerAuthInputData.START_SWIMMING) ||
                 packet.inputData.contains(PlayerAuthInputData.AUTO_JUMPING_IN_WATER) ||
-                localPlayer.motionY < 0) {
-                
+                localPlayer.motionY < 0
+            ) {
+
                 // Calculate speed based on look direction
                 val yaw = Math.toRadians(packet.rotation.y.toDouble())
                 val pitch = Math.toRadians(packet.rotation.x.toDouble())
-                
+
                 // Calculate motion vector
                 val motionX = -sin(yaw) * cos(pitch) * speedMultiplier
                 val motionZ = cos(yaw) * cos(pitch) * speedMultiplier
-                
+
                 // Set motion with speed boost and anti-sink
                 val motionPacket = SetEntityMotionPacket().apply {
                     runtimeEntityId = localPlayer.runtimeEntityId
@@ -41,7 +42,7 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
                     )
                 }
                 session.clientBound(motionPacket)
-                
+
                 // Remove swimming states
                 packet.inputData.remove(PlayerAuthInputData.START_SWIMMING)
                 packet.inputData.remove(PlayerAuthInputData.AUTO_JUMPING_IN_WATER)

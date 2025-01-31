@@ -47,7 +47,7 @@ class OverlayClickGUI : OverlayWindow() {
             }
 
             layoutInDisplayCutoutMode =
-                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 
             dimAmount = 0.4f
             windowAnimations = android.R.style.Animation_Dialog

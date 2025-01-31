@@ -1,10 +1,7 @@
 package com.mucheng.mucute.client.game.entity
 
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
-import org.cloudburstmc.protocol.bedrock.packet.LoginPacket
-import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.StartGamePacket
-import org.cloudburstmc.protocol.bedrock.util.EncryptionUtils
 import java.util.UUID
 
 @Suppress("MemberVisibilityCanBePrivate")
