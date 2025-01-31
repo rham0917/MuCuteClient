@@ -18,6 +18,7 @@ import com.mucheng.mucute.client.game.module.effect.LevitationModule
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
 import com.mucheng.mucute.client.game.module.effect.PoseidonModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
+import com.mucheng.mucute.client.game.module.visual.NoHurtCamModule
 import com.mucheng.mucute.relay.MuCuteRelaySession
 import com.mucheng.mucute.relay.listener.MuCuteRelayPacketListener
 import kotlinx.serialization.encodeToString
@@ -61,6 +62,7 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(RegenModule())
             add(AutoJumpModule())
             add(SprintModule())
+            add(NoHurtCamModule())
         }
     }
 
