@@ -18,7 +18,7 @@ class SlowFallModule : Module("slow_fall", ModuleCategory.Motion) {
                     effectId = Effect.SLOW_FALLING
                     amplifier = 0
                     isParticles = false
-                    duration = 21 * 20
+                    duration = 360000
                 })
             }
         }
