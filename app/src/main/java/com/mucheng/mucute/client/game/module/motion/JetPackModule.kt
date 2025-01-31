@@ -11,7 +11,7 @@ import kotlin.math.sin
 
 class JetPackModule : Module("jetpack", ModuleCategory.Motion) {
 
-    private val speed = 0.6f  // Movement speed
+    private val speed = 2.5f  // Movement speed
 
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
