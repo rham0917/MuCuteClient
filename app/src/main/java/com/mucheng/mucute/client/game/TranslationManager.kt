@@ -38,7 +38,7 @@ object TranslationManager {
         put("full_bright", "夜视")
         put("haste", "极速")
         put("jetpack", "喷气背包")
-        put("levitate", "漂浮")
+        put("levitation", "漂浮")
         put("high_jump", "高跳")
         put("slow_fall", "缓慢下落")
         put("anti_knockback","防击退")

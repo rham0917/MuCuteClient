@@ -6,7 +6,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.math.vector.Vector3f
 
-class AntiKnockbackModule : Module("anti_knockback", ModuleCategory.Effect) {
+class AntiKnockbackModule : Module("anti_knockback", ModuleCategory.Combat) {
 
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is SetEntityMotionPacket) {

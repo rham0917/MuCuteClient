@@ -12,7 +12,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 
-class AirJumpModule : Module("AirJump", ModuleCategory.Motion) {
+class AirJumpModule : Module("air_jump", ModuleCategory.Motion) {
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onReceived(packet: BedrockPacket): Boolean {

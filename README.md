@@ -2,7 +2,7 @@
 
 <img src="images/logo.png" alt="Logo" width="30%" />
 
-MuCuteRelay is a powerful and efficient implementation for Android, specifically tailored for Minecraft Bedrock Edition. Our goal is to enhance your gaming experience while maintaining the integrity of the original client. 🎮✨
+MuCuteClient is a powerful and efficient implementation for Android, specifically tailored for Minecraft Bedrock Edition. Our goal is to enhance your gaming experience while maintaining the integrity of the original client. 🎮✨
 
 ![Divider](images/divider.png)
 
@@ -63,11 +63,11 @@ This project is licensed under the [Mozilla Public License v2.0]. This license a
 ![Divider](images/divider.png)
 
 ## Platform-specific Implementations
-MuCuteRelay is designed exclusively for **ANDROID**. 📱💥
+MuCuteClient is designed exclusively for **ANDROID**. 📱💥
 
 ## Setting Up the Workspace in Android Studio 🛠️
 
-To set up MuCuteRelay in Android Studio, please follow these detailed steps:
+To set up MuCuteClient in Android Studio, please follow these detailed steps:
 
 1. **Install Android Studio**: 
    - Download and install Android Studio from the [official website](https://developer.android.com/studio).
@@ -82,36 +82,29 @@ To set up MuCuteRelay in Android Studio, please follow these detailed steps:
 4. **Sync Gradle**: 
    - After opening the project, Android Studio may prompt you to sync Gradle. Click on **Sync Now** to ensure all dependencies are downloaded.
 
-5. **Locate the `publishAppToMavenLocal` Task**: 
-   - In the right sidebar, open the **Gradle** tab.
-   - Navigate to `Tasks` > `build` and locate the `publishAppToMavenLocal` task.
-
-6. **Publish the Application**: 
-   - Right-click on the `publishAppToMavenLocal` task and select **Run**. This will publish the application locally.
-
-7. **Run the Application**: 
+5. **Run the Application**: 
    - Connect your Android device or start an emulator.
    - Click on the **Run** button (green play icon) in the toolbar to build and run the application.
 
-8. **Enjoy MuCuteRelay**: 
-   - Once the app is installed on your device or emulator, you can start using MuCuteRelay! 🚀
+6. **Enjoy MuCuteClient**: 
+   - Once the app is installed on your device or emulator, you can start using MuCuteClient! 🚀
 
 ![Divider](images/divider.png)
 
 ## Contributing 🤝
-We welcome contributions to MuCuteRelay! If you wish to get involved, please fork or clone the repository, make your changes, and submit a pull request. Your contributions are greatly appreciated and help us improve the project for everyone! 🙌
+We welcome contributions to MuCuteClient! If you wish to get involved, please fork or clone the repository, make your changes, and submit a pull request. Your contributions are greatly appreciated and help us improve the project for everyone! 🙌
 
 ![Divider](images/divider.png)
 
 ## Disclaimer ⚠️
-Use MuCuteRelay at your own risk. We **DO NOT** take responsibility for any bans or penalties that may arise from using this tool. Any losses incurred are solely your responsibility. Please use responsibly and enjoy the game! 🎮💔
+Use MuCuteClient at your own risk. We **DO NOT** take responsibility for any bans or penalties that may arise from using this tool. Any losses incurred are solely your responsibility. Please use responsibly and enjoy the game! 🎮💔
 
 ![Divider](images/divider.png)
 
 
 ## Installation Tutorial for APKs 📦
 
-To install the APK for MuCuteRelay, please follow these steps:
+To install the APK for MuCuteClient, please follow these steps:
 
 1. **Download the APK**: Go to the [Releases](https://github.com/CaiMuCheng/MuCuteClient/releases) tab on our GitHub repository and download the latest APK file.
 
@@ -123,7 +116,7 @@ To install the APK for MuCuteRelay, please follow these steps:
 
 4. **Install the APK**: Tap on the APK file and follow the on-screen instructions to install the application.
 
-5. **Launch the App**: Once installed, you can find MuCuteRelay in your app drawer. Tap to launch and enjoy!
+5. **Launch the App**: Once installed, you can find MuCuteClient in your app drawer. Tap to launch and enjoy!
 
 **Note**: Ensure that you have sufficient storage space and that your device meets the minimum requirements for running the app. 
 
@@ -140,4 +133,4 @@ To install the APK for MuCuteRelay, please follow these steps:
 ![License](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg) ![GitHub issues](https://img.shields.io/github/issues/CaiMuCheng/MuCuteRelay.svg) ![GitHub stars](https://img.shields.io/github/stars/CaiMuCheng/MuCuteRelay.svg)
 
 ![Divider](images/divider.png)
-![d](images/background.png)
+![Background](images/background.png)
