@@ -18,7 +18,7 @@ class HasteModule : Module("haste", ModuleCategory.Effect) {
                     effectId = Effect.HASTE
                     amplifier -= 1
                     isParticles = false
-                    duration = 21 * 20
+                    duration = 360000
                 })
             }
         }
