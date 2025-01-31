@@ -26,6 +26,7 @@ object TranslationManager {
         put("regen","Regen")
         put("auto_jump","BHOP")
         put("sprint","Sprint")
+        put("no_hurt_camera","NoHurtCam")
 
     }
 
@@ -46,6 +47,7 @@ object TranslationManager {
         put("regen","再生")
         put("auto_jump","自动跳跃")
         put("sprint","疾跑")
+        put("no_hurt_camera","无伤害相机")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {
