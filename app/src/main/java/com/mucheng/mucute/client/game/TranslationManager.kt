@@ -28,6 +28,9 @@ object TranslationManager {
         put("sprint","Sprint")
         put("no_hurt_camera","NoHurtCam")
 
+        // Below these are for module values
+        put("nightvision", "Night Vision")
+        put("removefire", "Remove fire")
     }
 
     private fun zh() = buildMap {
@@ -48,6 +51,10 @@ object TranslationManager {
         put("auto_jump","自动跳跃")
         put("sprint","疾跑")
         put("no_hurt_camera","无伤害抖动")
+
+        // Below these are for module values
+        put("nightvision", "夜视")
+        put("removefire", "移除火焰")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {

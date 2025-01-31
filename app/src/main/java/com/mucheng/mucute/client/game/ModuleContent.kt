@@ -2,7 +2,10 @@ package com.mucheng.mucute.client.game
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,12 +25,8 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ProgressIndicatorDefaults.drawStopIndicator
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
-import androidx.compose.material3.SliderDefaults.TickSize
-import androidx.compose.material3.SliderDefaults.drawStopIndicator
-import androidx.compose.material3.SliderDefaults.trackPath
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -37,20 +36,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.RoundRect
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastFilter
 import androidx.compose.ui.util.fastForEach
 import com.mucheng.mucute.client.R
 import com.mucheng.mucute.client.overlay.OverlayManager
 import com.mucheng.mucute.client.util.translatedSelf
-import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 @Composable
 fun ModuleContent(moduleCategory: ModuleCategory) {
@@ -79,11 +74,15 @@ private fun ModuleCard(module: Module) {
     )
 
     Card(
-        onClick = {
-            module.isExpanded = !module.isExpanded
-        },
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = {
+                    module.isExpanded = !module.isExpanded
+                }
+            ),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.outlinedCardColors(
             containerColor = background
@@ -128,9 +127,9 @@ private fun ModuleCard(module: Module) {
             if (module.isExpanded) {
                 values.fastForEach {
                     when (it) {
-                        is BoolValue -> BoolValueContent(module, it)
-                        is FloatValue -> FloatValueContent(module, it)
-                        is IntValue -> IntValueContent(module, it)
+                        is BoolValue -> BoolValueContent(it)
+                        is FloatValue -> FloatValueContent(it)
+                        is IntValue -> IntValueContent(it)
                     }
                 }
                 ShortcutContent(module)
@@ -141,7 +140,7 @@ private fun ModuleCard(module: Module) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun FloatValueContent(module: Module, value: FloatValue) {
+private fun FloatValueContent(value: FloatValue) {
     Column(
         Modifier
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
@@ -163,22 +162,35 @@ private fun FloatValueContent(module: Module, value: FloatValue) {
             thumbColor = MaterialTheme.colorScheme.surface,
             activeTrackColor = MaterialTheme.colorScheme.surface,
             activeTickColor = MaterialTheme.colorScheme.surface,
-            inactiveTickColor = MaterialTheme.colorScheme.surfaceVariant,
-            inactiveTrackColor = MaterialTheme.colorScheme.surfaceVariant
+            inactiveTickColor = MaterialTheme.colorScheme.outlineVariant,
+            inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
         )
+        val interactionSource = remember { MutableInteractionSource() }
         Slider(
             value = animateFloatAsState(
                 targetValue = value.value,
-                label = ""
+                label = "",
+                animationSpec = spring(
+                    stiffness = Spring.StiffnessLow
+                )
             ).value,
             valueRange = value.range,
             colors = colors,
+            thumb = {
+                SliderDefaults.Thumb(
+                    interactionSource = interactionSource,
+                    colors = colors,
+                    thumbSize = DpSize(4.dp, 22.dp),
+                    enabled = true
+                )
+            },
             track = { sliderState ->
                 SliderDefaults.Track(
                     colors = colors,
                     enabled = true,
                     sliderState = sliderState,
-                    drawStopIndicator = null
+                    drawStopIndicator = null,
+                    thumbTrackGapSize = 4.dp
                 )
             },
             onValueChange = {
@@ -191,13 +203,73 @@ private fun FloatValueContent(module: Module, value: FloatValue) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun IntValueContent(module: Module, value: IntValue) {
-
+private fun IntValueContent(value: IntValue) {
+    Column(
+        Modifier
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
+    ) {
+        Row {
+            Text(
+                value.name.translatedSelf,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.surface
+            )
+            Spacer(Modifier.weight(1f))
+            Text(
+                value.value.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.surface
+            )
+        }
+        val colors = SliderDefaults.colors(
+            thumbColor = MaterialTheme.colorScheme.surface,
+            activeTrackColor = MaterialTheme.colorScheme.surface,
+            activeTickColor = MaterialTheme.colorScheme.surface,
+            inactiveTickColor = MaterialTheme.colorScheme.outlineVariant,
+            inactiveTrackColor = MaterialTheme.colorScheme.outlineVariant
+        )
+        val interactionSource = remember { MutableInteractionSource() }
+        Slider(
+            value = animateFloatAsState(
+                targetValue = value.value.toFloat(),
+                label = "",
+                animationSpec = spring(
+                    stiffness = Spring.StiffnessLow
+                )
+            ).value,
+            valueRange = value.range.toFloatRange(),
+            colors = colors,
+            thumb = {
+                SliderDefaults.Thumb(
+                    interactionSource = interactionSource,
+                    colors = colors,
+                    thumbSize = DpSize(4.dp, 22.dp),
+                    enabled = true
+                )
+            },
+            track = { sliderState ->
+                SliderDefaults.Track(
+                    colors = colors,
+                    enabled = true,
+                    sliderState = sliderState,
+                    drawStopIndicator = null,
+                    thumbTrackGapSize = 4.dp
+                )
+            },
+            onValueChange = {
+                val newValue = it.roundToInt()
+                if (value.value != newValue) {
+                    value.value = newValue
+                }
+            }
+        )
+    }
 }
 
 @Composable
-private fun BoolValueContent(module: Module, value: BoolValue) {
+private fun BoolValueContent(value: BoolValue) {
     Row(
         Modifier
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
@@ -268,3 +340,5 @@ private fun ShortcutContent(module: Module) {
         )
     }
 }
+
+private fun IntRange.toFloatRange() = first.toFloat()..last.toFloat()

@@ -8,8 +8,6 @@ import org.cloudburstmc.math.vector.Vector3f
 
 class AntiKnockbackModule : Module("anti_knockback", ModuleCategory.Combat) {
 
-    val test1 by floatValue("test", 4f, 4f..6f)
-
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (packet is SetEntityMotionPacket) {
             // Reset horizontal motion to prevent knockback
