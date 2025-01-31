@@ -67,12 +67,12 @@ The **MuCuteClient** is officially owned by the **MuCuteClient Group**. By using
 
 ### ✅ Permitted Uses:  
 - Use the **MuCuteClient** name and logo in promotional materials (e.g., YouTube videos).  
-- Modify the launcher for **personal use**.  
+- Modify the client for **personal use**.  
 - Contribute to development by **forking and working** with the source code on GitHub.  
 
 
 ### ❌ Prohibited Uses:  
-- **Distribute, redistribute, or sell** modified versions of the launcher in any form.  
+- **Distribute, redistribute, or sell** modified versions of the client in any form.  
 - Use the **MuCuteClient** name in a way that implies an **official association** on websites, Discord servers, or other platforms.  
 - Claim **ownership** of the project in any public or private setting.  
 
