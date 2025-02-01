@@ -98,7 +98,7 @@ To set up MuCuteClient in Android Studio, please follow these detailed steps:
 
 2. **Clone the Repository**:
     - Open Android Studio and select **Get from Version Control**.
-    - Enter the repository URL: `https://github.com/CaiMuCheng/MuCuteRelay` and click **Clone**.
+    - Enter the repository URL: `https://github.com/MuCuteTeam/MuCuteRelay` and click **Clone**.
 
 3. **Open the Project**:
     - Once cloned, Android Studio will prompt you to open the project. Click **Open**.
@@ -136,7 +136,7 @@ responsibly and enjoy the game! 🎮💔
 
 To install the APK for MuCuteClient, please follow these steps:
 
-1. **Download the APK**: Go to the [Releases](https://github.com/CaiMuCheng/MuCuteClient/releases)
+1. **Download the APK**: Go to the [Releases](https://github.com/MuCuteTeam/MuCuteClient/releases)
    tab on our GitHub repository and download the latest APK file.
 
 2. **Enable Unknown Sources**:
@@ -169,7 +169,7 @@ requirements for running the app.
 
 ## Badges
 
-![GitHub issues](https://img.shields.io/github/issues/CaiMuCheng/MuCuteRelay.svg) ![GitHub stars](https://img.shields.io/github/stars/CaiMuCheng/MuCuteRelay.svg)
+![GitHub issues](https://img.shields.io/github/issues/MuCuteTeam/MuCuteRelay.svg) ![GitHub stars](https://img.shields.io/github/stars/MuCuteTeam/MuCuteRelay.svg)
 
 ![Divider](images/divider.png)
 ![Background](images/background.png)
