@@ -30,6 +30,7 @@ object TranslationManager {
         put("random_move","Anti AFK")
         put("auto_walk","Auto Walk")
         put("desync","DeSync")
+        put("whereisit","Google Maps")
 
 
     }
@@ -55,6 +56,7 @@ object TranslationManager {
         put("random_move","防停")
         put("auto_walk","自动行走")
         put("desync","异步服务器")
+        put("whereisit","百度地图")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {
