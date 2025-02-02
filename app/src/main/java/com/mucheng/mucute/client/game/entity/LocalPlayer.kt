@@ -25,6 +25,28 @@ class LocalPlayer : Player(0L, 0L, UUID.randomUUID(), "") {
         return false
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     override fun onDisconnect(reason: String) {
         super.onDisconnect(reason)
         reset()
