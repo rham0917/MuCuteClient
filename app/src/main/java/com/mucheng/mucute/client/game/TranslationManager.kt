@@ -15,7 +15,7 @@ object TranslationManager {
         put("zoom", "Zoom")
         put("air_jump",  "Air Jump")
         put("speed", "Speed Boost")
-        put("full_bright", "Fullbright")
+        put("full_bright", "Full Bright")
         put("haste", "Haste")
         put("jetpack", "Jetpack")
         put("levitation", "Levitation")
@@ -26,11 +26,11 @@ object TranslationManager {
         put("regen","Regen")
         put("auto_jump","BHOP")
         put("sprint","Sprint")
-        put("no_hurt_cam","NoHurtCam")
+        put("no_hurt_cam","No Hurt Camera")
         put("random_move","Anti AFK")
         put("auto_walk","Auto Walk")
         put("desync","DeSync")
-        put("whereisit","Google Maps")
+        put("whereisit","Entity Tracer")
 
 
     }
@@ -42,7 +42,7 @@ object TranslationManager {
         put("air_jump",  "空中跳跃")
         put("speed", "速度")
         put("full_bright", "夜视")
-        put("haste", "极速")
+        put("haste", "急迫")
         put("jetpack", "喷气背包")
         put("levitation", "漂浮")
         put("high_jump", "高跳")
@@ -53,10 +53,10 @@ object TranslationManager {
         put("auto_jump","自动跳跃")
         put("sprint","疾跑")
         put("no_hurt_cam","无伤害相机")
-        put("random_move","防停")
+        put("random_move","随机移动")
         put("auto_walk","自动行走")
-        put("desync","异步服务器")
-        put("whereisit","百度地图")
+        put("desync","异步发包")
+        put("whereisit","实体追踪器")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {

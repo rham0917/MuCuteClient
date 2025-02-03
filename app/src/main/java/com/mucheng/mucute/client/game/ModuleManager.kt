@@ -3,7 +3,7 @@ package com.mucheng.mucute.client.game
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.entity.LocalPlayer
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
-import com.mucheng.mucute.client.game.module.Misc.PositionLoggerModule
+import com.mucheng.mucute.client.game.module.misc.PositionLoggerModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.LevitationModule
 import com.mucheng.mucute.client.game.module.effect.PoseidonModule
@@ -12,7 +12,7 @@ import com.mucheng.mucute.client.game.module.misc.NoClipModule
 import com.mucheng.mucute.client.game.module.motion.AirJumpModule
 import com.mucheng.mucute.client.game.module.motion.AutoJumpModule
 import com.mucheng.mucute.client.game.module.motion.AutoWalkModule
-import com.mucheng.mucute.client.game.module.motion.DesyncModule
+import com.mucheng.mucute.client.game.module.misc.DesyncModule
 import com.mucheng.mucute.client.game.module.motion.FlyModule
 import com.mucheng.mucute.client.game.module.motion.HighJumpModule
 import com.mucheng.mucute.client.game.module.motion.JetPackModule

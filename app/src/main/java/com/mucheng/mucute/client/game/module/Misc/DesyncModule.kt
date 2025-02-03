@@ -1,7 +1,8 @@
-package com.mucheng.mucute.client.game.module.motion
+package com.mucheng.mucute.client.game.module.misc
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
+import kotlinx.coroutines.DelicateCoroutinesApi
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
@@ -24,6 +25,7 @@ class DesyncModule : Module("desync", ModuleCategory.Misc) {
         sendChatMessage("§7[Desync] §aEnabled! Movement packets will be delayed.")
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onDisabled() {
         isDesynced = false
         sendChatMessage("§7[Desync] §cDisabled! Resending stored packets...")
@@ -32,9 +34,11 @@ class DesyncModule : Module("desync", ModuleCategory.Misc) {
             delay(updateDelay)
             while (storedPackets.isNotEmpty()) {
                 val packet = storedPackets.poll()
-                session.clientBound(packet) // Send movement packet
-
-                sendChatMessage("§7[Desync] §fSent packet: ${packet.inputData}") // Log packet in chat
+                if (packet != null) {
+                    // Send movement packet
+                    session.clientBound(packet)
+                    sendChatMessage("§7[Desync] §fSent packet: ${packet.inputData}") // Log packet in chat
+                }
 
                 delay(Random.nextLong(minResendInterval, maxResendInterval))
             }
@@ -56,7 +60,7 @@ class DesyncModule : Module("desync", ModuleCategory.Misc) {
             return  // Don't send messages if the module is disabled
         }
 
-        if (session == null) {
+        if (!isInGame) {
             println("DesyncModule: Session is null. Skipping chat message.")
             return
         }

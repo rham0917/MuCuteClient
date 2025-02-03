@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.Misc
+package com.mucheng.mucute.client.game.module.misc
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory

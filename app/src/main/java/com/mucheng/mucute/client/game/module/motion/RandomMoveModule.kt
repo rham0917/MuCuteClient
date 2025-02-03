@@ -2,6 +2,7 @@ package com.mucheng.mucute.client.game.module.motion
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
+import kotlinx.coroutines.DelicateCoroutinesApi
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
@@ -16,6 +17,7 @@ class RandomMoveModule : Module("random_move", ModuleCategory.Motion) {
     private val maxMoveDistance = 4.5f // Max movement per tick
     private val moveCooldown = 200L // Delay between movements (in ms)
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onReceived(packet: BedrockPacket): Boolean {
         if (isEnabled && packet is PlayerAuthInputPacket) {
             GlobalScope.launch {
