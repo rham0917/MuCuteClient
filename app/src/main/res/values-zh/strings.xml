@@ -19,7 +19,7 @@
     <string name="server_host_name">服务器主机名</string>
     <string name="server_port">服务器端口</string>
     <string name="warnning">警告</string>
-    <string name="proxy_mode_is_not_supported">目前不支持代理模式。</string>
+    <string name="proxy_mode_is_not_stable">代理模式当前不稳定。</string>
     <string name="tips">提示</string>
     <string name="change_game_settings_tip">你需要先断开连接才能更改游戏设置。</string>
     <string name="backend_connected">已连接 MuCuteRelay</string>
@@ -56,4 +56,6 @@
     <string name="crash_happened">发生崩溃</string>
     <string name="cannot_back">崩溃已发生不允许返回，你只能重启应用</string>
     <string name="effect">效果</string>
+    <string name="proxying_game_packets">正在代理游戏数据包</string>
+    <string name="vpn_permission_denied">VPN 权限被拒绝</string>
 </resources>

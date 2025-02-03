@@ -39,20 +39,39 @@
         <activity android:name=".activity.CrashHandlerActivity" />
 
         <service
-            android:name=".service.MuCuteRelayService"
+            android:name=".service.CaptureModeService"
             android:exported="false"
             android:foregroundServiceType="specialUse">
 
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="MuCUteRelay Capture" />
+                android:value="MuCuteRelay Capture" />
 
             <intent-filter android:priority="1000">
-                <action android:name="com.mucheng.mucute.relay.start" />
-                <action android:name="com.mucheng.mucute.relay.stop" />
+                <action android:name="com.mucheng.mucute.relay.capture.start" />
+                <action android:name="com.mucheng.mucute.relay.capture.stop" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+        </service>
+
+        <service android:name=".service.ProxyModeService"
+            android:exported="false"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:foregroundServiceType="specialUse">
+
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="MuCuteRelay Proxy" />
+
+            <intent-filter android:priority="1000">
+                <action android:name="com.mucheng.mucute.relay.proxy.start" />
+                <action android:name="com.mucheng.mucute.relay.proxy.stop" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </service>
 
     </application>

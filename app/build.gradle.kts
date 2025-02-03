@@ -40,7 +40,7 @@ android {
                 "DebugProbesKt.bin"
             )
         )
-        resources.merges.addAll(
+        resources.pickFirsts.addAll(
             setOf(
                 "META-INF/INDEX.LIST",
                 "META-INF/io.netty.versions.properties",
@@ -89,6 +89,7 @@ configurations.all {
 
 dependencies {
     implementation(files("libs/MuCuteRelay.jar"))
+    implementation(files("libs/libmitm-1.2.3-raknet.aar"))
     debugImplementation(platform(libs.log4j.bom))
     debugImplementation(libs.log4j.api)
     debugImplementation(libs.log4j.core)

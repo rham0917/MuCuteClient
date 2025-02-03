@@ -1,8 +1,10 @@
 package com.mucheng.mucute.client.router.main
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.net.VpnService
 import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
@@ -83,7 +85,8 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mucheng.mucute.client.R
-import com.mucheng.mucute.client.service.MuCuteRelayService
+import com.mucheng.mucute.client.service.ProxyModeService
+import com.mucheng.mucute.client.service.Services
 import com.mucheng.mucute.client.util.LocalSnackbarHostState
 import com.mucheng.mucute.client.util.MinecraftUtils
 import com.mucheng.mucute.client.util.SnackbarHostStateScope
@@ -99,6 +102,28 @@ fun HomePageContent() {
         val coroutineScope = rememberCoroutineScope()
         val snackbarHostState = LocalSnackbarHostState.current
         val mainScreenViewModel: MainScreenViewModel = viewModel()
+        val connectVpn: () -> Unit = block@{
+            if (!Services.isActive) {
+                val intent = Intent(Services.ACTION_PROXY_START)
+                intent.setPackage(context.packageName)
+                context.startForegroundService(intent)
+                return@block
+            }
+
+            val intent = Intent(Services.ACTION_PROXY_STOP)
+            intent.setPackage(context.packageName)
+            context.startForegroundService(intent)
+        }
+        val vpnPermissionResult = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                connectVpn()
+            } else {
+                coroutineScope.launch {
+                    snackbarHostState.currentSnackbarData?.dismiss()
+                    snackbarHostState.showSnackbar(context.getString(R.string.vpn_permission_denied))
+                }
+            }
+        }
         val onPostPermissionResult: (Boolean) -> Unit = block@{ isGranted: Boolean ->
             if (!isGranted) {
                 coroutineScope.launch {
@@ -121,23 +146,23 @@ fun HomePageContent() {
             }
 
             if (mainScreenViewModel.workMode.value === WorkModes.ProxyMode) {
-                coroutineScope.launch {
-                    snackbarHostState.currentSnackbarData?.dismiss()
-                    snackbarHostState.showSnackbar(
-                        message = context.getString(R.string.proxy_mode_is_not_supported)
-                    )
+                val intent = VpnService.prepare(context)
+                if (intent != null) {
+                    vpnPermissionResult.launch(intent)
+                } else {
+                    connectVpn()
                 }
                 return@block
             }
 
-            if (!MuCuteRelayService.isActive) {
-                val intent = Intent(MuCuteRelayService.ACTION_START)
+            if (!Services.isActive) {
+                val intent = Intent(Services.ACTION_CAPTURE_START)
                 intent.setPackage(context.packageName)
                 context.startForegroundService(intent)
                 return@block
             }
 
-            val intent = Intent(MuCuteRelayService.ACTION_STOP)
+            val intent = Intent(Services.ACTION_CAPTURE_STOP)
             intent.setPackage(context.packageName)
             context.startForegroundService(intent)
         }
@@ -162,14 +187,14 @@ fun HomePageContent() {
             }
             onPostPermissionResult(true)
         }
-        var isActiveBefore by rememberSaveable { mutableStateOf(MuCuteRelayService.isActive) }
-        LaunchedEffect(MuCuteRelayService.isActive) {
-            if (MuCuteRelayService.isActive == isActiveBefore) {
+        var isActiveBefore by rememberSaveable { mutableStateOf(Services.isActive) }
+        LaunchedEffect(Services.isActive) {
+            if (Services.isActive == isActiveBefore) {
                 return@LaunchedEffect
             }
 
-            isActiveBefore = MuCuteRelayService.isActive
-            if (MuCuteRelayService.isActive) {
+            isActiveBefore = Services.isActive
+            if (Services.isActive) {
                 snackbarHostState.currentSnackbarData?.dismiss()
                 val result = snackbarHostState.showSnackbar(
                     message = context.getString(R.string.backend_connected),
@@ -260,7 +285,7 @@ fun HomePageContent() {
                         .padding(15.dp)
                         .align(Alignment.BottomEnd)
                 ) {
-                    AnimatedContent(MuCuteRelayService.isActive, label = "") { isActive ->
+                    AnimatedContent(Services.isActive, label = "") { isActive ->
                         if (!isActive) {
                             Icon(
                                 Icons.Rounded.PlayArrow,
@@ -560,7 +585,7 @@ private fun GameCard() {
                                         label = {
                                             Text(stringResource(R.string.capture_mode))
                                         },
-                                        enabled = !MuCuteRelayService.isActive
+                                        enabled = !Services.isActive
                                     )
                                     SegmentedButton(
                                         selected = workMode === WorkModes.ProxyMode,
@@ -573,7 +598,7 @@ private fun GameCard() {
                                         label = {
                                             Text(stringResource(R.string.proxy_mode))
                                         },
-                                        enabled = !MuCuteRelayService.isActive
+                                        enabled = !Services.isActive
                                     )
                                 }
                             }
@@ -597,7 +622,7 @@ private fun GameCard() {
                                     Text(stringResource(R.string.no_game_selected))
                                 },
                                 interactionSource = interactionSource,
-                                enabled = !MuCuteRelayService.isActive
+                                enabled = !Services.isActive
                             )
                             if (workMode === WorkModes.CaptureMode) {
                                 Column(
@@ -620,7 +645,7 @@ private fun GameCard() {
                                             imeAction = ImeAction.Next
                                         ),
                                         singleLine = true,
-                                        enabled = !MuCuteRelayService.isActive
+                                        enabled = !Services.isActive
                                     )
                                     TextField(
                                         value = serverPort,
@@ -642,7 +667,7 @@ private fun GameCard() {
                                             imeAction = ImeAction.Done
                                         ),
                                         singleLine = true,
-                                        enabled = !MuCuteRelayService.isActive
+                                        enabled = !Services.isActive
                                     )
                                 }
                             }
@@ -672,14 +697,14 @@ private fun GameCard() {
                                                 style = MaterialTheme.typography.bodyLarge
                                             )
                                             Text(
-                                                stringResource(R.string.proxy_mode_is_not_supported),
+                                                stringResource(R.string.proxy_mode_is_not_stable),
                                                 style = MaterialTheme.typography.bodySmall
                                             )
                                         }
                                     }
                                 }
                             }
-                            if (MuCuteRelayService.isActive) {
+                            if (Services.isActive) {
                                 Card(
                                     modifier = Modifier
                                         .fillMaxWidth(),
