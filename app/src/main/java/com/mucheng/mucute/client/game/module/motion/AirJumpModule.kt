@@ -15,7 +15,7 @@ import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 class AirJumpModule : Module("air_jump", ModuleCategory.Motion) {
 
     @OptIn(DelicateCoroutinesApi::class)
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
             if (packet.inputData.contains(PlayerAuthInputData.JUMP_DOWN)) {
                 GlobalScope.launch {

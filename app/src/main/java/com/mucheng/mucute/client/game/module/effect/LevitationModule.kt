@@ -9,7 +9,7 @@ import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
 class LevitationModule : Module("levitation", ModuleCategory.Effect) {
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
             if (localPlayer.tickExists % 20 == 0L) {
                 session.clientBound(MobEffectPacket().apply {
@@ -26,7 +26,7 @@ class LevitationModule : Module("levitation", ModuleCategory.Effect) {
     }
 
     override fun onDisabled() {
-        if (isInGame) {
+        if (isSessionCreated) {
             session.clientBound(MobEffectPacket().apply {
                 runtimeEntityId = localPlayer.runtimeEntityId
                 event = MobEffectPacket.Event.REMOVE

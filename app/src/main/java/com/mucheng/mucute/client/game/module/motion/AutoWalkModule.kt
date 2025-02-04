@@ -30,7 +30,7 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
         }
     }
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {  // Only execute if the module is enabled
             // Call the function to control X and Z axis if module is enabled
             controlXZMovement(packet)

@@ -1,6 +1,7 @@
-package dev.sora.relay
+package com.mucheng.mucute.client.game.entity
 
-class EntityItem(runtimeEntityId: Long, uniqueEntityId: Long) : Entity(runtimeEntityId, uniqueEntityId) {
+class Item(runtimeEntityId: Long, uniqueEntityId: Long) :
+    Entity(runtimeEntityId, uniqueEntityId) {
 
     override fun toString(): String {
         return "EntityItem(entityId=$runtimeEntityId, uniqueId=$uniqueEntityId, posX=$posX, posY=$posY, posZ=$posZ)"

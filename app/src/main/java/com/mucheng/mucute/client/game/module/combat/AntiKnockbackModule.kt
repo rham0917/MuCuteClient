@@ -8,7 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 
 class AntiKnockbackModule : Module("anti_knockback", ModuleCategory.Combat) {
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is SetEntityMotionPacket) {
             // Reset horizontal motion to prevent knockback
             packet.motion = Vector3f.from(

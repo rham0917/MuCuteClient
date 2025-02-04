@@ -19,7 +19,7 @@ class PositionLoggerModule : Module("whereisit", ModuleCategory.Misc) {
         println("PositionLogger Module initialized")
     }
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (!isEnabled) return false
 
         return handleReceivedPacket(packet)

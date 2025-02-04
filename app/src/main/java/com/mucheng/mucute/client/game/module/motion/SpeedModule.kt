@@ -12,22 +12,18 @@ import kotlin.math.sin
 
 class SpeedModule : Module("speed", ModuleCategory.Motion) {
 
-    private val speedValue = FloatValue("speed", 1.4f, 0.1f..3.0f)
+    private val speedValue by floatValue("speed", 1.4f, 0.1f..3.0f)
 
-    init {
-        values.add(speedValue)
-    }
-
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
             if (packet.motion.length() > 0) {
                 val angle = Math.toRadians(packet.rotation.y.toDouble())
                 val motionPacket = SetEntityMotionPacket().apply {
                     runtimeEntityId = localPlayer.runtimeEntityId
                     motion = Vector3f.from(
-                        -sin(angle).toFloat() * speedValue.value,
+                        -sin(angle).toFloat() * speedValue,
                         localPlayer.motionY,
-                        cos(angle).toFloat() * speedValue.value
+                        cos(angle).toFloat() * speedValue
                     )
                 }
                 session.clientBound(motionPacket)

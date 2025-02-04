@@ -45,7 +45,7 @@ class DesyncModule : Module("desync", ModuleCategory.Misc) {
         }
     }
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (isEnabled && isDesynced && packet is PlayerAuthInputPacket) {
             storedPackets.add(packet) // Store movement packet
             sendChatMessage("§7[Desync] §eStored packet: ${packet.inputData}") // Log stored packet in chat
@@ -60,7 +60,7 @@ class DesyncModule : Module("desync", ModuleCategory.Misc) {
             return  // Don't send messages if the module is disabled
         }
 
-        if (!isInGame) {
+        if (!isSessionCreated) {
             println("DesyncModule: Session is null. Skipping chat message.")
             return
         }

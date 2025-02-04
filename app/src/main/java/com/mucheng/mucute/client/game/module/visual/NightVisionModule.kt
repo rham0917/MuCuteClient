@@ -14,7 +14,7 @@ class NightVisionModule : Module("full_bright", ModuleCategory.Visual) {
     private val removeFire by boolValue("removefire", false)
 
     override fun onDisabled() {
-        if (nightVision && isInGame) {
+        if (nightVision && isSessionCreated) {
             session.clientBound(MobEffectPacket().apply {
                 event = MobEffectPacket.Event.REMOVE
                 runtimeEntityId = localPlayer.runtimeEntityId
@@ -23,7 +23,7 @@ class NightVisionModule : Module("full_bright", ModuleCategory.Visual) {
         }
     }
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is SetEntityDataPacket) {
             if (packet.runtimeEntityId == localPlayer.runtimeEntityId && packet.metadata?.flags != null) {
                 if (removeFire && packet.metadata.flags.contains(EntityFlag.ON_FIRE)) {

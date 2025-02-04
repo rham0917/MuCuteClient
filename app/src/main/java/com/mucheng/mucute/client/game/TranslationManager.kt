@@ -14,7 +14,7 @@ object TranslationManager {
         put("no_clip", "No Clip")
         put("zoom", "Zoom")
         put("air_jump",  "Air Jump")
-        put("speed", "Speed Boost")
+        put("speed", "Speed")
         put("full_bright", "Full Bright")
         put("haste", "Haste")
         put("jetpack", "Jetpack")
@@ -26,13 +26,12 @@ object TranslationManager {
         put("regen","Regen")
         put("auto_jump","BHOP")
         put("sprint","Sprint")
-        put("no_hurt_cam","No Hurt Camera")
+        put("no_hurt_cam","No Hurt Cam")
         put("random_move","Anti AFK")
         put("auto_walk","Auto Walk")
         put("desync","DeSync")
         put("whereisit","Entity Tracer")
-
-
+        put("killaura", "Killaura")
     }
 
     private fun zh() = buildMap {
@@ -57,6 +56,7 @@ object TranslationManager {
         put("auto_walk","自动行走")
         put("desync","异步发包")
         put("whereisit","实体追踪器")
+        put("killaura", "杀戮光环")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {

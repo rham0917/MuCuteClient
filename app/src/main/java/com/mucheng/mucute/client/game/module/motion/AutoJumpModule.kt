@@ -13,7 +13,7 @@ class AutoJumpModule : Module("auto_jump", ModuleCategory.Motion) {
         120 // Interval between upward and downward motion adjustments in milliseconds
     private var lastMotionTime = 0L
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (isEnabled) {
             val currentTime = System.currentTimeMillis()
 

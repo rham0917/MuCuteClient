@@ -62,7 +62,7 @@ class ZoomModule : Module("zoom", ModuleCategory.Visual) {
 
     private var lastZoomPacketTime = System.currentTimeMillis()
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket) {
             val currentTime = System.currentTimeMillis()
 

@@ -8,7 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.EntityEventPacket
 
 class NoHurtCamModule : Module("no_hurt_cam", ModuleCategory.Visual) {
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is EntityEventPacket && isEnabled) {
             if (packet.runtimeEntityId == localPlayer.runtimeEntityId
                 && packet.type == EntityEventType.HURT

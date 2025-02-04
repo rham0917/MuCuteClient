@@ -13,7 +13,7 @@ class JetPackModule : Module("jetpack", ModuleCategory.Motion) {
 
     private val speed = 2.5f  // Movement speed
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
             // Convert angles to radians
             val yaw = Math.toRadians(packet.rotation.y.toDouble())

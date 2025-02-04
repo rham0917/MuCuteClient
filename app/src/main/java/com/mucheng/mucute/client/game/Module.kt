@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mucheng.mucute.client.game.entity.LocalPlayer
+import com.mucheng.mucute.client.game.world.Level
 import com.mucheng.mucute.client.overlay.OverlayShortcutButton
 import com.mucheng.mucute.relay.MuCuteRelaySession
 import kotlinx.serialization.json.JsonElement
@@ -21,6 +22,8 @@ abstract class Module(val name: String, val category: ModuleCategory) : Composed
 
     open lateinit var localPlayer: LocalPlayer
 
+    open lateinit var level: Level
+
     private var _isEnabled by mutableStateOf(false)
 
     var isEnabled: Boolean
@@ -34,7 +37,7 @@ abstract class Module(val name: String, val category: ModuleCategory) : Composed
             }
         }
 
-    val isInGame: Boolean
+    val isSessionCreated: Boolean
         get() = ::session.isInitialized
 
     var isExpanded by mutableStateOf(false)

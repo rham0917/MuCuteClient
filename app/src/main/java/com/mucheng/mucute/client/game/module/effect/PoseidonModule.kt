@@ -16,7 +16,7 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
 
     private val speedMultiplier = 1.5f  // How much faster to move in water
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
             // Check for water or sinking
             if (packet.inputData.contains(PlayerAuthInputData.START_SWIMMING) ||
@@ -75,7 +75,7 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
     }
 
     override fun onDisabled() {
-        if (isInGame) {
+        if (isSessionCreated) {
             // Remove effects
             session.clientBound(MobEffectPacket().apply {
                 event = MobEffectPacket.Event.REMOVE

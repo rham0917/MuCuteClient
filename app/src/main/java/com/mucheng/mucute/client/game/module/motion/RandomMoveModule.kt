@@ -18,7 +18,7 @@ class RandomMoveModule : Module("random_move", ModuleCategory.Motion) {
     private val moveCooldown = 200L // Delay between movements (in ms)
 
     @OptIn(DelicateCoroutinesApi::class)
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (isEnabled && packet is PlayerAuthInputPacket) {
             GlobalScope.launch {
                 while (isEnabled) {

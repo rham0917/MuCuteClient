@@ -167,7 +167,7 @@ open class Entity(open val runtimeEntityId: Long, open val uniqueEntityId: Long)
         return effects.find { it.id == id }
     }
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is MoveEntityAbsolutePacket && packet.runtimeEntityId == runtimeEntityId) {
             move(packet.position)
             rotate(packet.rotation)
@@ -225,13 +225,13 @@ open class Entity(open val runtimeEntityId: Long, open val uniqueEntityId: Long)
         return false
     }
 
-    private fun handleSetData(map: EntityDataMap) {
+    fun handleSetData(map: EntityDataMap) {
         map.forEach { (key, value) ->
             metadata[key] = value
         }
     }
 
-    private fun handleSetAttribute(attributeList: List<AttributeData>) {
+    fun handleSetAttribute(attributeList: List<AttributeData>) {
         attributeList.forEach {
             attributes[it.name] = it
         }

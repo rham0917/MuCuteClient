@@ -4,7 +4,9 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 
 interface ComposedPacketHandler {
 
-    fun onReceived(packet: BedrockPacket): Boolean
+    fun beforePacketBound(packet: BedrockPacket): Boolean
+
+    fun afterPacketBound(packet: BedrockPacket) {}
 
     fun onDisconnect(reason: String) {}
 

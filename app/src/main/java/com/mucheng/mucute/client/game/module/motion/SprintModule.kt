@@ -8,7 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
 class SprintModule : Module("sprint", ModuleCategory.Motion) {
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
             packet.inputData.add(PlayerAuthInputData.SPRINTING)
             packet.inputData.add(PlayerAuthInputData.START_SPRINTING)

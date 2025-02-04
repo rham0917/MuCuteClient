@@ -1,0 +1,102 @@
+package com.mucheng.mucute.client.game.world
+
+import com.mucheng.mucute.client.game.ComposedPacketHandler
+import com.mucheng.mucute.client.game.entity.Entity
+import com.mucheng.mucute.client.game.entity.Item
+import com.mucheng.mucute.client.game.entity.EntityUnknown
+import com.mucheng.mucute.client.game.entity.Player
+import com.mucheng.mucute.relay.MuCuteRelaySession
+import org.cloudburstmc.protocol.bedrock.packet.AddEntityPacket
+import org.cloudburstmc.protocol.bedrock.packet.AddItemEntityPacket
+import org.cloudburstmc.protocol.bedrock.packet.AddPlayerPacket
+import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
+import org.cloudburstmc.protocol.bedrock.packet.PlayerListPacket
+import org.cloudburstmc.protocol.bedrock.packet.RemoveEntityPacket
+import org.cloudburstmc.protocol.bedrock.packet.StartGamePacket
+import org.cloudburstmc.protocol.bedrock.packet.TakeItemEntityPacket
+import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
+
+@Suppress("MemberVisibilityCanBePrivate")
+class Level(
+    val session: MuCuteRelaySession
+) : ComposedPacketHandler {
+
+    val entityMap = ConcurrentHashMap<Long, Entity>()
+
+    val playerMap = ConcurrentHashMap<UUID, PlayerListPacket.Entry>()
+
+    override fun onDisconnect(reason: String) {
+        entityMap.clear()
+        playerMap.clear()
+    }
+
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
+        when (packet) {
+            is StartGamePacket -> {
+                entityMap.clear()
+                playerMap.clear()
+            }
+
+            is AddEntityPacket -> {
+                val entity = EntityUnknown(
+                    packet.runtimeEntityId,
+                    packet.uniqueEntityId,
+                    packet.identifier
+                ).apply {
+                    move(packet.position)
+                    rotate(packet.rotation)
+                    handleSetData(packet.metadata)
+                    handleSetAttribute(packet.attributes)
+                }
+                entityMap[packet.runtimeEntityId] = entity
+            }
+
+            is AddItemEntityPacket -> {
+                val entity = Item(packet.runtimeEntityId, packet.uniqueEntityId).apply {
+                    move(packet.position)
+                    handleSetData(packet.metadata)
+                }
+                entityMap[packet.runtimeEntityId] = entity
+            }
+
+            is AddPlayerPacket -> {
+                val entity = Player(packet.runtimeEntityId, packet.uniqueEntityId, packet.uuid, packet.username).apply {
+                    move(packet.position.add(0f, Player.EYE_HEIGHT, 0f))
+                    rotate(packet.rotation)
+                    handleSetData(packet.metadata)
+                }
+                entityMap[packet.runtimeEntityId] = entity
+            }
+
+            is RemoveEntityPacket -> {
+                val entityToRemove = entityMap.values.find { it.uniqueEntityId == packet.uniqueEntityId } ?: return false
+                entityMap.remove(entityToRemove.runtimeEntityId)
+            }
+
+            is TakeItemEntityPacket -> {
+                entityMap.remove(packet.itemRuntimeEntityId)
+            }
+
+            is PlayerListPacket -> {
+                val add = packet.action == PlayerListPacket.Action.ADD
+                packet.entries.forEach {
+                    if (add) {
+                        playerMap[it.uuid] = it
+                    } else {
+                        playerMap.remove(it.uuid)
+                    }
+                }
+            }
+
+            else -> {
+                entityMap.values.forEach { entity ->
+                    entity.beforePacketBound(packet)
+                }
+            }
+        }
+
+        return false
+    }
+
+}

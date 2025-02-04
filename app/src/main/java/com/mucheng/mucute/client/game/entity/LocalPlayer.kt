@@ -16,35 +16,14 @@ class LocalPlayer : Player(0L, 0L, UUID.randomUUID(), "") {
     override var uuid: UUID = UUID.randomUUID()
         private set
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
-        super.onReceived(packet)
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
+        super.beforePacketBound(packet)
         if (packet is StartGamePacket) {
             runtimeEntityId = packet.runtimeEntityId
             uniqueEntityId = packet.uniqueEntityId
         }
         return false
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     override fun onDisconnect(reason: String) {

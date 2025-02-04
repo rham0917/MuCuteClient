@@ -12,7 +12,7 @@ class HighJumpModule : Module("high_jump", ModuleCategory.Motion) {
 
     private val jumpHeight = 0.8f  // Higher than normal jump (normal is 0.42f)
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
             if (packet.inputData.contains(PlayerAuthInputData.JUMP_DOWN)) {
                 val motionPacket = SetEntityMotionPacket().apply {

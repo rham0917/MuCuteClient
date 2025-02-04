@@ -63,7 +63,7 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
 
     private var canFly = false
 
-    override fun onReceived(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is RequestAbilityPacket && packet.ability == Ability.FLYING) {
             return true
         }
