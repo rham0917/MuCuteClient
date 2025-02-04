@@ -3,9 +3,7 @@ package com.mucheng.mucute.client.game
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.entity.LocalPlayer
 import com.mucheng.mucute.client.game.module.misc.PositionLoggerModule
-import com.mucheng.mucute.client.game.module.misc.NegaDebug
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
-import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.LevitationModule
 import com.mucheng.mucute.client.game.module.effect.PoseidonModule
@@ -84,9 +82,8 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(RandomMoveModule())
             add(DesyncModule())
             add(PositionLoggerModule())
-            //add(KillauraModule())
             add(MotionFlyModule())
-            //add(NegaDebug())
+
         }
     }
 
