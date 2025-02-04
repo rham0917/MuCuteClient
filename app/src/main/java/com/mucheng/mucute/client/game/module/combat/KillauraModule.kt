@@ -5,10 +5,13 @@ import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import com.mucheng.mucute.client.game.entity.Entity
 import org.cloudburstmc.math.vector.Vector3f
+import org.cloudburstmc.protocol.bedrock.data.SoundEvent
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryTransactionType
+import org.cloudburstmc.protocol.bedrock.packet.AnimatePacket
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.InventoryTransactionPacket
+import org.cloudburstmc.protocol.bedrock.packet.LevelSoundEventPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEquipmentPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerHotbarPacket
@@ -33,6 +36,10 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
             heldItemSlot = packet.hotbarSlot
         }
 
+        if (packet is InventoryTransactionPacket) {
+
+        }
+
         if (packet is PlayerAuthInputPacket && packet.tick % 10 == 0L) {
             val closestEntities = searchForClosestEntities()
             if (closestEntities.isEmpty()) {
@@ -48,7 +55,28 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
         return false
     }
 
+    private fun swing() {
+        AnimatePacket().apply {
+            action = AnimatePacket.Action.SWING_ARM
+            runtimeEntityId = localPlayer.runtimeEntityId
+        }.also {
+            session.clientBound(it)
+            session.serverBound(it)
+        }
+
+        session.serverBound(LevelSoundEventPacket().apply {
+            sound = SoundEvent.ATTACK_NODAMAGE
+            position = localPlayer.vec3Position
+            extraData = -1
+            identifier = "minecraft:player"
+            isBabySound = false
+            isRelativeVolumeDisabled = false
+        })
+    }
+
     private fun attack(entity: Entity) {
+        swing()
+
         session.serverBound(InventoryTransactionPacket().apply {
             transactionType = InventoryTransactionType.ITEM_USE_ON_ENTITY
             actionType = 1
