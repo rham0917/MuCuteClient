@@ -107,7 +107,7 @@ open class CaptureModeService : Service() {
                     listeners.add(NecessaryPacketListener(this))
                 }
             }
-        }.join()
+        }
     }
 
 }

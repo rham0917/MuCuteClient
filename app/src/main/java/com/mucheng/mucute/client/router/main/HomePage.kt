@@ -146,11 +146,17 @@ fun HomePageContent() {
             }
 
             if (mainScreenViewModel.workMode.value === WorkModes.ProxyMode) {
-                val intent = VpnService.prepare(context)
-                if (intent != null) {
-                    vpnPermissionResult.launch(intent)
-                } else {
-                    connectVpn()
+//                val intent = VpnService.prepare(context)
+//                if (intent != null) {
+//                    vpnPermissionResult.launch(intent)
+//                } else {
+//                    connectVpn()
+//                }
+                coroutineScope.launch {
+                    snackbarHostState.currentSnackbarData?.dismiss()
+                    snackbarHostState.showSnackbar(
+                        context.getString(R.string.proxy_mode_is_not_stable)
+                    )
                 }
                 return@block
             }

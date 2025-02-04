@@ -9,25 +9,16 @@ import android.os.ParcelFileDescriptor
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.ModuleManager
 import com.mucheng.mucute.client.model.GameSettingsModel
-import com.mucheng.mucute.client.netty.channel.NativeRakServerChannel
 import com.mucheng.mucute.client.overlay.OverlayManager
-import com.mucheng.mucute.relay.MuCuteRelay
 import com.mucheng.mucute.relay.definition.Definitions
-import com.mucheng.mucute.relay.listener.MuCuteRelayPacketListener
 import com.mucheng.mucute.relay.listener.NecessaryPacketListener
-import com.mucheng.mucute.relay.util.captureMuCuteRelay
 import com.mucheng.mucute.relay.util.proxyMuCuteRelay
-import io.netty.channel.ChannelFactory
-import libmitm.Libmitm
-import libmitm.TUN
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import kotlin.concurrent.thread
 
+// TODO: CANNOT WORK SUCCESSFULLY, NEED TO FIX
 class ProxyModeService : VpnService() {
 
     private var vpnDescriptor: ParcelFileDescriptor? = null
-
-    private var tun: TUN? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -58,9 +49,6 @@ class ProxyModeService : VpnService() {
 
     private fun stopMuCuteRelay() {
         vpnDescriptor?.close()
-        tun?.let {
-            Thread(it::close).start()
-        }
         Services.muCuteRelay?.disconnect()
         Services.isActive = false
         stopForeground(STOP_FOREGROUND_REMOVE)
@@ -88,23 +76,16 @@ class ProxyModeService : VpnService() {
             builder.addDnsServer("8.8.8.8")
             builder.addAddress("10.13.37.1", 30)
             builder.addRoute("0.0.0.0", 0)
+            builder.addAddress("1337::1", 126)
+            builder.addRoute("::", 0)
 
             vpnDescriptor = builder.establish()!!
-
-            val tun = TUN().apply {
-                fileDescriber = vpnDescriptor!!.fd
-                mtu = 1500
-                iPv6Config = Libmitm.IPv6Disable
-            }
-            this.tun = tun
-            tun.start()
 
             ModuleManager.loadConfig()
 
             runCatching {
                 Services.muCuteRelay = proxyMuCuteRelay(
                     authSession = gameSettingsModel.selectedAccount,
-                    channelFactory = { NativeRakServerChannel() },
                     beforeProxy = {
                         Services.isActive = true
                         if (Build.VERSION.SDK_INT >= 34) {
@@ -134,7 +115,7 @@ class ProxyModeService : VpnService() {
                 }
             }
 
-        }.join()
+        }
     }
 
 }

@@ -55,12 +55,8 @@ android {
             signingConfig = signingConfigs.getByName("shared")
         }
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            isMinifyEnabled = false
+            isDebuggable = false
             signingConfig = signingConfigs.getByName("shared")
         }
     }
@@ -89,7 +85,6 @@ configurations.all {
 
 dependencies {
     implementation(files("libs/MuCuteRelay.jar"))
-    implementation(files("libs/libmitm-1.2.3-raknet.aar"))
     debugImplementation(platform(libs.log4j.bom))
     debugImplementation(libs.log4j.api)
     debugImplementation(libs.log4j.core)
