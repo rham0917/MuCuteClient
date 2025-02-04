@@ -24,6 +24,7 @@ import com.mucheng.mucute.client.game.module.motion.SprintModule
 import com.mucheng.mucute.client.game.module.visual.NightVisionModule
 import com.mucheng.mucute.client.game.module.visual.NoHurtCamModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
+import com.mucheng.mucute.client.game.module.visual.FreeCamModule
 import com.mucheng.mucute.client.game.world.Level
 import com.mucheng.mucute.relay.MuCuteRelaySession
 import com.mucheng.mucute.relay.listener.MuCuteRelayPacketListener
@@ -83,6 +84,7 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(DesyncModule())
             add(PositionLoggerModule())
             add(MotionFlyModule())
+            add(FreeCamModule())
 
         }
     }
