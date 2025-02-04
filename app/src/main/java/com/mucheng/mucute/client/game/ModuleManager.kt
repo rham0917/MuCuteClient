@@ -90,7 +90,7 @@ object ModuleManager : MuCuteRelayPacketListener {
         this.session = muCuteRelaySession
 
         val localPlayer = LocalPlayer()
-        val level = Level(muCuteRelaySession)
+        val level = Level()
 
         for (module in _modules) {
             module.session = muCuteRelaySession

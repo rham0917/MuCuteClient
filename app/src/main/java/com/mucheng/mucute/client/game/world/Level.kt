@@ -2,10 +2,9 @@ package com.mucheng.mucute.client.game.world
 
 import com.mucheng.mucute.client.game.ComposedPacketHandler
 import com.mucheng.mucute.client.game.entity.Entity
-import com.mucheng.mucute.client.game.entity.Item
 import com.mucheng.mucute.client.game.entity.EntityUnknown
+import com.mucheng.mucute.client.game.entity.Item
 import com.mucheng.mucute.client.game.entity.Player
-import com.mucheng.mucute.relay.MuCuteRelaySession
 import org.cloudburstmc.protocol.bedrock.packet.AddEntityPacket
 import org.cloudburstmc.protocol.bedrock.packet.AddItemEntityPacket
 import org.cloudburstmc.protocol.bedrock.packet.AddPlayerPacket
@@ -18,9 +17,7 @@ import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 @Suppress("MemberVisibilityCanBePrivate")
-class Level(
-    val session: MuCuteRelaySession
-) : ComposedPacketHandler {
+class Level : ComposedPacketHandler {
 
     val entityMap = ConcurrentHashMap<Long, Entity>()
 
