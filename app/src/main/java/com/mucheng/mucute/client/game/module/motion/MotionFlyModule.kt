@@ -15,7 +15,7 @@ import com.mucheng.mucute.client.game.BoolValue
 import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
 import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 
-class MotionFlyModule : Module("fly", ModuleCategory.Motion) {
+class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
     private val verticalSpeedUp = floatValue("Vertical Speed (Up)", 7.0f, 1.0f..20.0f)
     private val verticalSpeedDown = floatValue("Vertical Speed (Down)", 7.0f, 1.0f..20.0f)
