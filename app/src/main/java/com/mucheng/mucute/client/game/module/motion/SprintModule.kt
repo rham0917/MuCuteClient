@@ -13,6 +13,10 @@ class SprintModule : Module("sprint", ModuleCategory.Motion) {
             packet.inputData.add(PlayerAuthInputData.SPRINTING)
             packet.inputData.add(PlayerAuthInputData.START_SPRINTING)
         }
+        else if
+            (packet is PlayerAuthInputPacket && !isEnabled) {
+                packet.inputData.add(PlayerAuthInputData.STOP_SPRINTING)
+            }
         return false
     }
 }

@@ -30,10 +30,11 @@ object TranslationManager {
         put("random_move","Anti AFK")
         put("auto_walk","Auto Walk")
         put("desync","DeSync")
-        put("whereisit","Entity Tracer")
+        put("position_logger","Entity Tracer")
         put("killaura", "Killaura")
         put("motion_fly", "MotionFly")
         put("freecam", "FreeCam")
+        put("player_tracer","Player Tracker")
     }
 
     private fun zh() = buildMap {
@@ -57,10 +58,11 @@ object TranslationManager {
         put("random_move","随机移动")
         put("auto_walk","自动行走")
         put("desync","异步发包")
-        put("whereisit","实体追踪器")
+        put("position_logger","实体追踪器")
         put("killaura", "杀戮光环")
         put("motion_fly", "动量飞行")
         put("freecam", "自由视角")
+        put("player_tracer","玩家追踪器")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {

@@ -12,6 +12,8 @@ import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class ZoomModule : Module("zoom", ModuleCategory.Visual) {
 
+   // private val zoom by floatValue("Zoom",0.42f,0.42f..20.0f)
+
     // Packet to enable zooming
     private val enableZoomPacket = UpdateAbilitiesPacket().apply {
         playerPermission = PlayerPermission.OPERATOR
@@ -64,12 +66,7 @@ class ZoomModule : Module("zoom", ModuleCategory.Visual) {
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket) {
-            val currentTime = System.currentTimeMillis()
 
-            // Prevent sending too many packets in a short amount of time
-            if (currentTime - lastZoomPacketTime < 200) {
-                return false
-            }
 
             if (!isZoomEnabled && isEnabled) {
                 // Enable zoom
@@ -83,7 +80,6 @@ class ZoomModule : Module("zoom", ModuleCategory.Visual) {
                 isZoomEnabled = false
             }
 
-            lastZoomPacketTime = currentTime
         }
         return false
     }

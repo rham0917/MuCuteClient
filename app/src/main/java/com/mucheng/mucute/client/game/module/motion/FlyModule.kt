@@ -13,6 +13,11 @@ import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class FlyModule : Module("fly", ModuleCategory.Motion) {
 
+
+    private var flyspeed by floatValue("Fly Speed", 0.15f, 0.1f..1.5f)
+
+
+
     private val enableFlyAbilitiesPacket = UpdateAbilitiesPacket().apply {
         playerPermission = PlayerPermission.OPERATOR
         commandPermission = CommandPermission.OWNER
@@ -34,7 +39,7 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
                 )
             )
             walkSpeed = 0.1f
-            flySpeed = 0.15f
+            flySpeed = flyspeed
         })
     }
 

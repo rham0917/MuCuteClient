@@ -14,15 +14,16 @@ import kotlinx.coroutines.launch
 
 class RandomMoveModule : Module("random_move", ModuleCategory.Motion) {
 
-    private val maxMoveDistance = 4.5f // Max movement per tick
-    private val moveCooldown = 200L // Delay between movements (in ms)
+    private val maxMoveDistance by floatValue("Repeat",  4.5f, 2.0f..10.0f)
+    private val moveCooldown by intValue("Delay", 300, 100..1000)
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (isEnabled && packet is PlayerAuthInputPacket) {
             GlobalScope.launch {
                 while (isEnabled) {
-                    delay(moveCooldown)
+                    delay(moveCooldown.toLong())
+
 
                     // Generate random movement only for X and Z (no Y-axis movement)
                     val randomX = Random.nextFloat() * maxMoveDistance - (maxMoveDistance / 2)
