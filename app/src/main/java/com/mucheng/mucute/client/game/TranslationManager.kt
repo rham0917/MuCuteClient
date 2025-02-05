@@ -29,10 +29,10 @@ object TranslationManager {
         put("no_hurt_cam","No Hurt Cam")
         put("random_move","Anti AFK")
         put("auto_walk","Auto Walk")
-        put("desync","DeSync")
+        put("desync","Desync")
         put("position_logger","Entity Tracer")
         put("killaura", "Killaura")
-        put("motion_fly", "MotionFly")
+        put("motion_fly", "Motion Fly")
         put("freecam", "FreeCam")
         put("player_tracer","Player Tracker")
     }

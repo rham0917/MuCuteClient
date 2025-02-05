@@ -12,8 +12,6 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
-import kotlin.math.cos
-import kotlin.math.sin
 
 class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
@@ -26,109 +24,109 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
 
     private val enableFlyAbilitiesPacket = UpdateAbilitiesPacket().apply {
-            playerPermission = PlayerPermission.OPERATOR
-            commandPermission = CommandPermission.OWNER
-            abilityLayers.add(AbilityLayer().apply {
-                layerType = AbilityLayer.Type.BASE
-                abilitiesSet.addAll(Ability.entries.toTypedArray())
-                abilityValues.addAll(
-                    arrayOf(
-                        Ability.BUILD,
-                        Ability.MINE,
-                        Ability.DOORS_AND_SWITCHES,
-                        Ability.OPEN_CONTAINERS,
-                        Ability.ATTACK_PLAYERS,
-                        Ability.ATTACK_MOBS,
-                        Ability.OPERATOR_COMMANDS,
-                        Ability.MAY_FLY,
-                        Ability.FLY_SPEED,
-                        Ability.WALK_SPEED
-                    )
+        playerPermission = PlayerPermission.OPERATOR
+        commandPermission = CommandPermission.OWNER
+        abilityLayers.add(AbilityLayer().apply {
+            layerType = AbilityLayer.Type.BASE
+            abilitiesSet.addAll(Ability.entries.toTypedArray())
+            abilityValues.addAll(
+                arrayOf(
+                    Ability.BUILD,
+                    Ability.MINE,
+                    Ability.DOORS_AND_SWITCHES,
+                    Ability.OPEN_CONTAINERS,
+                    Ability.ATTACK_PLAYERS,
+                    Ability.ATTACK_MOBS,
+                    Ability.OPERATOR_COMMANDS,
+                    Ability.MAY_FLY,
+                    Ability.FLY_SPEED,
+                    Ability.WALK_SPEED
                 )
-                walkSpeed = 0.1f
-                flySpeed = 2.19f
-            })
-        }
-
-        private val disableFlyAbilitiesPacket = UpdateAbilitiesPacket().apply {
-            playerPermission = PlayerPermission.OPERATOR
-            commandPermission = CommandPermission.OWNER
-            abilityLayers.add(AbilityLayer().apply {
-                layerType = AbilityLayer.Type.BASE
-                abilitiesSet.addAll(Ability.entries.toTypedArray())
-                abilityValues.addAll(
-                    arrayOf(
-                        Ability.BUILD,
-                        Ability.MINE,
-                        Ability.DOORS_AND_SWITCHES,
-                        Ability.OPEN_CONTAINERS,
-                        Ability.ATTACK_PLAYERS,
-                        Ability.ATTACK_MOBS,
-                        Ability.OPERATOR_COMMANDS,
-                        Ability.FLY_SPEED,
-                        Ability.WALK_SPEED
-                    )
-                )
-                walkSpeed = 0.1f
-            })
-        }
-
-        private var canFly = false
-
-        override fun beforePacketBound(packet: BedrockPacket): Boolean {
-            if (packet is PlayerAuthInputPacket) {
-                if (!canFly && isEnabled) {
-                    enableFlyAbilitiesPacket.uniqueEntityId = localPlayer.uniqueEntityId
-                    session.clientBound(enableFlyAbilitiesPacket)
-                    canFly = true
-                } else if (canFly && !isEnabled) {
-                    disableFlyAbilitiesPacket.uniqueEntityId = localPlayer.uniqueEntityId
-                    session.clientBound(disableFlyAbilitiesPacket)
-                    canFly = false
-                }
-            }
-
-            if (isEnabled) {
-                val currentTime = System.currentTimeMillis()
-
-                if (currentTime - lastMotionTime >= motionInterval) {
-                    val yaw = localPlayer.rotationYaw.toFloat()
-
-                    var moveX = 0f
-                    var moveZ = 0f
-
-                    moveX -= 0
-                    moveZ += 0
-
-                    var vertical = 0f
-                    if (packet is PlayerAuthInputPacket) {
-                        val inputData = packet.inputData
-                        if (inputData.contains(PlayerAuthInputData.WANT_UP)) {
-                            vertical = verticalSpeedUp
-                        } else if (inputData.contains(PlayerAuthInputData.WANT_DOWN)) {
-                            vertical = -verticalSpeedDown
-                        }
-                    }
-
-                    if (jitterState) {
-                        vertical += 0.1f
-                    } else {
-                        vertical -= 0.1f
-                    }
-
-                    jitterState = !jitterState
-
-                    val motionPacket = SetEntityMotionPacket().apply {
-                        runtimeEntityId = localPlayer.runtimeEntityId
-                        motion = Vector3f.from(moveX * speedValue, vertical, moveZ * speedValue)
-                    }
-
-                    session.clientBound(motionPacket)
-
-                    lastMotionTime = currentTime
-                }
-            }
-
-            return false
-        }
+            )
+            walkSpeed = 0.1f
+            flySpeed = 2.19f
+        })
     }
+
+    private val disableFlyAbilitiesPacket = UpdateAbilitiesPacket().apply {
+        playerPermission = PlayerPermission.OPERATOR
+        commandPermission = CommandPermission.OWNER
+        abilityLayers.add(AbilityLayer().apply {
+            layerType = AbilityLayer.Type.BASE
+            abilitiesSet.addAll(Ability.entries.toTypedArray())
+            abilityValues.addAll(
+                arrayOf(
+                    Ability.BUILD,
+                    Ability.MINE,
+                    Ability.DOORS_AND_SWITCHES,
+                    Ability.OPEN_CONTAINERS,
+                    Ability.ATTACK_PLAYERS,
+                    Ability.ATTACK_MOBS,
+                    Ability.OPERATOR_COMMANDS,
+                    Ability.FLY_SPEED,
+                    Ability.WALK_SPEED
+                )
+            )
+            walkSpeed = 0.1f
+        })
+    }
+
+    private var canFly = false
+
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
+        if (packet is PlayerAuthInputPacket) {
+            if (!canFly && isEnabled) {
+                enableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
+                session.clientBound(enableFlyAbilitiesPacket)
+                canFly = true
+            } else if (canFly && !isEnabled) {
+                disableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
+                session.clientBound(disableFlyAbilitiesPacket)
+                canFly = false
+            }
+        }
+
+        if (isEnabled) {
+            val currentTime = System.currentTimeMillis()
+
+            if (currentTime - lastMotionTime >= motionInterval) {
+                val yaw = session.localPlayer.rotationYaw
+
+                var moveX = 0f
+                var moveZ = 0f
+
+                moveX -= 0
+                moveZ += 0
+
+                var vertical = 0f
+                if (packet is PlayerAuthInputPacket) {
+                    val inputData = packet.inputData
+                    if (inputData.contains(PlayerAuthInputData.WANT_UP)) {
+                        vertical = verticalSpeedUp
+                    } else if (inputData.contains(PlayerAuthInputData.WANT_DOWN)) {
+                        vertical = -verticalSpeedDown
+                    }
+                }
+
+                if (jitterState) {
+                    vertical += 0.1f
+                } else {
+                    vertical -= 0.1f
+                }
+
+                jitterState = !jitterState
+
+                val motionPacket = SetEntityMotionPacket().apply {
+                    runtimeEntityId = session.localPlayer.runtimeEntityId
+                    motion = Vector3f.from(moveX * speedValue, vertical, moveZ * speedValue)
+                }
+
+                session.clientBound(motionPacket)
+
+                lastMotionTime = currentTime
+            }
+        }
+
+        return false
+    }
+}
