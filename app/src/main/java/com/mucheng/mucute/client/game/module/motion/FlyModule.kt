@@ -16,7 +16,6 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
 
     private var flyspeed by floatValue("flySpeed", 0.15f, 0.1f..1.5f)
 
-
     private val enableFlyAbilitiesPacket = UpdateAbilitiesPacket().apply {
         playerPermission = PlayerPermission.OPERATOR
         commandPermission = CommandPermission.OWNER

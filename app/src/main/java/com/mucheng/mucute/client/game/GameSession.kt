@@ -30,6 +30,7 @@ class GameSession(val muCuteRelaySession: MuCuteRelaySession) : ComposedPacketHa
                 return true
             }
         }
+
         return false
     }
 
