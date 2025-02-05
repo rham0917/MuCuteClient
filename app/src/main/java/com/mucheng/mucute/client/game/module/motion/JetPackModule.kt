@@ -11,7 +11,7 @@ import kotlin.math.sin
 
 class JetPackModule : Module("jetpack", ModuleCategory.Motion) {
 
-    private val speed = 2.5f  // Movement speed
+    private val speed by floatValue("Speed", 2.5f, 1.0f..10.0f)
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
@@ -24,7 +24,6 @@ class JetPackModule : Module("jetpack", ModuleCategory.Motion) {
             val motionY = -sin(pitch) * speed
             val motionZ = cos(yaw) * cos(pitch) * speed
 
-            // Apply motion in look direction
             val motionPacket = SetEntityMotionPacket().apply {
                 runtimeEntityId = localPlayer.runtimeEntityId
                 motion = Vector3f.from(
