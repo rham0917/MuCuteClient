@@ -31,41 +31,46 @@ class LocalPlayer : Player(0L, 0L, UUID.randomUUID(), "") {
             runtimeEntityId = packet.runtimeEntityId
             uniqueEntityId = packet.uniqueEntityId
         }
-         if (packet is PlayerAuthInputPacket){
+        if (packet is PlayerAuthInputPacket) {
             move(packet.position)
-            rotate (packet.rotation)
+            rotate(packet.rotation)
             tickExists = packet.tick
         }
         return false
     }
 
-    fun attack(session: MuCuteRelaySession, entity: Entity, heldItemSlot: Int, itemInHand: ItemData) {
-        val animatePacket = AnimatePacket().apply {
-            action = AnimatePacket.Action.SWING_ARM
-            runtimeEntityId = runtimeEntityId
-        }
+    fun attack(
+        session: MuCuteRelaySession,
+        entity: Entity,
+        heldItemSlot: Int,
+        itemInHand: ItemData
+    ) {
+        val animatePacket = AnimatePacket()
+        animatePacket.action = AnimatePacket.Action.SWING_ARM
+        animatePacket.runtimeEntityId = runtimeEntityId
+
         session.clientBound(animatePacket)
         session.serverBound(animatePacket)
 
-        val levelSoundEventPacket = LevelSoundEventPacket().apply {
-            sound = SoundEvent.ATTACK_NODAMAGE
-            position = vec3Position
-            extraData = -1
-            identifier = "minecraft:player"
-            isBabySound = false
-            isRelativeVolumeDisabled = false
-        }
+        val levelSoundEventPacket = LevelSoundEventPacket()
+        levelSoundEventPacket.sound = SoundEvent.ATTACK_NODAMAGE
+        levelSoundEventPacket.position = vec3Position
+        levelSoundEventPacket.extraData = -1
+        levelSoundEventPacket.identifier = "minecraft:player"
+        levelSoundEventPacket.isBabySound = false
+        levelSoundEventPacket.isRelativeVolumeDisabled = false
+
         session.serverBound(levelSoundEventPacket)
 
-        val inventoryTransactionPacket = InventoryTransactionPacket().apply {
-            transactionType = InventoryTransactionType.ITEM_USE_ON_ENTITY
-            actionType = 1
-            runtimeEntityId = entity.runtimeEntityId
-            hotbarSlot = heldItemSlot
-            this.itemInHand = itemInHand
-            playerPosition = vec3Position
-            clickPosition = Vector3f.ZERO
-        }
+        val inventoryTransactionPacket = InventoryTransactionPacket()
+        inventoryTransactionPacket.transactionType = InventoryTransactionType.ITEM_USE_ON_ENTITY
+        inventoryTransactionPacket.actionType = 1
+        inventoryTransactionPacket.runtimeEntityId = entity.runtimeEntityId
+        inventoryTransactionPacket.hotbarSlot = heldItemSlot
+        inventoryTransactionPacket.itemInHand = itemInHand
+        inventoryTransactionPacket.playerPosition = vec3Position
+        inventoryTransactionPacket.clickPosition = Vector3f.ZERO
+
         session.serverBound(inventoryTransactionPacket)
     }
 
