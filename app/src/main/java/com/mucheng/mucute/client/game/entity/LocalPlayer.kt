@@ -22,6 +22,11 @@ class LocalPlayer : Player(0L, 0L, UUID.randomUUID(), "") {
             runtimeEntityId = packet.runtimeEntityId
             uniqueEntityId = packet.uniqueEntityId
         }
+         if (packet is PlayerAuthInputPacket){
+            move(packet.position)
+            rotate (packet.rotation)
+            tickExists = packet.tick
+        }
         return false
     }
 
