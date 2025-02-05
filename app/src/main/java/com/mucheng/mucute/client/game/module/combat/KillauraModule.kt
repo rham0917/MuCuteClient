@@ -26,6 +26,7 @@ import org.cloudburstmc.protocol.bedrock.packet.PlayerHotbarPacket
 class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
     private var rangeValue by floatValue("Range", 3.7f, 2f..7f)
+    private var attackInterval by intValue("Delay", 5, 1..20)
 
     private var heldItemSlot = 0
 
@@ -65,7 +66,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
             return false
         }
 
-        if (packet is PlayerAuthInputPacket && packet.tick % 5 == 0L) {
+        if (packet is PlayerAuthInputPacket && packet.tick % attackInterval == 0L) { // Use configurable interval
             val closestEntities = searchForClosestEntities()
             if (closestEntities.isEmpty()) {
                 return false
