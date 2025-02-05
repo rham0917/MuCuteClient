@@ -16,7 +16,6 @@ import kotlin.math.sin
 
 class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
 
-    private val speed = 1.0f // Camera movement speed
     private var originalPosition: Vector3f? = null
 
     private val enableFlyNoClipPacket = UpdateAbilitiesPacket().apply {
