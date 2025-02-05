@@ -1,6 +1,7 @@
 package com.mucheng.mucute.client.game.entity
 
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
+import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.StartGamePacket
 import java.util.UUID
 
