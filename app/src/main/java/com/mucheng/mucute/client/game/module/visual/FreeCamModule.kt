@@ -72,11 +72,11 @@ class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
         if (isSessionCreated) {
             // Store original position when enabled
             originalPosition = Vector3f.from(
-                localPlayer.posX,
-                localPlayer.posY,
-                localPlayer.posZ
+                session.localPlayer.posX,
+                session.localPlayer.posY,
+                session.localPlayer.posZ
             )
-            enableFlyNoClipPacket.uniqueEntityId = localPlayer.uniqueEntityId
+            enableFlyNoClipPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
             session.clientBound(enableFlyNoClipPacket)
             isFlyNoClipEnabled = true
         }
@@ -86,22 +86,19 @@ class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
         if (isSessionCreated && originalPosition != null) {
             // Return to original position when disabled
             val motionPacket = SetEntityMotionPacket().apply {
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 motion = originalPosition
             }
             session.clientBound(motionPacket)
             originalPosition = null
 
-            disableFlyNoClipPacket.uniqueEntityId = localPlayer.uniqueEntityId
+            disableFlyNoClipPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
             session.clientBound(disableFlyNoClipPacket)
             isFlyNoClipEnabled = false
         }
     }
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
-        if (packet is PlayerAuthInputPacket && isEnabled) {
-            return true
-        }
-        return false
+        return packet is PlayerAuthInputPacket && isEnabled
     }
 }

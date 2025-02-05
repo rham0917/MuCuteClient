@@ -1,10 +1,8 @@
 package com.mucheng.mucute.client.router.main
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.net.VpnService
 import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
@@ -30,7 +28,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Plumbing
@@ -47,9 +44,6 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
@@ -85,12 +79,10 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mucheng.mucute.client.R
-import com.mucheng.mucute.client.service.ProxyModeService
 import com.mucheng.mucute.client.service.Services
 import com.mucheng.mucute.client.util.LocalSnackbarHostState
 import com.mucheng.mucute.client.util.MinecraftUtils
 import com.mucheng.mucute.client.util.SnackbarHostStateScope
-import com.mucheng.mucute.client.util.WorkModes
 import com.mucheng.mucute.client.viewmodel.MainScreenViewModel
 import kotlinx.coroutines.launch
 
@@ -102,28 +94,6 @@ fun HomePageContent() {
         val coroutineScope = rememberCoroutineScope()
         val snackbarHostState = LocalSnackbarHostState.current
         val mainScreenViewModel: MainScreenViewModel = viewModel()
-        val connectVpn: () -> Unit = block@{
-            if (!Services.isActive) {
-                val intent = Intent(Services.ACTION_PROXY_START)
-                intent.setPackage(context.packageName)
-                context.startForegroundService(intent)
-                return@block
-            }
-
-            val intent = Intent(Services.ACTION_PROXY_STOP)
-            intent.setPackage(context.packageName)
-            context.startForegroundService(intent)
-        }
-        val vpnPermissionResult = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                connectVpn()
-            } else {
-                coroutineScope.launch {
-                    snackbarHostState.currentSnackbarData?.dismiss()
-                    snackbarHostState.showSnackbar(context.getString(R.string.vpn_permission_denied))
-                }
-            }
-        }
         val onPostPermissionResult: (Boolean) -> Unit = block@{ isGranted: Boolean ->
             if (!isGranted) {
                 coroutineScope.launch {
@@ -140,22 +110,6 @@ fun HomePageContent() {
                     snackbarHostState.currentSnackbarData?.dismiss()
                     snackbarHostState.showSnackbar(
                         message = context.getString(R.string.select_game_first)
-                    )
-                }
-                return@block
-            }
-
-            if (mainScreenViewModel.workMode.value === WorkModes.ProxyMode) {
-//                val intent = VpnService.prepare(context)
-//                if (intent != null) {
-//                    vpnPermissionResult.launch(intent)
-//                } else {
-//                    connectVpn()
-//                }
-                coroutineScope.launch {
-                    snackbarHostState.currentSnackbarData?.dismiss()
-                    snackbarHostState.showSnackbar(
-                        context.getString(R.string.proxy_mode_is_not_stable)
                     )
                 }
                 return@block
@@ -380,7 +334,6 @@ private fun IntroductionCard() {
 private fun GameCard() {
     val context = LocalContext.current
     val mainScreenViewModel: MainScreenViewModel = viewModel()
-    val workMode by mainScreenViewModel.workMode.collectAsStateWithLifecycle()
     val captureModeModel by mainScreenViewModel.captureModeModel.collectAsStateWithLifecycle()
     var showGameSettingsDialog by rememberSaveable { mutableStateOf(false) }
     var serverHostName by rememberSaveable(showGameSettingsDialog) { mutableStateOf(captureModeModel.serverHostName) }
@@ -571,43 +524,6 @@ private fun GameCard() {
                                 .fillMaxWidth()
                                 .verticalScroll(rememberScrollState())
                         ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(10.dp)
-                            ) {
-                                Text(
-                                    stringResource(R.string.work_mode),
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                                SingleChoiceSegmentedButtonRow(Modifier.weight(1f)) {
-                                    SegmentedButton(
-                                        selected = workMode === WorkModes.CaptureMode,
-                                        onClick = {
-                                            if (workMode !== WorkModes.CaptureMode) {
-                                                mainScreenViewModel.selectWorkMode(WorkModes.CaptureMode)
-                                            }
-                                        },
-                                        shape = SegmentedButtonDefaults.itemShape(0, 2),
-                                        label = {
-                                            Text(stringResource(R.string.capture_mode))
-                                        },
-                                        enabled = !Services.isActive
-                                    )
-                                    SegmentedButton(
-                                        selected = workMode === WorkModes.ProxyMode,
-                                        onClick = {
-                                            if (workMode !== WorkModes.ProxyMode) {
-                                                mainScreenViewModel.selectWorkMode(WorkModes.ProxyMode)
-                                            }
-                                        },
-                                        shape = SegmentedButtonDefaults.itemShape(1, 2),
-                                        label = {
-                                            Text(stringResource(R.string.proxy_mode))
-                                        },
-                                        enabled = !Services.isActive
-                                    )
-                                }
-                            }
                             val interactionSource = remember { MutableInteractionSource() }
                             val isPressed by interactionSource.collectIsPressedAsState()
                             if (isPressed) {
@@ -630,85 +546,50 @@ private fun GameCard() {
                                 interactionSource = interactionSource,
                                 enabled = !Services.isActive
                             )
-                            if (workMode === WorkModes.CaptureMode) {
-                                Column(
-                                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                                ) {
-                                    TextField(
-                                        value = serverHostName,
-                                        label = {
-                                            Text(stringResource(R.string.server_host_name))
-                                        },
-                                        onValueChange = {
-                                            serverHostName = it
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                TextField(
+                                    value = serverHostName,
+                                    label = {
+                                        Text(stringResource(R.string.server_host_name))
+                                    },
+                                    onValueChange = {
+                                        serverHostName = it
 
-                                            if (it.isEmpty()) return@TextField
-                                            mainScreenViewModel.selectCaptureModeModel(
-                                                captureModeModel.copy(serverHostName = it)
-                                            )
-                                        },
-                                        keyboardOptions = KeyboardOptions(
-                                            imeAction = ImeAction.Next
-                                        ),
-                                        singleLine = true,
-                                        enabled = !Services.isActive
-                                    )
-                                    TextField(
-                                        value = serverPort,
-                                        label = {
-                                            Text(stringResource(R.string.server_port))
-                                        },
-                                        onValueChange = {
-                                            serverPort = it
-
-                                            if (it.isEmpty()) return@TextField
-                                            val port = it.toIntOrNull() ?: return@TextField
-                                            if (port < 0 || port > 65535) return@TextField
-
-                                            mainScreenViewModel.selectCaptureModeModel(
-                                                captureModeModel.copy(serverPort = port)
-                                            )
-                                        },
-                                        keyboardOptions = KeyboardOptions(
-                                            imeAction = ImeAction.Done
-                                        ),
-                                        singleLine = true,
-                                        enabled = !Services.isActive
-                                    )
-                                }
-                            }
-                            if (workMode == WorkModes.ProxyMode) {
-                                Card(
-                                    modifier = Modifier
-                                        .fillMaxWidth(),
-                                    shape = MaterialTheme.shapes.medium,
-                                    colors = CardDefaults.cardColors(
-                                        containerColor = MaterialTheme.colorScheme.errorContainer,
-                                        contentColor = MaterialTheme.colorScheme.onErrorContainer
-                                    )
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(16.dp),
-                                        verticalArrangement = Arrangement.spacedBy(16.dp)
-                                    ) {
-                                        Icon(
-                                            Icons.Outlined.WarningAmber,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .size(20.dp)
+                                        if (it.isEmpty()) return@TextField
+                                        mainScreenViewModel.selectCaptureModeModel(
+                                            captureModeModel.copy(serverHostName = it)
                                         )
-                                        Column(Modifier.fillMaxWidth()) {
-                                            Text(
-                                                stringResource(R.string.warnning),
-                                                style = MaterialTheme.typography.bodyLarge
-                                            )
-                                            Text(
-                                                stringResource(R.string.proxy_mode_is_not_stable),
-                                                style = MaterialTheme.typography.bodySmall
-                                            )
-                                        }
-                                    }
-                                }
+                                    },
+                                    keyboardOptions = KeyboardOptions(
+                                        imeAction = ImeAction.Next
+                                    ),
+                                    singleLine = true,
+                                    enabled = !Services.isActive
+                                )
+                                TextField(
+                                    value = serverPort,
+                                    label = {
+                                        Text(stringResource(R.string.server_port))
+                                    },
+                                    onValueChange = {
+                                        serverPort = it
+
+                                        if (it.isEmpty()) return@TextField
+                                        val port = it.toIntOrNull() ?: return@TextField
+                                        if (port < 0 || port > 65535) return@TextField
+
+                                        mainScreenViewModel.selectCaptureModeModel(
+                                            captureModeModel.copy(serverPort = port)
+                                        )
+                                    },
+                                    keyboardOptions = KeyboardOptions(
+                                        imeAction = ImeAction.Done
+                                    ),
+                                    singleLine = true,
+                                    enabled = !Services.isActive
+                                )
                             }
                             if (Services.isActive) {
                                 Card(

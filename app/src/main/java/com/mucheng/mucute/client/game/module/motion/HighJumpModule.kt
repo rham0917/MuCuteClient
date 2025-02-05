@@ -16,11 +16,11 @@ class HighJumpModule : Module("high_jump", ModuleCategory.Motion) {
         if (packet is PlayerAuthInputPacket && isEnabled) {
             if (packet.inputData.contains(PlayerAuthInputData.JUMP_DOWN)) {
                 val motionPacket = SetEntityMotionPacket().apply {
-                    runtimeEntityId = localPlayer.runtimeEntityId
+                    runtimeEntityId = session.localPlayer.runtimeEntityId
                     motion = Vector3f.from(
-                        localPlayer.motionX,
+                        session.localPlayer.motionX,
                         jumpHeight,
-                        localPlayer.motionZ
+                        session.localPlayer.motionZ
                     )
                 }
                 session.clientBound(motionPacket)

@@ -21,13 +21,13 @@ class AutoJumpModule : Module("auto_jump", ModuleCategory.Motion) {
             if (currentTime - lastMotionTime >= motionInterval) {
                 // Apply upward and downward motion to simulate jumping
                 val motionPacket = SetEntityMotionPacket().apply {
-                    runtimeEntityId = localPlayer.runtimeEntityId
+                    runtimeEntityId = session.localPlayer.runtimeEntityId
 
                     // Alternate vertical motion to simulate jumping up and down
                     motion = Vector3f.from(
-                        localPlayer.motionX,  // Keep horizontal motion
+                        session.localPlayer.motionX,  // Keep horizontal motion
                         if ((currentTime / motionInterval) % 2 == 0L) jumpHeight else -jumpHeight,  // Alternate between upwards and downwards motion
-                        localPlayer.motionZ   // Keep horizontal motion
+                        session.localPlayer.motionZ   // Keep horizontal motion
                     )
                 }
 

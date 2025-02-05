@@ -15,13 +15,8 @@
     <string name="game_settings">Game Settings</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
-    <string name="capture_mode">Capture Mode</string>
-    <string name="proxy_mode">Proxy Mode</string>
-    <string name="work_mode">Work mode</string>
     <string name="server_host_name">Server host name</string>
     <string name="server_port">Server port</string>
-    <string name="warnning">Warnning</string>
-    <string name="proxy_mode_is_not_stable">Proxy mode is not stable.</string>
     <string name="tips">Tips</string>
     <string name="change_game_settings_tip">You need to disconnect before changing game settings.</string>
     <string name="backend_connected">MuCuteRelay connected.</string>
@@ -60,6 +55,4 @@
     <string name="crash_happened">Crash Happened</string>
     <string name="cannot_back">A crash has occurred and you are not allowed to return. You can only restart the app.</string>
     <string name="effect">Effect</string>
-    <string name="proxying_game_packets">Proxying game packets...</string>
-    <string name="vpn_permission_denied">VPN permission denied</string>
 </resources>

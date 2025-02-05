@@ -7,14 +7,19 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import com.mucheng.mucute.client.application.AppContext
+import com.mucheng.mucute.client.game.GameSession
 import com.mucheng.mucute.client.game.ModuleManager
 import com.mucheng.mucute.client.model.GameSettingsModel
 import com.mucheng.mucute.client.overlay.OverlayManager
+import com.mucheng.mucute.relay.MuCuteRelaySession
 import com.mucheng.mucute.relay.definition.Definitions
 import com.mucheng.mucute.relay.listener.NecessaryPacketListener
 import com.mucheng.mucute.relay.util.captureMuCuteRelay
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.net.InetSocketAddress
-import kotlin.concurrent.thread
 
 open class CaptureModeService : Service() {
 
@@ -49,22 +54,21 @@ open class CaptureModeService : Service() {
         return super.onStartCommand(intent, flags, startId)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun stopMuCuteRelay() {
         Services.muCuteRelay?.disconnect()
         Services.isActive = false
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
-        thread {
+        GlobalScope.launch(Dispatchers.IO) {
             ModuleManager.saveConfig()
         }
         OverlayManager.dismiss()
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun startMuCuteRelay() {
-        thread(
-            name = "MuCuteRelayThread",
-            priority = Thread.MAX_PRIORITY
-        ) {
+        GlobalScope.launch(Dispatchers.IO) {
             val gameSettingsSharedPreferences =
                 AppContext.instance.getSharedPreferences("game_settings", Context.MODE_PRIVATE)
             val gameSettingsModel = GameSettingsModel.from(gameSettingsSharedPreferences)
@@ -84,29 +88,37 @@ open class CaptureModeService : Service() {
                         if (Build.VERSION.SDK_INT >= 34) {
                             startForeground(
                                 1,
-                                Services.createNotification(this, gameSettingsModel.workMode),
+                                Services.createNotification(this@CaptureModeService),
                                 ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
                             )
                         } else {
                             startForeground(
                                 1,
-                                Services.createNotification(this, gameSettingsModel.workMode)
+                                Services.createNotification(this@CaptureModeService)
                             )
                         }
 
                         Services.handler.post {
-                            OverlayManager.show(this)
+                            OverlayManager.show(this@CaptureModeService)
                         }
 
                         Definitions.loadBlockPalette()
                     }
                 ) {
-                    ModuleManager.initModules(this)
+                    initModules(this)
 
-                    listeners.add(ModuleManager)
                     listeners.add(NecessaryPacketListener(this))
                 }
             }
+        }
+    }
+
+    private fun initModules(muCuteRelaySession: MuCuteRelaySession) {
+        val session = GameSession(muCuteRelaySession)
+        muCuteRelaySession.listeners.add(session)
+
+        for (module in ModuleManager.modules) {
+            module.session = session
         }
     }
 

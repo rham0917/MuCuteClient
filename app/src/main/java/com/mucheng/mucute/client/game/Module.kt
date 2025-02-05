@@ -3,11 +3,7 @@ package com.mucheng.mucute.client.game
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.mucheng.mucute.client.game.entity.Entity
-import com.mucheng.mucute.client.game.entity.LocalPlayer
-import com.mucheng.mucute.client.game.world.Level
 import com.mucheng.mucute.client.overlay.OverlayShortcutButton
-import com.mucheng.mucute.relay.MuCuteRelaySession
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -15,16 +11,11 @@ import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.put
-import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData
 
 abstract class Module(val name: String, val category: ModuleCategory) : ComposedPacketHandler,
     Configurable {
 
-    open lateinit var session: MuCuteRelaySession
-
-    open lateinit var localPlayer: LocalPlayer
-
-    open lateinit var level: Level
+    open lateinit var session: GameSession
 
     private var _isEnabled by mutableStateOf(false)
 
@@ -92,10 +83,6 @@ abstract class Module(val name: String, val category: ModuleCategory) : Composed
                 isShortcutDisplayed = true
             }
         }
-    }
-
-    fun LocalPlayer.attack(entity: Entity, heldItemSlot: Int, itemInHand: ItemData) {
-        attack(session, entity, heldItemSlot, itemInHand)
     }
 
 }

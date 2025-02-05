@@ -26,7 +26,7 @@ class JetPackModule : Module("jetpack", ModuleCategory.Motion) {
 
             // Apply motion in look direction
             val motionPacket = SetEntityMotionPacket().apply {
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 motion = Vector3f.from(
                     motionX.toFloat(),
                     motionY.toFloat(),

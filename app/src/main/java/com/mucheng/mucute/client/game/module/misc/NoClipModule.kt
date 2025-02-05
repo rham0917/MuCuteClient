@@ -78,11 +78,11 @@ class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
             }
 
             if (!noClipEnabled && isEnabled) {
-                enableNoClipAbilitiesPacket.uniqueEntityId = localPlayer.uniqueEntityId
+                enableNoClipAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
                 session.clientBound(enableNoClipAbilitiesPacket)
                 noClipEnabled = true
             } else if (noClipEnabled && !isEnabled) {
-                disableNoClipAbilitiesPacket.uniqueEntityId = localPlayer.uniqueEntityId
+                disableNoClipAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
                 session.clientBound(disableNoClipAbilitiesPacket)
                 noClipEnabled = false
             }

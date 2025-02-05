@@ -11,7 +11,6 @@ import com.google.gson.JsonParser
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.model.CaptureModeModel
 import com.mucheng.mucute.client.router.main.MainScreenPages
-import com.mucheng.mucute.client.util.WorkModes
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,8 +34,6 @@ class MainScreenViewModel : ViewModel() {
 
     private val _selectedPage = MutableStateFlow(MainScreenPages.HomePage)
 
-    private val _workMode = MutableStateFlow(initialWorkMode())
-
     private val _captureModeModel = MutableStateFlow(initialCaptureModeModel())
 
     private val _packageInfos = MutableStateFlow<List<PackageInfo>>(emptyList())
@@ -52,8 +49,6 @@ class MainScreenViewModel : ViewModel() {
 
     val selectedPage = _selectedPage.asStateFlow()
 
-    val workMode = _workMode.asStateFlow()
-
     val captureModeModel = _captureModeModel.asStateFlow()
 
     val packageInfos = _packageInfos.asStateFlow()
@@ -68,11 +63,6 @@ class MainScreenViewModel : ViewModel() {
 
     fun selectPage(page: MainScreenPages) {
         _selectedPage.value = page
-    }
-
-    fun selectWorkMode(workMode: WorkModes) {
-        _workMode.value = workMode
-        workMode.to(gameSettingsSharedPreferences)
     }
 
     fun selectCaptureModeModel(captureModeModel: CaptureModeModel) {
@@ -180,10 +170,6 @@ class MainScreenViewModel : ViewModel() {
         gameSettingsSharedPreferences.edit {
             putString("selected_account", account?.mcChain?.displayName)
         }
-    }
-
-    private fun initialWorkMode(): WorkModes {
-        return WorkModes.from(gameSettingsSharedPreferences)
     }
 
     private fun initialCaptureModeModel(): CaptureModeModel {

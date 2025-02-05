@@ -16,7 +16,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mucheng.mucute.client.R
 import com.mucheng.mucute.client.activity.MainActivity
-import com.mucheng.mucute.client.util.WorkModes
 import com.mucheng.mucute.relay.MuCuteRelay
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -26,8 +25,6 @@ object Services {
 
     const val ACTION_CAPTURE_START = "com.mucheng.mucute.relay.capture.start"
     const val ACTION_CAPTURE_STOP = "com.mucheng.mucute.relay.capture.stop"
-    const val ACTION_PROXY_START = "com.mucheng.mucute.relay.proxy.start"
-    const val ACTION_PROXY_STOP = "com.mucheng.mucute.relay.proxy.stop"
 
     var isActive by mutableStateOf(false)
 
@@ -54,7 +51,7 @@ object Services {
         }
     }
 
-    fun createNotification(service: Service, workMode: WorkModes): Notification {
+    fun createNotification(service: Service): Notification {
         val flag = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
 
         val intent = Intent(service, MainActivity::class.java)
@@ -72,10 +69,7 @@ object Services {
             .setSmallIcon(R.mipmap.ic_launcher)
             .setLargeIcon(BitmapFactory.decodeResource(service.resources, R.mipmap.ic_launcher))
             .setContentTitle("MuCuteRelay")
-            .setContentText(service.getString(when (workMode) {
-                WorkModes.CaptureMode -> R.string.capturing_game_packets
-                WorkModes.ProxyMode -> R.string.proxying_game_packets
-            }))
+            .setContentText(service.getString(R.string.capturing_game_packets))
             .setOngoing(true)
             .setContentIntent(goHomePendingIntent)
             .addAction(R.mipmap.ic_launcher, service.getString(R.string.stop), stopPendingIntent)

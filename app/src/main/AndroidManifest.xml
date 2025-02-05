@@ -15,14 +15,15 @@
     <application
         android:name=".application.AppContext"
         android:enableOnBackInvokedCallback="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:persistent="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MuCuteClient"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="tiramisu">
 
         <activity
@@ -50,24 +51,6 @@
             <intent-filter android:priority="1000">
                 <action android:name="com.mucheng.mucute.relay.capture.start" />
                 <action android:name="com.mucheng.mucute.relay.capture.stop" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-        </service>
-
-        <service android:name=".service.ProxyModeService"
-            android:exported="false"
-            android:permission="android.permission.BIND_VPN_SERVICE"
-            android:foregroundServiceType="specialUse">
-
-            <property
-                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="MuCuteRelay Proxy" />
-
-            <intent-filter android:priority="1000">
-                <action android:name="com.mucheng.mucute.relay.proxy.start" />
-                <action android:name="com.mucheng.mucute.relay.proxy.stop" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -10,7 +10,7 @@ class NoHurtCamModule : Module("no_hurt_cam", ModuleCategory.Visual) {
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is EntityEventPacket && isEnabled) {
-            if (packet.runtimeEntityId == localPlayer.runtimeEntityId
+            if (packet.runtimeEntityId == session.localPlayer.runtimeEntityId
                 && packet.type == EntityEventType.HURT
             ) {
                 return true

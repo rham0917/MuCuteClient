@@ -18,8 +18,8 @@ class AirJumpModule : Module("air_jump", ModuleCategory.Motion) {
         if (packet is PlayerAuthInputPacket && isEnabled) {
             if (packet.inputData.contains(PlayerAuthInputData.JUMP_DOWN)) {
                 val motionPacket = SetEntityMotionPacket().apply {
-                    runtimeEntityId = localPlayer.runtimeEntityId
-                    motion = Vector3f.from(localPlayer.motionX, 0.42f, localPlayer.motionZ)
+                    runtimeEntityId = session.localPlayer.runtimeEntityId
+                    motion = Vector3f.from(session.localPlayer.motionX, 0.42f, session.localPlayer.motionZ)
                 }
                 session.clientBound(motionPacket)
             }

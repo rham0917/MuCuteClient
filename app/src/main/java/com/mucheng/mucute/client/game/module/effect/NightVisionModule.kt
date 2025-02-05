@@ -17,7 +17,7 @@ class NightVisionModule : Module("full_bright", ModuleCategory.Effect) {
         if (nightVision && isSessionCreated) {
             session.clientBound(MobEffectPacket().apply {
                 event = MobEffectPacket.Event.REMOVE
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 effectId = Effect.NIGHT_VISION
             })
         }
@@ -25,16 +25,16 @@ class NightVisionModule : Module("full_bright", ModuleCategory.Effect) {
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is SetEntityDataPacket) {
-            if (packet.runtimeEntityId == localPlayer.runtimeEntityId && packet.metadata?.flags != null) {
+            if (packet.runtimeEntityId == session.localPlayer.runtimeEntityId && packet.metadata?.flags != null) {
                 if (removeFire && packet.metadata.flags.contains(EntityFlag.ON_FIRE)) {
                     packet.metadata.setFlag(EntityFlag.ON_FIRE, false)
                 }
             }
         }
 
-        if (isEnabled && nightVision && localPlayer.tickExists % 20 == 0L) {
+        if (isEnabled && nightVision && session.localPlayer.tickExists % 20 == 0L) {
             session.clientBound(MobEffectPacket().apply {
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 event = MobEffectPacket.Event.ADD
                 effectId = Effect.NIGHT_VISION
                 amplifier = 0

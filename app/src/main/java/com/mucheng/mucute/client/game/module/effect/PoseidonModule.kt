@@ -21,7 +21,7 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
             // Check for water or sinking
             if (packet.inputData.contains(PlayerAuthInputData.START_SWIMMING) ||
                 packet.inputData.contains(PlayerAuthInputData.AUTO_JUMPING_IN_WATER) ||
-                localPlayer.motionY < 0
+                session.localPlayer.motionY < 0
             ) {
 
                 // Calculate speed based on look direction
@@ -34,7 +34,7 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
 
                 // Set motion with speed boost and anti-sink
                 val motionPacket = SetEntityMotionPacket().apply {
-                    runtimeEntityId = localPlayer.runtimeEntityId
+                    runtimeEntityId = session.localPlayer.runtimeEntityId
                     motion = Vector3f.from(
                         motionX.toFloat(),
                         0.05f,  // Anti-sink
@@ -50,10 +50,10 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
         }
 
         // Apply effects every second
-        if (isEnabled && localPlayer.tickExists % 20 == 0L) {
+        if (isEnabled && session.localPlayer.tickExists % 20 == 0L) {
             // Night vision
             session.clientBound(MobEffectPacket().apply {
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 event = MobEffectPacket.Event.ADD
                 effectId = Effect.NIGHT_VISION
                 amplifier = 0
@@ -63,7 +63,7 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
 
             // Water breathing
             session.clientBound(MobEffectPacket().apply {
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 event = MobEffectPacket.Event.ADD
                 effectId = Effect.WATER_BREATHING
                 amplifier = 0
@@ -79,12 +79,12 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
             // Remove effects
             session.clientBound(MobEffectPacket().apply {
                 event = MobEffectPacket.Event.REMOVE
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 effectId = Effect.NIGHT_VISION
             })
             session.clientBound(MobEffectPacket().apply {
                 event = MobEffectPacket.Event.REMOVE
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 effectId = Effect.WATER_BREATHING
             })
         }

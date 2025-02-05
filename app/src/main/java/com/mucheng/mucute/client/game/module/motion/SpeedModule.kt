@@ -19,10 +19,10 @@ class SpeedModule : Module("speed", ModuleCategory.Motion) {
             if (packet.motion.length() > 0) {
                 val angle = Math.toRadians(packet.rotation.y.toDouble())
                 val motionPacket = SetEntityMotionPacket().apply {
-                    runtimeEntityId = localPlayer.runtimeEntityId
+                    runtimeEntityId = session.localPlayer.runtimeEntityId
                     motion = Vector3f.from(
                         -sin(angle).toFloat() * speedValue,
-                        localPlayer.motionY,
+                        session.localPlayer.motionY,
                         cos(angle).toFloat() * speedValue
                     )
                 }

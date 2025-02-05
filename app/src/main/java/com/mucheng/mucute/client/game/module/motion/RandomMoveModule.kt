@@ -29,10 +29,10 @@ class RandomMoveModule : Module("random_move", ModuleCategory.Motion) {
                     val randomZ = Random.nextFloat() * maxMoveDistance - (maxMoveDistance / 2)
 
                     val motionPacket = SetEntityMotionPacket().apply {
-                        runtimeEntityId = localPlayer.runtimeEntityId
+                        runtimeEntityId = session.localPlayer.runtimeEntityId
                         motion = Vector3f.from(
                             randomX,  // X-axis movement
-                            localPlayer.motionY, // Keep current Y motion
+                            session.localPlayer.motionY, // Keep current Y motion
                             randomZ   // Z-axis movement
                         )
                     }

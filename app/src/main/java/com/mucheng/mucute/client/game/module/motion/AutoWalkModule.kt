@@ -55,7 +55,7 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
 
         // Send the updated packet for movement input
         val motionPacket = SetEntityMotionPacket().apply {
-            runtimeEntityId = localPlayer.runtimeEntityId
+            runtimeEntityId = session.localPlayer.runtimeEntityId
             motion = Vector3f.from(
                 motionX.toFloat(),
                 0f,  // We are not manually controlling the Y-axis yet
@@ -72,7 +72,7 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
 
             // Apply a slight upward motion for the jump
             val motionPacket = SetEntityMotionPacket().apply {
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 motion = Vector3f.from(0f, 1.5f, 0f)  // 0.5f is the jump height (adjust as needed)
             }
             session.clientBound(motionPacket)
@@ -94,7 +94,7 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
 
             // Apply a slight upward motion for the jump
             val motionPacket = SetEntityMotionPacket().apply {
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 motion = Vector3f.from(0f, 1.5f, 0f)  // 0.5f is the jump height (adjust as needed)
             }
             session.clientBound(motionPacket)

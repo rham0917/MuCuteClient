@@ -3,13 +3,11 @@ package com.mucheng.mucute.client.model
 import android.content.SharedPreferences
 import com.google.gson.JsonParser
 import com.mucheng.mucute.client.application.AppContext
-import com.mucheng.mucute.client.util.WorkModes
 import net.raphimc.minecraftauth.MinecraftAuth
 import net.raphimc.minecraftauth.step.bedrock.session.StepFullBedrockSession
 
 data class GameSettingsModel(
     val captureModeModel: CaptureModeModel,
-    val workMode: WorkModes,
     val selectedGame: String,
     val selectedAccount: StepFullBedrockSession.FullBedrockSession?
 ) {
@@ -18,10 +16,9 @@ data class GameSettingsModel(
 
         fun from(sharedPreferences: SharedPreferences): GameSettingsModel {
             val captureModeModel = CaptureModeModel.from(sharedPreferences)
-            val workMode = WorkModes.from(sharedPreferences)
             val selectedGame = fetchSelectedGame(sharedPreferences)
             val selectedAccount = fetchSelectedAccount(sharedPreferences)
-            return GameSettingsModel(captureModeModel, workMode, selectedGame, selectedAccount)
+            return GameSettingsModel(captureModeModel, selectedGame, selectedAccount)
         }
 
         private fun fetchSelectedGame(sharedPreferences: SharedPreferences): String {

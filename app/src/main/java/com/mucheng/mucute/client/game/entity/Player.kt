@@ -20,15 +20,13 @@ open class Player(
     val displayName: String
         get() = (metadata[EntityDataTypes.NAME] as? String?)?.ifEmpty { username } ?: username
 
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
-        super.beforePacketBound(packet)
+    override fun onPacketBound(packet: BedrockPacket) {
+        super.onPacketBound(packet)
         if (packet is MovePlayerPacket && packet.runtimeEntityId == runtimeEntityId) {
             move(packet.position.x, packet.position.y, packet.position.z)
             rotate(packet.rotation)
             tickExists++
         }
-
-        return false
     }
 
     override fun toString(): String {

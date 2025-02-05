@@ -73,12 +73,12 @@ class ZoomModule : Module("zoom", ModuleCategory.Visual) {
 
             if (!isZoomEnabled && isEnabled) {
                 // Enable zoom
-                enableZoomPacket.uniqueEntityId = localPlayer.uniqueEntityId
+                enableZoomPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
                 session.clientBound(enableZoomPacket)
                 isZoomEnabled = true
             } else if (isZoomEnabled && !isEnabled) {
                 // Disable zoom
-                disableZoomPacket.uniqueEntityId = localPlayer.uniqueEntityId
+                disableZoomPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
                 session.clientBound(disableZoomPacket)
                 isZoomEnabled = false
             }

@@ -11,9 +11,9 @@ class HasteModule : Module("haste", ModuleCategory.Effect) {
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
-            if (localPlayer.tickExists % 20 == 0L) {
+            if (session.localPlayer.tickExists % 20 == 0L) {
                 session.clientBound(MobEffectPacket().apply {
-                    runtimeEntityId = localPlayer.runtimeEntityId
+                    runtimeEntityId = session.localPlayer.runtimeEntityId
                     event = MobEffectPacket.Event.ADD
                     effectId = Effect.HASTE
                     amplifier -= 1
@@ -28,7 +28,7 @@ class HasteModule : Module("haste", ModuleCategory.Effect) {
     override fun onDisabled() {
         if (isSessionCreated) {
             session.clientBound(MobEffectPacket().apply {
-                runtimeEntityId = localPlayer.runtimeEntityId
+                runtimeEntityId = session.localPlayer.runtimeEntityId
                 event = MobEffectPacket.Event.REMOVE
                 effectId = Effect.HASTE
             })

@@ -1,6 +1,6 @@
 package com.mucheng.mucute.client.game.world
 
-import com.mucheng.mucute.client.game.ComposedPacketHandler
+import com.mucheng.mucute.client.game.GameSession
 import com.mucheng.mucute.client.game.entity.Entity
 import com.mucheng.mucute.client.game.entity.EntityUnknown
 import com.mucheng.mucute.client.game.entity.Item
@@ -17,18 +17,18 @@ import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 @Suppress("MemberVisibilityCanBePrivate")
-class Level : ComposedPacketHandler {
+class Level(val session: GameSession) {
 
     val entityMap = ConcurrentHashMap<Long, Entity>()
 
     val playerMap = ConcurrentHashMap<UUID, PlayerListPacket.Entry>()
 
-    override fun onDisconnect(reason: String) {
+    fun onDisconnect() {
         entityMap.clear()
         playerMap.clear()
     }
 
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
+    fun onPacketBound(packet: BedrockPacket) {
         when (packet) {
             is StartGamePacket -> {
                 entityMap.clear()
@@ -67,7 +67,7 @@ class Level : ComposedPacketHandler {
             }
 
             is RemoveEntityPacket -> {
-                val entityToRemove = entityMap.values.find { it.uniqueEntityId == packet.uniqueEntityId } ?: return false
+                val entityToRemove = entityMap.values.find { it.uniqueEntityId == packet.uniqueEntityId } ?: return
                 entityMap.remove(entityToRemove.runtimeEntityId)
             }
 
@@ -88,12 +88,10 @@ class Level : ComposedPacketHandler {
 
             else -> {
                 entityMap.values.forEach { entity ->
-                    entity.beforePacketBound(packet)
+                    entity.onPacketBound(packet)
                 }
             }
         }
-
-        return false
     }
 
 }

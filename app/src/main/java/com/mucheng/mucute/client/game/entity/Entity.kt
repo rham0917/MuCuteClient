@@ -1,7 +1,7 @@
 package com.mucheng.mucute.client.game.entity
 
-import com.mucheng.mucute.client.game.ComposedPacketHandler
 import com.mucheng.mucute.client.game.data.Effect
+import com.mucheng.mucute.client.game.inventory.EntityInventory
 import org.cloudburstmc.math.vector.Vector2f
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.data.AttributeData
@@ -18,8 +18,7 @@ import org.cloudburstmc.protocol.bedrock.packet.UpdateAttributesPacket
 import kotlin.math.sqrt
 
 @Suppress("MemberVisibilityCanBePrivate")
-open class Entity(open val runtimeEntityId: Long, open val uniqueEntityId: Long) :
-    ComposedPacketHandler {
+open class Entity(open val runtimeEntityId: Long, open val uniqueEntityId: Long) {
 
     open var posX = 0f
         set(value) {
@@ -115,6 +114,8 @@ open class Entity(open val runtimeEntityId: Long, open val uniqueEntityId: Long)
     open val isGliding: Boolean
         get() = metadata.flags.contains(EntityFlag.GLIDING)
 
+    open val inventory = EntityInventory(this)
+
     open fun move(x: Float, y: Float, z: Float) {
         this.posX = x
         this.posY = y
@@ -167,7 +168,7 @@ open class Entity(open val runtimeEntityId: Long, open val uniqueEntityId: Long)
         return effects.find { it.id == id }
     }
 
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
+    open fun onPacketBound(packet: BedrockPacket) {
         if (packet is MoveEntityAbsolutePacket && packet.runtimeEntityId == runtimeEntityId) {
             move(packet.position)
             rotate(packet.rotation)
@@ -222,8 +223,9 @@ open class Entity(open val runtimeEntityId: Long, open val uniqueEntityId: Long)
                 else -> {}
             }
         }
-        return false
     }
+
+    open fun onDisconnect() {}
 
     fun handleSetData(map: EntityDataMap) {
         map.forEach { (key, value) ->

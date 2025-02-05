@@ -16,8 +16,8 @@ class AntiKnockbackModule : Module("anti_knockback", ModuleCategory.Combat) {
                 packet.motion.y,  // Maintain vertical motion
                 0f   // Reset horizontal motion
             )
-            return true // Indicate that the packet was handled
+            return false
         }
-        return false // Indicate that the packet was not handled
+        return false
     }
 } 
