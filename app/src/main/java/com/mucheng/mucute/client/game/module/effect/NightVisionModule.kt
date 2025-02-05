@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.visual
+package com.mucheng.mucute.client.game.module.effect
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
@@ -8,7 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityDataPacket
 
-class NightVisionModule : Module("full_bright", ModuleCategory.Visual) {
+class NightVisionModule : Module("full_bright", ModuleCategory.Effect) {
 
     private val nightVision by boolValue("nightvision", true)
     private val removeFire by boolValue("removefire", false)

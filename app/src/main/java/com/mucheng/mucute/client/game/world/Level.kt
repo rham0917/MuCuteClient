@@ -59,7 +59,7 @@ class Level : ComposedPacketHandler {
 
             is AddPlayerPacket -> {
                 val entity = Player(packet.runtimeEntityId, packet.uniqueEntityId, packet.uuid, packet.username).apply {
-                    move(packet.position.add(0f, Player.EYE_HEIGHT, 0f))
+                    move(packet.position)
                     rotate(packet.rotation)
                     handleSetData(packet.metadata)
                 }

@@ -6,16 +6,22 @@ import com.mucheng.mucute.client.game.ModuleCategory
 import com.mucheng.mucute.client.game.entity.Entity
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.data.SoundEvent
+import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData
+import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.request.action.PlaceAction
+import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryActionData
+import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventorySource
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryTransactionType
 import org.cloudburstmc.protocol.bedrock.packet.AnimatePacket
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
+import org.cloudburstmc.protocol.bedrock.packet.InventoryContentPacket
+import org.cloudburstmc.protocol.bedrock.packet.InventorySlotPacket
 import org.cloudburstmc.protocol.bedrock.packet.InventoryTransactionPacket
+import org.cloudburstmc.protocol.bedrock.packet.ItemStackRequestPacket
 import org.cloudburstmc.protocol.bedrock.packet.LevelSoundEventPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEquipmentPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerHotbarPacket
-import kotlin.math.pow
 
 class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
@@ -23,74 +29,75 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
     private var heldItemSlot = 0
 
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
-        if (!isEnabled) {
-            return false
-        }
+    private val content = Array(41) { ItemData.AIR }
 
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerHotbarPacket) {
             heldItemSlot = packet.selectedHotbarSlot
         }
 
-        if (packet is MobEquipmentPacket) {
+        if (packet is MobEquipmentPacket && packet.runtimeEntityId == localPlayer.runtimeEntityId) {
             heldItemSlot = packet.hotbarSlot
         }
 
-        if (packet is InventoryTransactionPacket) {
-
+        if (packet is InventoryTransactionPacket && packet.runtimeEntityId == localPlayer.runtimeEntityId && packet.transactionType == InventoryTransactionType.NORMAL) {
+            packet.actions.filter { it is InventoryActionData && it.source.type == InventorySource.Type.CONTAINER }
+                .forEach {
+                    val containerId =
+                        getOffsetByContainerId(it.source.containerId) ?: return@forEach
+                    content[it.slot + containerId] = it.toItem
+                }
         }
 
-        if (packet is PlayerAuthInputPacket && packet.tick % 10 == 0L) {
+        if (packet is InventorySlotPacket) {
+            getOffsetByContainerId(packet.containerId)?.let {
+                content[packet.slot + it] = packet.item
+            }
+        }
+
+        if (packet is InventoryContentPacket) {
+            getOffsetByContainerId(packet.containerId)?.let {
+                fillContent(packet.contents, it)
+            }
+        }
+
+        if (!isEnabled) {
+            return false
+        }
+
+        if (packet is PlayerAuthInputPacket && packet.tick % 5 == 0L) {
             val closestEntities = searchForClosestEntities()
             if (closestEntities.isEmpty()) {
                 return false
             }
 
-            Log.e("Closest", closestEntities.toString())
+            Log.e("itemInHand", content[heldItemSlot].toString())
 
-            closestEntities.forEach {
-                attack(it)
+            closestEntities.forEach { entity ->
+                localPlayer.attack(entity, heldItemSlot, content[heldItemSlot])
             }
         }
         return false
     }
 
-    private fun swing() {
-        AnimatePacket().apply {
-            action = AnimatePacket.Action.SWING_ARM
-            runtimeEntityId = localPlayer.runtimeEntityId
-        }.also {
-            session.clientBound(it)
-            session.serverBound(it)
+    private fun fillContent(contents: List<ItemData>, offset: Int) {
+        contents.forEachIndexed { i, item ->
+            content[offset + i] = item
         }
-
-        session.serverBound(LevelSoundEventPacket().apply {
-            sound = SoundEvent.ATTACK_NODAMAGE
-            position = localPlayer.vec3Position
-            extraData = -1
-            identifier = "minecraft:player"
-            isBabySound = false
-            isRelativeVolumeDisabled = false
-        })
     }
 
-    private fun attack(entity: Entity) {
-        swing()
-
-        session.serverBound(InventoryTransactionPacket().apply {
-            transactionType = InventoryTransactionType.ITEM_USE_ON_ENTITY
-            actionType = 1
-            runtimeEntityId = entity.runtimeEntityId
-            hotbarSlot = heldItemSlot
-            itemInHand = ItemData.AIR
-            playerPosition = localPlayer.vec3Position
-            clickPosition = Vector3f.ZERO
-        })
+    private fun getOffsetByContainerId(container: Int): Int? {
+        return when (container) {
+            0 -> 0
+            ContainerId.ARMOR -> 36
+            ContainerId.OFFHAND -> 40
+            else -> null
+        }
     }
 
     private fun searchForClosestEntities(): List<Entity> {
         return level.entityMap.values
-            .filter { it.distanceSq(localPlayer) < rangeValue.pow(2) }
+            .filter { it.distance(localPlayer) < rangeValue }
     }
 
 }

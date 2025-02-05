@@ -49,6 +49,7 @@ import androidx.compose.ui.util.fastForEach
 import com.mucheng.mucute.client.R
 import com.mucheng.mucute.client.overlay.OverlayManager
 import com.mucheng.mucute.client.util.translatedSelf
+import java.util.Locale
 import kotlin.math.roundToInt
 
 @Composable
@@ -234,7 +235,7 @@ private fun FloatValueContent(value: FloatValue) {
                 )
             },
             onValueChange = {
-                val newValue = "%.2f".format(it).toFloat()
+                val newValue = "%.2f".format(Locale.ENGLISH, it).toFloat()
                 if (value.value != newValue) {
                     value.value = newValue
                 }

@@ -14,12 +14,8 @@ open class Player(
     open val username: String
 ) : Entity(runtimeEntityId, uniqueEntityId) {
 
-    companion object {
-        val EYE_HEIGHT = 1.62f
-    }
-
     val vec3PositionFeet: Vector3f
-        get() = Vector3f.from(posX, posY - EYE_HEIGHT, posZ)
+        get() = Vector3f.from(posX, posY, posZ)
 
     val displayName: String
         get() = (metadata[EntityDataTypes.NAME] as? String?)?.ifEmpty { username } ?: username
