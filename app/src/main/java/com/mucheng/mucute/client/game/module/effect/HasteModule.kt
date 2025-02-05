@@ -6,8 +6,11 @@ import com.mucheng.mucute.client.game.data.Effect
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import com.mucheng.mucute.client.game.entity.LocalPlayer
 
 class HasteModule : Module("haste", ModuleCategory.Effect) {
+
+    private val amplifierValue by floatValue("Amplifier", 1f, 1f..5f)
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
@@ -16,7 +19,7 @@ class HasteModule : Module("haste", ModuleCategory.Effect) {
                     runtimeEntityId = session.localPlayer.runtimeEntityId
                     event = MobEffectPacket.Event.ADD
                     effectId = Effect.HASTE
-                    amplifier -= 1
+                    amplifier = amplifierValue.toInt() - 1
                     isParticles = false
                     duration = 360000
                 })
@@ -34,4 +37,5 @@ class HasteModule : Module("haste", ModuleCategory.Effect) {
             })
         }
     }
+
 }
