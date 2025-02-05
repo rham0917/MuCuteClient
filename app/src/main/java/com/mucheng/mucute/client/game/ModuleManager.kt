@@ -2,9 +2,8 @@ package com.mucheng.mucute.client.game
 
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.entity.LocalPlayer
-import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
-import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.misc.PositionLoggerModule
+import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.LevitationModule
 import com.mucheng.mucute.client.game.module.effect.PoseidonModule
@@ -19,11 +18,13 @@ import com.mucheng.mucute.client.game.module.motion.HighJumpModule
 import com.mucheng.mucute.client.game.module.motion.JetPackModule
 import com.mucheng.mucute.client.game.module.motion.RandomMoveModule
 import com.mucheng.mucute.client.game.module.effect.SlowFallModule
+import com.mucheng.mucute.client.game.module.motion.MotionFlyModule
 import com.mucheng.mucute.client.game.module.motion.SpeedModule
 import com.mucheng.mucute.client.game.module.motion.SprintModule
 import com.mucheng.mucute.client.game.module.visual.NightVisionModule
 import com.mucheng.mucute.client.game.module.visual.NoHurtCamModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
+import com.mucheng.mucute.client.game.module.visual.FreeCamModule
 import com.mucheng.mucute.client.game.world.Level
 import com.mucheng.mucute.relay.MuCuteRelaySession
 import com.mucheng.mucute.relay.listener.MuCuteRelayPacketListener
@@ -82,7 +83,9 @@ object ModuleManager : MuCuteRelayPacketListener {
             add(RandomMoveModule())
             add(DesyncModule())
             add(PositionLoggerModule())
-            add(KillauraModule())
+            add(MotionFlyModule())
+            add(FreeCamModule())
+
         }
     }
 
