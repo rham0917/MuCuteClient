@@ -46,6 +46,15 @@ object TranslationManager {
         put("strength","Strength")
         put("insta_damage","Instant Damage")
         put("anticrystal","Anti Crystal")
+        put("badomen","Bad Omen")
+        put("conduitpower","Conduit Power")
+        put("darkness","Darkness")
+        put("fatal","FatalPoison")
+        put("hunger","Hunger")
+        put("poison","Poison")
+        put("village_omen","Village Hero")
+        put("weakness","Weakness")
+        put("wither","Wither")
 
         // Below for module options
         put("flySpeed", "Fly Speed")
@@ -100,6 +109,15 @@ object TranslationManager {
         put("strength","力量")
         put("insta_damage","瞬间伤害")
         put("anticrystal","反晶")
+        put("badomen","坏兆头")
+        put("conduitpower","海权")
+        put("darkness","暗效果")
+        put("fatal","致命的毒药")
+        put("hunger","饥饿")
+        put("poison","毒")
+        put("village_omen","乡村英雄")
+        put("weakness","弱点")
+        put("wither","枯萎")
 
 
         // Below for module options
