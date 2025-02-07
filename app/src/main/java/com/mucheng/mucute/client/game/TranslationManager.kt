@@ -41,6 +41,7 @@ object TranslationManager {
         put("jump_boost","Jump Boost")
         put("resistance", "Resistance")
         put("fire_resist","Fire Resistance")
+        put("swiftness","Swiftness")
 
         // Below for module options
         put("flySpeed", "Fly Speed")
@@ -90,6 +91,7 @@ object TranslationManager {
         put("jump_boost","跳跃放大器")
         put("resistance", "抗损坏能力")
         put("fire_resist","耐火性")
+        put("swiftness","见效快")
 
         // Below for module options
         put("flySpeed", "飞行速度")
