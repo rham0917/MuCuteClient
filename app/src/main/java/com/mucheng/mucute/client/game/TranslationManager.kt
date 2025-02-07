@@ -40,6 +40,7 @@ object TranslationManager {
         put("health_boost","Health Boost")
         put("jump_boost","Jump Boost")
         put("resistance", "Resistance")
+        put("fire_resist","Fire Resistance")
 
         // Below for module options
         put("flySpeed", "Fly Speed")
@@ -88,6 +89,7 @@ object TranslationManager {
         put("health_boost","健康放大器")
         put("jump_boost","跳跃放大器")
         put("resistance", "抗损坏能力")
+        put("fire_resist","耐火性")
 
         // Below for module options
         put("flySpeed", "飞行速度")
