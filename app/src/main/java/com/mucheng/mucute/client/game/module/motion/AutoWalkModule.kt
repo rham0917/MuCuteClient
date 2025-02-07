@@ -2,13 +2,13 @@ package com.mucheng.mucute.client.game.module.motion
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
+import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
-import org.cloudburstmc.math.vector.Vector3f
+import kotlin.concurrent.timer
 import kotlin.math.cos
 import kotlin.math.sin
-import kotlin.concurrent.timer
 
 class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
 
@@ -46,8 +46,10 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
     // Function to control X and Z movement based on the player's look direction
     private fun controlXZMovement(packet: PlayerAuthInputPacket) {
         // Convert angles to radians (use Float for the calculations)
-        val yaw = Math.toRadians(packet.rotation.y.toDouble()).toFloat()  // Horizontal direction (left/right)
-        val pitch = Math.toRadians(packet.rotation.x.toDouble()).toFloat()  // Vertical direction (up/down)
+        val yaw = Math.toRadians(packet.rotation.y.toDouble())
+            .toFloat()  // Horizontal direction (left/right)
+        val pitch =
+            Math.toRadians(packet.rotation.x.toDouble()).toFloat()  // Vertical direction (up/down)
 
         // Calculate direction vector based on the player's look direction
         val motionX = -sin(yaw) * cos(pitch) * speed  // Movement along X (forward/backward)
@@ -89,7 +91,7 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
 
     // Apply a slight jump every 2 seconds
     private fun applyJump() {
-        if (!isJumping) {  // Ensure we're not already jumping
+        if (!isJumping && isSessionCreated) {  // Ensure we're not already jumping
             isJumping = true  // Mark as jumping
 
             // Apply a slight upward motion for the jump

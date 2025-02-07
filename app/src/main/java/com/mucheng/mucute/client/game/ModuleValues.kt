@@ -24,8 +24,8 @@ interface Configurable {
     fun intValue(name: String, value: Int, range: IntRange) =
         IntValue(name, value, range).also { values.add(it) }
 
-    fun choiceValue(name: String, value: String, choices: Set<String>) =
-        ChoiceValue(name, value, choices).also { values.add(it) }
+    fun listValue(name: String, value: ListItem, choices: Set<ListItem>) =
+        ListValue(name, value, choices).also { values.add(it) }
 
 }
 
@@ -90,15 +90,21 @@ class IntValue(name: String, defaultValue: Int, val range: IntRange) :
 
 }
 
-class ChoiceValue(name: String, defaultValue: String, val choices: Set<String>) :
-    Value<String>(name, defaultValue) {
+@Suppress("MemberVisibilityCanBePrivate")
+class ListValue(name: String, defaultValue: ListItem, val listItems: Set<ListItem>) :
+    Value<ListItem>(name, defaultValue) {
 
-    override fun toJson() = JsonPrimitive(name)
+    override fun toJson() = JsonPrimitive(value.name)
 
     override fun fromJson(element: JsonElement) {
         if (element is JsonPrimitive) {
-            value = element.content
+            val content = element.content
+            value = listItems.find { it.name == content } ?: return
         }
     }
 
+}
+
+interface ListItem {
+    val name: String
 }

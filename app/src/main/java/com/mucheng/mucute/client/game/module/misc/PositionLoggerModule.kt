@@ -4,13 +4,15 @@ import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
-import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.MoveEntityAbsolutePacket
+import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
+import kotlin.math.PI
+import kotlin.math.atan2
+import kotlin.math.ceil
 import kotlin.math.sqrt
-import kotlin.math.*
 
-class PositionLoggerModule : Module("positionLogger", ModuleCategory.Misc) {
+class PositionLoggerModule : Module("position_logger", ModuleCategory.Misc) {
 
     private var playerPosition = Vector3f.from(0f, 0f, 0f)
     private val entityPositions = mutableMapOf<Long, Vector3f>()

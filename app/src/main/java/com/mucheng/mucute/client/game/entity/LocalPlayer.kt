@@ -1,14 +1,13 @@
 package com.mucheng.mucute.client.game.entity
 
+import android.util.Log
 import com.mucheng.mucute.client.game.GameSession
 import com.mucheng.mucute.client.game.inventory.AbstractInventory
 import com.mucheng.mucute.client.game.inventory.ContainerInventory
 import com.mucheng.mucute.client.game.inventory.PlayerInventory
-import com.mucheng.mucute.client.game.util.removeNetInfo
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.data.AuthoritativeMovementMode
 import org.cloudburstmc.protocol.bedrock.data.SoundEvent
-import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryTransactionType
 import org.cloudburstmc.protocol.bedrock.packet.AnimatePacket
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
@@ -55,7 +54,8 @@ class LocalPlayer(val session: GameSession) : Player(0L, 0L, UUID.randomUUID(), 
             runtimeEntityId = packet.runtimeEntityId
             uniqueEntityId = packet.uniqueEntityId
 
-            movementServerAuthoritative = packet.authoritativeMovementMode != AuthoritativeMovementMode.CLIENT
+            movementServerAuthoritative =
+                packet.authoritativeMovementMode != AuthoritativeMovementMode.CLIENT
             packet.authoritativeMovementMode = AuthoritativeMovementMode.SERVER
             inventoriesServerAuthoritative = packet.isInventoriesServerAuthoritative
             blockBreakServerAuthoritative = packet.isServerAuthoritativeBlockBreaking
@@ -110,12 +110,17 @@ class LocalPlayer(val session: GameSession) : Player(0L, 0L, UUID.randomUUID(), 
     fun attack(entity: Entity) {
         swing()
 
+        Log.e("Inventory", """
+            hotbarSlot: ${inventory.heldItemSlot}
+            hand: ${inventory.hand}
+        """.trimIndent())
+
         val inventoryTransactionPacket = InventoryTransactionPacket()
         inventoryTransactionPacket.transactionType = InventoryTransactionType.ITEM_USE_ON_ENTITY
         inventoryTransactionPacket.actionType = 1
         inventoryTransactionPacket.runtimeEntityId = entity.runtimeEntityId
         inventoryTransactionPacket.hotbarSlot = inventory.heldItemSlot
-        inventoryTransactionPacket.itemInHand = inventory.hand.removeNetInfo()
+        inventoryTransactionPacket.itemInHand = inventory.hand
         inventoryTransactionPacket.playerPosition = vec3Position
         inventoryTransactionPacket.clickPosition = Vector3f.ZERO
 

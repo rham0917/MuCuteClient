@@ -1,7 +1,6 @@
 package com.mucheng.mucute.client.game.inventory
 
 import com.mucheng.mucute.client.game.GameSession
-import com.mucheng.mucute.client.game.util.removeNetInfo
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerSlotType
 import org.cloudburstmc.protocol.bedrock.data.inventory.FullContainerName
@@ -150,7 +149,7 @@ abstract class AbstractInventory(val containerId: Int) {
             InventoryTransactionPacket().apply {
                 transactionType = InventoryTransactionType.NORMAL
                 val src = content[sourceSlot]
-                val dst = destinationInventory.content[destinationSlot].removeNetInfo()
+                val dst = destinationInventory.content[destinationSlot]
                 actions.add(
                     InventoryActionData(
                         InventorySource.fromContainerWindowId(sourceInfo.first), sourceInfo.second,
@@ -233,7 +232,7 @@ abstract class AbstractInventory(val containerId: Int) {
         } else {
             InventoryTransactionPacket().apply {
                 transactionType = InventoryTransactionType.NORMAL
-                val item = content[slot].removeNetInfo()
+                val item = content[slot]
                 actions.add(
                     InventoryActionData(
                         InventorySource.fromWorldInteraction(InventorySource.Flag.DROP_ITEM), 0,

@@ -1,23 +1,18 @@
 package com.mucheng.mucute.client.game.module.misc
 
-import com.mucheng.mucute.client.game.BoolValue
-import com.mucheng.mucute.client.game.ChoiceValue
-import com.mucheng.mucute.client.game.FloatValue
-import com.mucheng.mucute.client.game.IntValue
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
-import com.mucheng.mucute.client.game.Value
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.data.skin.SerializedSkin
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
-import org.cloudburstmc.protocol.bedrock.packet.PlayerListPacket
 import org.cloudburstmc.protocol.bedrock.packet.MoveEntityAbsolutePacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import org.cloudburstmc.protocol.bedrock.packet.PlayerListPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
-import kotlin.math.sqrt
-import kotlin.math.ceil
-import kotlin.math.atan2
 import kotlin.math.PI
+import kotlin.math.atan2
+import kotlin.math.ceil
+import kotlin.math.sqrt
 
 class EntityPositionTrackerModule : Module("player_tracer", ModuleCategory.Misc) {
     // Store player info by entityId
@@ -30,7 +25,7 @@ class EntityPositionTrackerModule : Module("player_tracer", ModuleCategory.Misc)
     private val previousTimestamps = mutableMapOf<Long, Long>()
 
     // Define a constant for the scan radius (in blocks)
-    private val scanRadius = intValue("Scan Radius", 500, 100..100000)
+    private val scanRadius = intValue("scanRadius", 500, 100..100000)
 
     // Data class to hold player information
     data class PlayerInfo(
@@ -43,7 +38,11 @@ class EntityPositionTrackerModule : Module("player_tracer", ModuleCategory.Misc)
     )
 
     // Function to calculate velocity
-    private fun calculateVelocity(entityId: Long, currentPosition: Vector3f, currentTime: Long): Vector3f? {
+    private fun calculateVelocity(
+        entityId: Long,
+        currentPosition: Vector3f,
+        currentTime: Long
+    ): Vector3f? {
         val previousPosition = previousPositions[entityId]
         val previousTimestamp = previousTimestamps[entityId]
 
@@ -73,16 +72,32 @@ class EntityPositionTrackerModule : Module("player_tracer", ModuleCategory.Misc)
     }
 
     // Function to send a message with detailed information
-    private fun sendMessage(playerInfo: PlayerInfo, entityPosition: Vector3f, distance: Float, direction: String, velocity: Vector3f?, actionState: String?) {
+    private fun sendMessage(
+        playerInfo: PlayerInfo,
+        entityPosition: Vector3f,
+        distance: Float,
+        direction: String,
+        velocity: Vector3f?,
+        actionState: String?
+    ) {
         val timestamp = System.currentTimeMillis()
-        val lastKnownPosition = previousPositions[playerInfo.entityId]?.roundUpCoordinates() ?: "N/A"
+        val lastKnownPosition =
+            previousPositions[playerInfo.entityId]?.roundUpCoordinates() ?: "N/A"
 
         val textPacket = TextPacket().apply {
             type = TextPacket.Type.RAW
             isNeedsTranslation = false
             message = """
-        §l§b[CutieAI]§r §ePlayer Gamertag: §a${playerInfo.name} §e| §eEntity ID: §c${playerInfo.entityId} §e| §ePosition: §a${entityPosition.roundUpCoordinates()} §e| §eDistance: §c${ceil(distance)} §e| §eDirection: §d$direction
-        §l§b[CutieAI]§r §7Additional Info: §fXbox UID: §7${playerInfo.xuid} §e| §7Height Difference: §f${ceil(entityPosition.y - playerPosition.y)} Blocks §e| §7Last Known Position: §f$lastKnownPosition
+        §l§b[CutieAI]§r §ePlayer Gamertag: §a${playerInfo.name} §e| §eEntity ID: §c${playerInfo.entityId} §e| §ePosition: §a${entityPosition.roundUpCoordinates()} §e| §eDistance: §c${
+                ceil(
+                    distance
+                )
+            } §e| §eDirection: §d$direction
+        §l§b[CutieAI]§r §7Additional Info: §fXbox UID: §7${playerInfo.xuid} §e| §7Height Difference: §f${
+                ceil(
+                    entityPosition.y - playerPosition.y
+                )
+            } Blocks §e| §7Last Known Position: §f$lastKnownPosition
     """.trimIndent()
             xuid = ""
             sourceName = ""
@@ -137,7 +152,14 @@ class EntityPositionTrackerModule : Module("player_tracer", ModuleCategory.Misc)
                     val direction = getCompassDirection(playerPosition, entityPosition)
 
                     // Send message with player info, entityId, position, and distance
-                    sendMessage(storedPlayerInfo, entityPosition, distance, direction, velocity, null)
+                    sendMessage(
+                        storedPlayerInfo,
+                        entityPosition,
+                        distance,
+                        direction,
+                        velocity,
+                        null
+                    )
                 }
             }
         }

@@ -1,6 +1,9 @@
 package com.mucheng.mucute.client.router.main
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,7 +29,7 @@ import com.mucheng.mucute.client.R
 import com.mucheng.mucute.client.util.LocalSnackbarHostState
 import com.mucheng.mucute.client.util.SnackbarHostStateScope
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AboutPageContent() {
     SnackbarHostStateScope {
@@ -60,7 +63,11 @@ fun AboutPageContent() {
                 Column(
                     Modifier
                         .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
+                        .scrollable(
+                            state = rememberScrollState(),
+                            orientation = Orientation.Vertical,
+                            overscrollEffect = null
+                        )
                         .padding(10.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {

@@ -6,20 +6,18 @@ import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
+import android.widget.Toast
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.GameSession
 import com.mucheng.mucute.client.game.ModuleManager
 import com.mucheng.mucute.client.model.GameSettingsModel
 import com.mucheng.mucute.client.overlay.OverlayManager
 import com.mucheng.mucute.relay.MuCuteRelaySession
+import com.mucheng.mucute.relay.data.MuCuteAddress
 import com.mucheng.mucute.relay.definition.Definitions
 import com.mucheng.mucute.relay.listener.NecessaryPacketListener
 import com.mucheng.mucute.relay.util.captureMuCuteRelay
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.net.InetSocketAddress
+import kotlin.concurrent.thread
 
 open class CaptureModeService : Service() {
 
@@ -54,21 +52,35 @@ open class CaptureModeService : Service() {
         return super.onStartCommand(intent, flags, startId)
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun stopMuCuteRelay() {
         Services.muCuteRelay?.disconnect()
         Services.isActive = false
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
-        GlobalScope.launch(Dispatchers.IO) {
+        thread {
             ModuleManager.saveConfig()
         }
-        OverlayManager.dismiss()
+
+        Services.handler.post {
+            OverlayManager.dismiss()
+        }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun startMuCuteRelay() {
-        GlobalScope.launch(Dispatchers.IO) {
+        if (Build.VERSION.SDK_INT >= 34) {
+            startForeground(
+                1,
+                Services.createNotification(this@CaptureModeService),
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+            )
+        } else {
+            startForeground(
+                1,
+                Services.createNotification(this@CaptureModeService)
+            )
+        }
+
+        thread(name = "RakThread") {
             val gameSettingsSharedPreferences =
                 AppContext.instance.getSharedPreferences("game_settings", Context.MODE_PRIVATE)
             val gameSettingsModel = GameSettingsModel.from(gameSettingsSharedPreferences)
@@ -79,35 +91,27 @@ open class CaptureModeService : Service() {
             runCatching {
                 Services.muCuteRelay = captureMuCuteRelay(
                     authSession = gameSettingsModel.selectedAccount,
-                    remoteAddress = InetSocketAddress(
+                    remoteAddress = MuCuteAddress(
                         captureModeModel.serverHostName,
                         captureModeModel.serverPort
-                    ),
-                    beforeCapture = {
-                        Services.isActive = true
-                        if (Build.VERSION.SDK_INT >= 34) {
-                            startForeground(
-                                1,
-                                Services.createNotification(this@CaptureModeService),
-                                ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
-                            )
-                        } else {
-                            startForeground(
-                                1,
-                                Services.createNotification(this@CaptureModeService)
-                            )
-                        }
-
-                        Services.handler.post {
-                            OverlayManager.show(this@CaptureModeService)
-                        }
-
-                        Definitions.loadBlockPalette()
-                    }
+                    )
                 ) {
                     initModules(this)
 
                     listeners.add(NecessaryPacketListener(this))
+                }
+
+                Services.isActive = true
+                Services.handler.post {
+                    OverlayManager.show(this@CaptureModeService)
+                }
+
+                Definitions.loadBlockPalette()
+            }.exceptionOrNull()?.let {
+                it.printStackTrace()
+                Services.handler.post {
+                    Toast.makeText(this, it.stackTraceToString(), Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         }

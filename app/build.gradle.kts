@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.lombok)
+    // alias(libs.plugins.checkerframework)
     kotlin("plugin.serialization") version libs.versions.kotlin
 }
 
@@ -20,6 +22,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //noinspection ChromeOsAbiSupport
+            abiFilters += setOf("arm64-v8a", "armeabi-v7a")
+        }
     }
     signingConfigs {
         create("shared") {
@@ -55,7 +62,12 @@ android {
             signingConfig = signingConfigs.getByName("shared")
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             isDebuggable = false
             signingConfig = signingConfigs.getByName("shared")
         }
@@ -63,6 +75,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+//        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -83,13 +96,31 @@ configurations.all {
     // exclude(group = "com.nukkitx", module = "natives")
 }
 
-dependencies {
+fun DependencyHandler.implementationRelay() {
     implementation(files("libs/MuCuteRelay.jar"))
+    implementation(libs.minecraftauth)
+    implementation(libs.jackson.databind)
+    implementation(libs.bundles.netty)
+    implementation(libs.expiringmap)
+    implementation(libs.network.common)
+    implementation(platform(libs.fastutil.bom))
+    implementation(libs.fastutil.long.common)
+    implementation(libs.fastutil.long.obj.maps)
+    implementation(libs.fastutil.int.obj.maps)
+    implementation(libs.fastutil.obj.int.maps)
+    implementation(libs.jose4j)
+    implementation(libs.math)
+    implementation(libs.nbt)
+    implementation(libs.lmbda)
+    implementation(libs.snappy)
     debugImplementation(platform(libs.log4j.bom))
     debugImplementation(libs.log4j.api)
     debugImplementation(libs.log4j.core)
-    implementation(libs.minecraftauth)
-    implementation(libs.nukkitx.natives)
+}
+
+dependencies {
+    implementationRelay()
+//    coreLibraryDesugaring(libs.desugar)
     implementation(libs.kotlinx.serialization.json.jvm)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

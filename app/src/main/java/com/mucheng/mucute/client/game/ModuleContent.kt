@@ -5,8 +5,10 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -49,7 +51,6 @@ import androidx.compose.ui.util.fastForEach
 import com.mucheng.mucute.client.R
 import com.mucheng.mucute.client.overlay.OverlayManager
 import com.mucheng.mucute.client.util.translatedSelf
-import java.util.Locale
 import kotlin.math.roundToInt
 
 @Composable
@@ -135,7 +136,7 @@ private fun ModuleCard(module: Module) {
                         is BoolValue -> BoolValueContent(it)
                         is FloatValue -> FloatValueContent(it)
                         is IntValue -> IntValueContent(it)
-                        is ChoiceValue -> ChoiceValueContent(it)
+                        is ListValue -> ChoiceValueContent(it)
                     }
                 }
                 ShortcutContent(module)
@@ -144,8 +145,9 @@ private fun ModuleCard(module: Module) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ChoiceValueContent(value: ChoiceValue) {
+private fun ChoiceValueContent(value: ListValue) {
     Column(
         Modifier
             .padding(start = 10.dp, end = 10.dp, bottom = 5.dp)
@@ -155,8 +157,15 @@ private fun ChoiceValueContent(value: ChoiceValue) {
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.surface
         )
-        Row(Modifier.horizontalScroll(rememberScrollState())) {
-            value.choices.forEach {
+        Row(
+            Modifier
+                .scrollable(
+                    state = rememberScrollState(),
+                    orientation = Orientation.Horizontal,
+                    overscrollEffect = null
+                )
+        ) {
+            value.listItems.forEach {
                 ElevatedFilterChip(
                     selected = value.value == it,
                     onClick = {
@@ -165,7 +174,7 @@ private fun ChoiceValueContent(value: ChoiceValue) {
                         }
                     },
                     label = {
-                        Text(it.translatedSelf)
+                        Text(it.name.translatedSelf)
                     },
                     modifier = Modifier.height(30.dp),
                     colors = FilterChipDefaults.filterChipColors(
@@ -235,7 +244,7 @@ private fun FloatValueContent(value: FloatValue) {
                 )
             },
             onValueChange = {
-                val newValue = "%.2f".format(Locale.ENGLISH, it).toFloat()
+                val newValue = ((it * 100.0).roundToInt() / 100.0).toFloat()
                 if (value.value != newValue) {
                     value.value = newValue
                 }

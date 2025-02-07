@@ -52,8 +52,8 @@ abstract class Module(val name: String, val category: ModuleCategory) : Composed
     open fun toJson() = buildJsonObject {
         put("state", isEnabled)
         put("values", buildJsonObject {
-            values.forEach {
-                put(it.name, it.toJson())
+            values.forEach { value ->
+                put(value.name, value.toJson())
             }
         })
         if (isShortcutDisplayed) {

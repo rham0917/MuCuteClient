@@ -6,6 +6,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,7 +28,7 @@ import com.mucheng.mucute.client.ui.theme.MuCuteClientTheme
 
 class CrashHandlerActivity : ComponentActivity() {
 
-    @OptIn(ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -47,7 +50,11 @@ class CrashHandlerActivity : ComponentActivity() {
                         Modifier
                             .padding(it)
                             .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
+                            .scrollable(
+                                state = rememberScrollState(),
+                                orientation = Orientation.Vertical,
+                                overscrollEffect = null
+                            )
                     ) {
                         SelectionContainer {
                             Text(

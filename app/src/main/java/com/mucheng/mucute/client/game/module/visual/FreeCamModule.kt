@@ -11,8 +11,6 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
-import kotlin.math.cos
-import kotlin.math.sin
 
 class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
 

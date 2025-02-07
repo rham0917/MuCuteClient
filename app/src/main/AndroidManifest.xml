@@ -48,7 +48,7 @@
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="MuCuteRelay Capture" />
 
-            <intent-filter android:priority="1000">
+            <intent-filter>
                 <action android:name="com.mucheng.mucute.relay.capture.start" />
                 <action android:name="com.mucheng.mucute.relay.capture.stop" />
 

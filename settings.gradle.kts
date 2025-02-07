@@ -22,7 +22,6 @@ dependencyResolutionManagement {
         mavenCentral()
         maven("https://repo.opencollab.dev/maven-snapshots")
         maven("https://repo.opencollab.dev/maven-releases")
-        maven("https://mccheatz.github.io/maven_repo")
     }
 }
 

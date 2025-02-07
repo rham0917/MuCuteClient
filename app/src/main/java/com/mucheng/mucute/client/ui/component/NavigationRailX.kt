@@ -1,5 +1,8 @@
 package com.mucheng.mucute.client.ui.component
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -22,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NavigationRailX(
     modifier: Modifier = Modifier,
@@ -44,7 +48,11 @@ fun NavigationRailX(
                 .widthIn(min = 80.dp)
                 .padding(vertical = 4.dp)
                 .selectableGroup()
-                .verticalScroll(rememberScrollState()),
+                .scrollable(
+                    state = rememberScrollState(),
+                    orientation = Orientation.Vertical,
+                    overscrollEffect = null
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(
                 4.dp,

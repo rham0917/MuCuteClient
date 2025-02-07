@@ -1,6 +1,8 @@
 package com.mucheng.mucute.client.overlay
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.view.View
 import android.view.WindowManager
 import androidx.compose.ui.platform.compositionContext
 import androidx.lifecycle.Lifecycle
@@ -12,17 +14,15 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.mucheng.mucute.client.game.ModuleManager
 import com.mucheng.mucute.client.ui.theme.MuCuteClientTheme
 import kotlinx.coroutines.launch
-import java.lang.ref.WeakReference
 
+@SuppressLint("StaticFieldLeak")
 @Suppress("MemberVisibilityCanBePrivate")
 object OverlayManager {
 
     private val overlayWindows = ArrayList<OverlayWindow>()
 
-    private var contextWeakRef: WeakReference<Context> = WeakReference(null)
-
-    val currentContext: Context?
-        get() = contextWeakRef.get()
+    var currentContext: Context? = null
+        private set
 
     var isShowing = false
         private set
@@ -56,7 +56,7 @@ object OverlayManager {
     }
 
     fun show(context: Context) {
-        this.contextWeakRef = WeakReference(context)
+        this.currentContext = context
 
         overlayWindows.forEach {
             showOverlayWindow(context, it)

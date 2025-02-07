@@ -10,8 +10,8 @@ import org.cloudburstmc.protocol.bedrock.packet.SetEntityDataPacket
 
 class NightVisionModule : Module("full_bright", ModuleCategory.Effect) {
 
-    private val nightVision by boolValue("nightvision", true)
-    private val removeFire by boolValue("removefire", false)
+    private val nightVision by boolValue("nightVision", true)
+    private val removeFire by boolValue("removeFire", false)
 
     override fun onDisabled() {
         if (nightVision && isSessionCreated) {

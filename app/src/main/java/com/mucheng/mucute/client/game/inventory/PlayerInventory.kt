@@ -50,11 +50,13 @@ class PlayerInventory(private val player: LocalPlayer) : EntityInventory(player)
             }
 
             is MobEquipmentPacket -> {
-                heldItemSlot = packet.hotbarSlot
+                if (packet.runtimeEntityId == player.runtimeEntityId) {
+                    heldItemSlot = packet.hotbarSlot
+                }
             }
 
             is InventoryTransactionPacket -> {
-                if (packet.transactionType == InventoryTransactionType.NORMAL) {
+                if (packet.transactionType == InventoryTransactionType.NORMAL && packet.runtimeEntityId == player.runtimeEntityId) {
                     packet.actions.filter { it is InventoryActionData && it.source.type == InventorySource.Type.CONTAINER }
                         .forEach {
                             val containerId =

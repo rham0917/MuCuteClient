@@ -15,9 +15,9 @@ import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
-    private val verticalSpeedUp by floatValue("Vertical Speed (Up)", 7.0f, 1.0f..20.0f)
-    private val verticalSpeedDown by floatValue("Vertical Speed (Down)", 7.0f, 1.0f..20.0f)
-    private var motionInterval by floatValue("Hop Delay", 100.0f, 1.0f..600.0f)
+    private val verticalSpeedUp by floatValue("verticalUpSpeed", 7.0f, 1.0f..20.0f)
+    private val verticalSpeedDown by floatValue("verticalDownSpeed", 7.0f, 1.0f..20.0f)
+    private var motionInterval by floatValue("motionInterval", 100.0f, 1.0f..600.0f)
     private val speedValue by floatValue("speed", 1.4f, 0.1f..3.0f)
     private var jitterState = false
     private var lastMotionTime = 0L

@@ -48,7 +48,7 @@ class GameSession(val muCuteRelaySession: MuCuteRelaySession) : ComposedPacketHa
         }
     }
 
-    fun displayClientMessage(message: String, type: TextPacket.Type = TextPacket.Type.TIP) {
+    fun displayClientMessage(message: String, type: TextPacket.Type = TextPacket.Type.RAW) {
         val textPacket = TextPacket()
         textPacket.type = type
         textPacket.isNeedsTranslation = false

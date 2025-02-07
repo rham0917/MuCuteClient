@@ -3,19 +3,19 @@ package com.mucheng.mucute.client.game.module.motion
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import kotlinx.coroutines.DelicateCoroutinesApi
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
-import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
-import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
-import org.cloudburstmc.math.vector.Vector3f
-import kotlin.random.Random
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.cloudburstmc.math.vector.Vector3f
+import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
+import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
+import kotlin.random.Random
 
 class RandomMoveModule : Module("random_move", ModuleCategory.Motion) {
 
-    private val maxMoveDistance by floatValue("Repeat",  4.5f, 2.0f..10.0f)
-    private val moveCooldown by intValue("Delay", 300, 100..1000)
+    private val maxMoveDistance by floatValue("repeat", 4.5f, 2.0f..10.0f)
+    private val moveCooldown by intValue("delay", 300, 100..1000)
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun beforePacketBound(packet: BedrockPacket): Boolean {

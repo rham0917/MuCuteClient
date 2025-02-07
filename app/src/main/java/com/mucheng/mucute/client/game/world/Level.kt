@@ -58,7 +58,12 @@ class Level(val session: GameSession) {
             }
 
             is AddPlayerPacket -> {
-                val entity = Player(packet.runtimeEntityId, packet.uniqueEntityId, packet.uuid, packet.username).apply {
+                val entity = Player(
+                    packet.runtimeEntityId,
+                    packet.uniqueEntityId,
+                    packet.uuid,
+                    packet.username
+                ).apply {
                     move(packet.position)
                     rotate(packet.rotation)
                     handleSetData(packet.metadata)
@@ -67,7 +72,8 @@ class Level(val session: GameSession) {
             }
 
             is RemoveEntityPacket -> {
-                val entityToRemove = entityMap.values.find { it.uniqueEntityId == packet.uniqueEntityId } ?: return
+                val entityToRemove =
+                    entityMap.values.find { it.uniqueEntityId == packet.uniqueEntityId } ?: return
                 entityMap.remove(entityToRemove.runtimeEntityId)
             }
 

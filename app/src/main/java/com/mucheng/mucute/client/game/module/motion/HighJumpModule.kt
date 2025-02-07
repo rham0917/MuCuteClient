@@ -10,7 +10,7 @@ import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 
 class HighJumpModule : Module("high_jump", ModuleCategory.Motion) {
 
-    private val jumpHeight by floatValue("Jump Height", 0.85f, 0.4f..3.0f)
+    private val jumpHeight by floatValue("jumpHeight", 0.85f, 0.4f..3.0f)
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {

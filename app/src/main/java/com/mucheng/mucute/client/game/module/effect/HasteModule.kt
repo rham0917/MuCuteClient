@@ -6,11 +6,10 @@ import com.mucheng.mucute.client.game.data.Effect
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
-import com.mucheng.mucute.client.game.entity.LocalPlayer
 
 class HasteModule : Module("haste", ModuleCategory.Effect) {
 
-    private val amplifierValue by floatValue("Amplifier", 1f, 1f..5f)
+    private val amplifierValue by floatValue("amplifier", 1f, 1f..5f)
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
