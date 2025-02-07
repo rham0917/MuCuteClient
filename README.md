@@ -16,6 +16,12 @@ innovation in our development process. 🚫
 
 ![Divider](images/divider.png)
 
+## Install ⬆️
+
+[Click Here to Install](https://github.com/MuCuteTeam/MuCuteClient/releases/download/v1.0/app-debug.apk)
+
+![Divider](images/divider.png)
+
 ## Features
 
 1. **No Modifications to the Minecraft Client**: Our solution ensures that the original client
@@ -57,7 +63,7 @@ channels:
   on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134)
   for ongoing discussions. 💬
 - Join our [Telegram](https://t.me/mucuteclient) channel for updates and community interaction. 📱
-
+- Join our [Discord](https://discord.gg/7Xx6GVwS) channel for more activities 🥳
 ![Divider](images/divider.png)
 
 ## License 📝  
@@ -152,6 +158,12 @@ To install the APK for MuCuteClient, please follow these steps:
 
 5. **Launch the App**: Once installed, you can find MuCuteClient in your app drawer. Tap to launch
    and enjoy!
+
+6. **Reccomended Requirements**
+   1GB Storage Available
+   Stable Minecraft APK (1.21.51)
+   Andriod 5
+   Once you reach these requirements, You can use MuCuteClient With Ease!
 
 **Note**: Ensure that you have sufficient storage space and that your device meets the minimum
 requirements for running the app.
