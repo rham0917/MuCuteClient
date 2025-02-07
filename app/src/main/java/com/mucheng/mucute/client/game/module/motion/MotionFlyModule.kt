@@ -3,25 +3,29 @@ package com.mucheng.mucute.client.game.module.motion
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.math.vector.Vector3f
-import org.cloudburstmc.protocol.bedrock.data.Ability
-import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
-import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
-import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
-import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
+import org.cloudburstmc.protocol.bedrock.data.Ability
+import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
+import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
+import com.mucheng.mucute.client.game.FloatValue
+import com.mucheng.mucute.client.game.BoolValue
+import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
+import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
+import org.cloudburstmc.protocol.bedrock.packet.RequestAbilityPacket
 
 class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
-    private val verticalSpeedUp by floatValue("Vertical Speed (Up)", 7.0f, 1.0f..20.0f)
-    private val verticalSpeedDown by floatValue("Vertical Speed (Down)", 7.0f, 1.0f..20.0f)
-    private var motionInterval by floatValue("Hop Delay", 100.0f, 1.0f..600.0f)
-    private val speedValue by floatValue("speed", 1.4f, 0.1f..3.0f)
-    private var jitterState = false
+    private val verticalSpeedUp = floatValue("Vertical Speed (Up)", 7.0f, 1.0f..20.0f)
+    private val verticalSpeedDown = floatValue("Vertical Speed (Down)", 7.0f, 1.0f..20.0f)
+    private val motionInterval = floatValue("Hop Delay", 100.0f, 100.0f..600.0f)
     private var lastMotionTime = 0L
+    private var speedvalue by floatValue("Glide Speed", 1.0f, 0.42f..3.2f)
+    private var FlySpeed by floatValue("Vanilla Fly", 2.15f, 1.0f..5.0f)
+    private var jitterState = false
+    private var canFly = false
 
 
     private val enableFlyAbilitiesPacket = UpdateAbilitiesPacket().apply {
@@ -45,7 +49,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
                 )
             )
             walkSpeed = 0.1f
-            flySpeed = 2.19f
+            flySpeed = FlySpeed
         })
     }
 
@@ -72,37 +76,12 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
         })
     }
 
-    private var canFly = false
 
-    private fun sendToggleMessage(enabled: Boolean) {
-        val status = if (enabled) "§aEnabled" else "§cDisabled"
-        val message = "§l§b[MuCute] §r§7Motion Fly §8» $status"
 
-        val textPacket = TextPacket().apply {
-            type = TextPacket.Type.RAW
-            isNeedsTranslation = false
-            this.message = message
-            xuid = ""
-            sourceName = ""
-        }
+    private fun handleFlyAbilities(isEnabled: Boolean) {
 
-        session.clientBound(textPacket)
-    }
 
-    override fun onEnabled() {
-        if (isSessionCreated) {
-            sendToggleMessage(true)
-        }
-    }
 
-    override fun onDisabled() {
-        if (isSessionCreated) {
-            sendToggleMessage(false)
-        }
-    }
-
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
-        if (packet is PlayerAuthInputPacket) {
             if (!canFly && isEnabled) {
                 enableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
                 session.clientBound(enableFlyAbilitiesPacket)
@@ -112,49 +91,35 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
                 session.clientBound(disableFlyAbilitiesPacket)
                 canFly = false
             }
-        }
 
-        if (isEnabled) {
-            val currentTime = System.currentTimeMillis()
+    }
 
-            if (currentTime - lastMotionTime >= motionInterval) {
-                val yaw = session.localPlayer.rotationYaw
 
-                var moveX = 0f
-                var moveZ = 0f
 
-                moveX -= 0
-                moveZ += 0
 
-                var vertical = 0f
-                if (packet is PlayerAuthInputPacket) {
-                    val inputData = packet.inputData
-                    if (inputData.contains(PlayerAuthInputData.WANT_UP)) {
-                        vertical = verticalSpeedUp
-                    } else if (inputData.contains(PlayerAuthInputData.WANT_DOWN)) {
-                        vertical = -verticalSpeedDown
-                    }
+
+
+
+
+
+    override fun beforePacketBound(packet: BedrockPacket): Boolean {
+        if (packet is PlayerAuthInputPacket) {
+            handleFlyAbilities(isEnabled)
+            if (isEnabled && System.currentTimeMillis() - lastMotionTime >= motionInterval.value) {
+                val vertical = when {
+                    packet.inputData.contains(PlayerAuthInputData.WANT_UP) -> verticalSpeedUp.value
+                    packet.inputData.contains(PlayerAuthInputData.WANT_DOWN) -> -verticalSpeedDown.value
+                    else -> 0f
                 }
-
-                if (jitterState) {
-                    vertical += 0.1f
-                } else {
-                    vertical -= 0.1f
-                }
-
-                jitterState = !jitterState
-
                 val motionPacket = SetEntityMotionPacket().apply {
                     runtimeEntityId = session.localPlayer.runtimeEntityId
-                    motion = Vector3f.from(moveX * speedValue, vertical, moveZ * speedValue)
+                    motion = Vector3f.from(session.localPlayer.motionX * speedvalue, vertical + (if (jitterState) 0.1f else -0.1f), session.localPlayer.motionZ * speedvalue)
                 }
-
                 session.clientBound(motionPacket)
-
-                lastMotionTime = currentTime
+                jitterState = !jitterState
+                lastMotionTime = System.currentTimeMillis()
             }
         }
-
         return false
     }
 }
