@@ -7,6 +7,7 @@ import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.FireResistanceModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.HealthBoostModule
+import com.mucheng.mucute.client.game.module.effect.InstantDamageModule
 import com.mucheng.mucute.client.game.module.effect.InstantHealthModule
 import com.mucheng.mucute.client.game.module.effect.JumpBoostModule
 import com.mucheng.mucute.client.game.module.effect.LevitationModule
@@ -16,6 +17,7 @@ import com.mucheng.mucute.client.game.module.effect.PoseidonModule
 import com.mucheng.mucute.client.game.module.effect.RegenModule
 import com.mucheng.mucute.client.game.module.effect.ResistanceModule
 import com.mucheng.mucute.client.game.module.effect.SlowFallModule
+import com.mucheng.mucute.client.game.module.effect.StrengthModule
 import com.mucheng.mucute.client.game.module.effect.SwiftnessModule
 import com.mucheng.mucute.client.game.module.misc.DesyncModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
@@ -84,6 +86,8 @@ object ModuleManager {
             add(FireResistanceModule())
             add(SwiftnessModule())
             add(InstantHealthModule())
+            add(StrengthModule())
+            add(InstantDamageModule())
         }
     }
 

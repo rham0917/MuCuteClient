@@ -43,6 +43,7 @@ object TranslationManager {
         put("fire_resist","Fire Resistance")
         put("swiftness","Swiftness")
         put("insta_health","Instant Health")
+        put("strength","Strength")
 
         // Below for module options
         put("flySpeed", "Fly Speed")
@@ -94,6 +95,7 @@ object TranslationManager {
         put("fire_resist","耐火性")
         put("swiftness","见效快")
         put("insta_health","即时健康")
+        put("strength","力量")
 
         // Below for module options
         put("flySpeed", "飞行速度")
