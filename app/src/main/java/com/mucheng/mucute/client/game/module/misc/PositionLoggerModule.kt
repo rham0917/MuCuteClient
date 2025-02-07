@@ -12,7 +12,7 @@ import kotlin.math.atan2
 import kotlin.math.ceil
 import kotlin.math.sqrt
 
-class PositionLoggerModule : Module("positionLogger", ModuleCategory.Misc) {
+class PositionLoggerModule : Module("position_logger", ModuleCategory.Misc) {
 
     private var playerPosition = Vector3f.from(0f, 0f, 0f)
     private val entityPositions = mutableMapOf<Long, Vector3f>()
