@@ -2,7 +2,7 @@ package com.mucheng.mucute.client.game
 
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
-import com.mucheng.mucute.client.game.module.combat.AnticrystalModule
+import com.mucheng.mucute.client.game.module.combat.AntiCrystalModule
 import com.mucheng.mucute.client.game.module.combat.CriticalsModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.AbsoptionModule
@@ -97,7 +97,7 @@ object ModuleManager {
             add(SaturationModule())
             add(AbsoptionModule())
             add(BlindnessModule())
-            add(AnticrystalModule())
+            add(AntiCrystalModule())
         }
     }
 
