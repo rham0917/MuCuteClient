@@ -35,6 +35,7 @@ object TranslationManager {
         put("motion_fly", "Motion Fly")
         put("freecam", "FreeCam")
         put("player_tracer", "Player Tracker")
+        put("critic", "Criticals")
 
         // Below for module options
         put("flySpeed", "Fly Speed")
@@ -78,6 +79,7 @@ object TranslationManager {
         put("motion_fly", "动量飞行")
         put("freecam", "自由视角")
         put("player_tracer", "玩家追踪器")
+        put("critic","批评家")
 
         // Below for module options
         put("flySpeed", "飞行速度")
