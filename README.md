@@ -16,6 +16,12 @@ innovation in our development process. 🚫
 
 ![Divider](images/divider.png)
 
+## Install ⬆️
+
+[Click Here to Install](https://github.com/MuCuteTeam/MuCuteClient/releases/download/v1.0/app-debug.apk)
+
+![Divider](images/divider.png)
+
 ## Features
 
 1. **No Modifications to the Minecraft Client**: Our solution ensures that the original client
