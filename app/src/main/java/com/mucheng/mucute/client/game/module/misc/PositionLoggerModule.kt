@@ -12,13 +12,36 @@ import kotlin.math.atan2
 import kotlin.math.ceil
 import kotlin.math.sqrt
 
-class PositionLoggerModule : Module("position_logger", ModuleCategory.Misc) {
+class PositionLoggerModule : Module("positionLogger", ModuleCategory.Misc) {
 
     private var playerPosition = Vector3f.from(0f, 0f, 0f)
     private val entityPositions = mutableMapOf<Long, Vector3f>()
 
-    init {
-        println("PositionLogger Module initialized")
+    override fun onEnabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(true)
+        }
+    }
+
+    override fun onDisabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(false)
+        }
+    }
+
+    private fun sendToggleMessage(enabled: Boolean) {
+        val status = if (enabled) "§aEnabled" else "§cDisabled"
+        val message = "§l§b[MuCute] §r§7Position Logger §8» $status"
+
+        val textPacket = TextPacket().apply {
+            type = TextPacket.Type.RAW
+            isNeedsTranslation = false
+            this.message = message
+            xuid = ""
+            sourceName = ""
+        }
+
+        session.clientBound(textPacket)
     }
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
@@ -44,9 +67,8 @@ class PositionLoggerModule : Module("position_logger", ModuleCategory.Misc) {
             // If a closest entity is found, send the message
             if (closestEntityId != null && closestEntityPosition != null) {
                 val roundedPosition = closestEntityPosition!!.roundUpCoordinates()
-                val roundedDistance = ceil(closestDistance) // Round up distance
+                val roundedDistance = ceil(closestDistance)
                 val direction = getCompassDirection(playerPosition, closestEntityPosition!!)
-
                 sendMessage("§l§b[PositionLogger]§r §eClosest entity at §a$roundedPosition §e| Distance: §c$roundedDistance §e| Direction: §d$direction")
             }
         }
@@ -73,35 +95,26 @@ class PositionLoggerModule : Module("position_logger", ModuleCategory.Misc) {
         val roundedX = ceil(this.x).toInt()
         val roundedY = ceil(this.y).toInt()
         val roundedZ = ceil(this.z).toInt()
-        return "$roundedX, $roundedY, $roundedZ"
+        return "($roundedX, $roundedY, $roundedZ)"
     }
 
-    // Determine the 16-direction compass heading
+    // Get compass direction between two points
     private fun getCompassDirection(from: Vector3f, to: Vector3f): String {
         val dx = to.x - from.x
         val dz = to.z - from.z
+        val angle = Math.toDegrees(atan2(dx, dz).toDouble()).let {
+            ((it + 360) % 360)
+        }
 
-        // Calculate angle in degrees (-180 to 180)
-        val angle = (atan2(dz, dx) * (180 / PI) + 360) % 360
-
-        // Map the angle to 16 compass directions
         return when {
-            angle >= 348.75 || angle < 11.25 -> "N"
-            angle >= 11.25 && angle < 33.75 -> "NNE"
-            angle >= 33.75 && angle < 56.25 -> "NE"
-            angle >= 56.25 && angle < 78.75 -> "ENE"
-            angle >= 78.75 && angle < 101.25 -> "E"
-            angle >= 101.25 && angle < 123.75 -> "ESE"
-            angle >= 123.75 && angle < 146.25 -> "SE"
-            angle >= 146.25 && angle < 168.75 -> "SSE"
-            angle >= 168.75 && angle < 191.25 -> "S"
-            angle >= 191.25 && angle < 213.75 -> "SSW"
-            angle >= 213.75 && angle < 236.25 -> "SW"
-            angle >= 236.25 && angle < 258.75 -> "WSW"
-            angle >= 258.75 && angle < 281.25 -> "W"
-            angle >= 281.25 && angle < 303.75 -> "WNW"
-            angle >= 303.75 && angle < 326.25 -> "NW"
-            else -> "NNW"
+            angle >= 337.5 || angle < 22.5 -> "N"
+            angle >= 22.5 && angle < 67.5 -> "NE"
+            angle >= 67.5 && angle < 112.5 -> "E"
+            angle >= 112.5 && angle < 157.5 -> "SE"
+            angle >= 157.5 && angle < 202.5 -> "S"
+            angle >= 202.5 && angle < 247.5 -> "SW"
+            angle >= 247.5 && angle < 292.5 -> "W"
+            else -> "NW"
         }
     }
 
@@ -116,6 +129,4 @@ class PositionLoggerModule : Module("position_logger", ModuleCategory.Misc) {
         }
         session.clientBound(textPacket)
     }
-
-
 }

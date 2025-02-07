@@ -4,6 +4,7 @@ import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import com.mucheng.mucute.client.game.data.Effect
 import org.cloudburstmc.math.vector.Vector3f
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
@@ -15,6 +16,61 @@ import kotlin.math.sin
 class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
 
     private val speedMultiplier = 1.5f  // How much faster to move in water
+
+    override fun onEnabled() {
+
+        if (isSessionCreated) {
+
+            sendToggleMessage(true)
+
+        }
+
+    }
+
+    override fun onDisabled() {
+        if (isSessionCreated) {
+            // Remove effects
+            session.clientBound(MobEffectPacket().apply {
+                event = MobEffectPacket.Event.REMOVE
+                runtimeEntityId = session.localPlayer.runtimeEntityId
+                effectId = Effect.NIGHT_VISION
+            })
+            session.clientBound(MobEffectPacket().apply {
+                event = MobEffectPacket.Event.REMOVE
+                runtimeEntityId = session.localPlayer.runtimeEntityId
+                effectId = Effect.WATER_BREATHING
+            })
+            sendToggleMessage(false)
+        }
+    }
+
+    private fun sendToggleMessage(enabled: Boolean) {
+
+        val status = if (enabled) "§aEnabled" else "§cDisabled"
+
+        val message = "§l§b[MuCute] §r§7Poseidon §8» $status"
+
+
+
+        val textPacket = TextPacket().apply {
+
+            type = TextPacket.Type.RAW
+
+            isNeedsTranslation = false
+
+            this.message = message
+
+            xuid = ""
+
+            sourceName = ""
+
+        }
+
+        session.clientBound(textPacket)
+
+    }
+
+
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
@@ -74,19 +130,5 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
         return false
     }
 
-    override fun onDisabled() {
-        if (isSessionCreated) {
-            // Remove effects
-            session.clientBound(MobEffectPacket().apply {
-                event = MobEffectPacket.Event.REMOVE
-                runtimeEntityId = session.localPlayer.runtimeEntityId
-                effectId = Effect.NIGHT_VISION
-            })
-            session.clientBound(MobEffectPacket().apply {
-                event = MobEffectPacket.Event.REMOVE
-                runtimeEntityId = session.localPlayer.runtimeEntityId
-                effectId = Effect.WATER_BREATHING
-            })
-        }
-    }
+
 } 

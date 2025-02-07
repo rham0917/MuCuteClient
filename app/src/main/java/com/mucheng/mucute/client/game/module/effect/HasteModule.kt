@@ -6,10 +6,42 @@ import com.mucheng.mucute.client.game.data.Effect
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
 class HasteModule : Module("haste", ModuleCategory.Effect) {
 
-    private val amplifierValue by floatValue("amplifier", 1f, 1f..5f)
+    private val amplifierValue by floatValue("Amplifier", 1f, 1f..5f)
+
+    override fun onEnabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(true)
+        }
+    }
+
+    override fun onDisabled() {
+        if (isSessionCreated) {
+            session.clientBound(MobEffectPacket().apply {
+                runtimeEntityId = session.localPlayer.runtimeEntityId
+                event = MobEffectPacket.Event.REMOVE
+                effectId = Effect.HASTE
+            })
+            sendToggleMessage(false)
+        }
+    }
+
+    private fun sendToggleMessage(enabled: Boolean) {
+        val status = if (enabled) "§aEnabled" else "§cDisabled"
+        val message = "§l§b[MuCute] §r§7Haste §8» $status"
+
+        val textPacket = TextPacket().apply {
+            type = TextPacket.Type.RAW
+            isNeedsTranslation = false
+            this.message = message
+            xuid = ""
+            sourceName = ""
+        }
+        session.clientBound(textPacket)
+    }
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket && isEnabled) {
@@ -26,15 +58,4 @@ class HasteModule : Module("haste", ModuleCategory.Effect) {
         }
         return false
     }
-
-    override fun onDisabled() {
-        if (isSessionCreated) {
-            session.clientBound(MobEffectPacket().apply {
-                runtimeEntityId = session.localPlayer.runtimeEntityId
-                event = MobEffectPacket.Event.REMOVE
-                effectId = Effect.HASTE
-            })
-        }
-    }
-
 }

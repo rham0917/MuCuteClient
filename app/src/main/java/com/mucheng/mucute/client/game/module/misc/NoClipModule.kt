@@ -9,6 +9,7 @@ import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
 class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
 
@@ -32,7 +33,6 @@ class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
                     Ability.OPERATOR_COMMANDS
                 )
             )
-            // Adding the NoClip ability
             abilityValues.add(Ability.NO_CLIP)
             walkSpeed = 0.1f
             flySpeed = 0.15f
@@ -58,21 +58,45 @@ class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
                     Ability.OPERATOR_COMMANDS
                 )
             )
-            // Removing the NoClip ability
             abilityValues.remove(Ability.NO_CLIP)
             walkSpeed = 0.1f
         })
     }
 
     private var noClipEnabled = false
-
     private var lastNoClipPacketTime = System.currentTimeMillis()
+
+    override fun onEnabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(true)
+        }
+    }
+
+    override fun onDisabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(false)
+        }
+    }
+
+    private fun sendToggleMessage(enabled: Boolean) {
+        val status = if (enabled) "§aEnabled" else "§cDisabled"
+        val message = "§l§b[MuCute] §r§7NoClip §8» $status"
+
+        val textPacket = TextPacket().apply {
+            type = TextPacket.Type.RAW
+            isNeedsTranslation = false
+            this.message = message
+            xuid = ""
+            sourceName = ""
+        }
+
+        session.clientBound(textPacket)
+    }
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is PlayerAuthInputPacket) {
             val currentTime = System.currentTimeMillis()
 
-            // Prevent sending too many packets in a short amount of time
             if (currentTime - lastNoClipPacketTime < 200) {
                 return false
             }
@@ -91,5 +115,4 @@ class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
         }
         return false
     }
-
 }

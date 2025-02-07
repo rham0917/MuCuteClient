@@ -10,11 +10,11 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.RequestAbilityPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
 class FlyModule : Module("fly", ModuleCategory.Motion) {
 
-
-    private var flyspeed by floatValue("flySpeed", 0.15f, 0.1f..1.5f)
+    private var flyspeed by floatValue("Fly Speed", 0.15f, 0.1f..1.5f)
 
     private val enableFlyAbilitiesPacket = UpdateAbilitiesPacket().apply {
         playerPermission = PlayerPermission.OPERATOR
@@ -66,6 +66,33 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
 
     private var canFly = false
 
+    override fun onEnabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(true)
+        }
+    }
+
+    override fun onDisabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(false)
+        }
+    }
+
+    private fun sendToggleMessage(enabled: Boolean) {
+        val status = if (enabled) "§aEnabled" else "§cDisabled"
+        val message = "§l§b[MuCute] §r§7Fly §8» $status"
+
+        val textPacket = TextPacket().apply {
+            type = TextPacket.Type.RAW
+            isNeedsTranslation = false
+            this.message = message
+            xuid = ""
+            sourceName = ""
+        }
+
+        session.clientBound(textPacket)
+    }
+
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
         if (packet is RequestAbilityPacket && packet.ability == Ability.FLYING) {
             return true
@@ -89,5 +116,4 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
 
         return false
     }
-
 }

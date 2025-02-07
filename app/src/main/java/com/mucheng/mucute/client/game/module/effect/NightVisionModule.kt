@@ -7,11 +7,22 @@ import org.cloudburstmc.protocol.bedrock.data.entity.EntityFlag
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityDataPacket
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
 class NightVisionModule : Module("full_bright", ModuleCategory.Effect) {
 
-    private val nightVision by boolValue("nightVision", true)
-    private val removeFire by boolValue("removeFire", false)
+    private val nightVision by boolValue("nightvision", true)
+    private val removeFire by boolValue("removefire", false)
+
+    override fun onEnabled() {
+
+        if (isSessionCreated) {
+
+            sendToggleMessage(true)
+
+        }
+
+    }
 
     override fun onDisabled() {
         if (nightVision && isSessionCreated) {
@@ -20,7 +31,34 @@ class NightVisionModule : Module("full_bright", ModuleCategory.Effect) {
                 runtimeEntityId = session.localPlayer.runtimeEntityId
                 effectId = Effect.NIGHT_VISION
             })
+            sendToggleMessage(false)
         }
+    }
+
+    private fun sendToggleMessage(enabled: Boolean) {
+
+        val status = if (enabled) "§aEnabled" else "§cDisabled"
+
+        val message = "§l§b[MuCute] §r§7FullBright §8» $status"
+
+
+
+        val textPacket = TextPacket().apply {
+
+            type = TextPacket.Type.RAW
+
+            isNeedsTranslation = false
+
+            this.message = message
+
+            xuid = ""
+
+            sourceName = ""
+
+        }
+
+        session.clientBound(textPacket)
+
     }
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {

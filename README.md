@@ -162,8 +162,9 @@ requirements for running the app.
 
 - Connect with us
   on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134)
-  for ongoing discussions. 💬
+  for Chinese discussions. 💬
 - Join our [Telegram](https://t.me/mucuteclient) channel for updates and community interaction. 📱
+- Join our [Discord](https://discord.gg/7Xx6GVwS) channel for more activities 🥳
 
 ![Divider](images/divider.png)
 

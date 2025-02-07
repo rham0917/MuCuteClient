@@ -6,6 +6,7 @@ import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import kotlin.concurrent.timer
 import kotlin.math.cos
 import kotlin.math.sin
@@ -28,6 +29,33 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
                 }
             }
         }
+    }
+
+    override fun onEnabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(true)
+        }
+    }
+
+    override fun onDisabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(false)
+        }
+    }
+
+    private fun sendToggleMessage(enabled: Boolean) {
+        val status = if (enabled) "§aEnabled" else "§cDisabled"
+        val message = "§l§b[MuCute] §r§7Auto Walk §8» $status"
+
+        val textPacket = TextPacket().apply {
+            type = TextPacket.Type.RAW
+            isNeedsTranslation = false
+            this.message = message
+            xuid = ""
+            sourceName = ""
+        }
+
+        session.clientBound(textPacket)
     }
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
@@ -91,7 +119,7 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
 
     // Apply a slight jump every 2 seconds
     private fun applyJump() {
-        if (!isJumping && isSessionCreated) {  // Ensure we're not already jumping
+        if (!isJumping) {  // Ensure we're not already jumping
             isJumping = true  // Mark as jumping
 
             // Apply a slight upward motion for the jump

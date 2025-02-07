@@ -11,6 +11,11 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
 class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
 
@@ -65,22 +70,35 @@ class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
 
     private var isFlyNoClipEnabled = false
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onEnabled() {
         if (isSessionCreated) {
-            // Store original position when enabled
-            originalPosition = Vector3f.from(
-                session.localPlayer.posX,
-                session.localPlayer.posY,
-                session.localPlayer.posZ
-            )
-            enableFlyNoClipPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
-            session.clientBound(enableFlyNoClipPacket)
-            isFlyNoClipEnabled = true
+            sendToggleMessage(true)
+
+            GlobalScope.launch {
+                for (i in 5 downTo 1) {
+                    val countdownMessage = "§l§b[MuCute] §r§7FreeCam will enable in §e$i §7seconds"
+                    sendCountdownMessage(countdownMessage)
+                    delay(1000)
+                }
+
+                // Store original position when enabled after countdown
+                originalPosition = Vector3f.from(
+                    session.localPlayer.posX,
+                    session.localPlayer.posY,
+                    session.localPlayer.posZ
+                )
+                enableFlyNoClipPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
+                session.clientBound(enableFlyNoClipPacket)
+                isFlyNoClipEnabled = true
+            }
         }
     }
 
     override fun onDisabled() {
         if (isSessionCreated && originalPosition != null) {
+            sendToggleMessage(false)
+
             // Return to original position when disabled
             val motionPacket = SetEntityMotionPacket().apply {
                 runtimeEntityId = session.localPlayer.runtimeEntityId
@@ -93,6 +111,33 @@ class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
             session.clientBound(disableFlyNoClipPacket)
             isFlyNoClipEnabled = false
         }
+    }
+
+    private fun sendToggleMessage(enabled: Boolean) {
+        val status = if (enabled) "§aEnabled" else "§cDisabled"
+        val message = "§l§b[MuCute] §r§7FreeCam §8» $status"
+
+        val textPacket = TextPacket().apply {
+            type = TextPacket.Type.RAW
+            isNeedsTranslation = false
+            this.message = message
+            xuid = ""
+            sourceName = ""
+        }
+
+        session.clientBound(textPacket)
+    }
+
+    private fun sendCountdownMessage(message: String) {
+        val textPacket = TextPacket().apply {
+            type = TextPacket.Type.RAW
+            isNeedsTranslation = false
+            this.message = message
+            xuid = ""
+            sourceName = ""
+        }
+
+        session.clientBound(textPacket)
     }
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
