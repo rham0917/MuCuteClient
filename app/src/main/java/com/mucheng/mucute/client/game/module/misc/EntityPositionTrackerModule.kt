@@ -18,14 +18,40 @@ class EntityPositionTrackerModule : Module("player_tracer", ModuleCategory.Misc)
     // Store player info by entityId
     private val playersInfo = mutableMapOf<Long, PlayerInfo>()
     private var playerPosition = Vector3f.from(0f, 0f, 0f)
-    private var playerEntityId: Long? = null
 
     // Store previous positions and timestamps to calculate velocity
     private val previousPositions = mutableMapOf<Long, Vector3f>()
     private val previousTimestamps = mutableMapOf<Long, Long>()
 
     // Define a constant for the scan radius (in blocks)
-    private val scanRadius = intValue("scanRadius", 500, 100..100000)
+    private val scanRadius = intValue("Scan Radius", 500, 100..100000)
+
+    override fun onEnabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(true)
+        }
+    }
+
+    override fun onDisabled() {
+        if (isSessionCreated) {
+            sendToggleMessage(false)
+        }
+    }
+
+    private fun sendToggleMessage(enabled: Boolean) {
+        val status = if (enabled) "§aEnabled" else "§cDisabled"
+        val message = "§l§b[MuCute] §r§7Entity Position Tracker §8» $status"
+
+        val textPacket = TextPacket().apply {
+            type = TextPacket.Type.RAW
+            isNeedsTranslation = false
+            this.message = message
+            xuid = ""
+            sourceName = ""
+        }
+
+        session.clientBound(textPacket)
+    }
 
     // Data class to hold player information
     data class PlayerInfo(
