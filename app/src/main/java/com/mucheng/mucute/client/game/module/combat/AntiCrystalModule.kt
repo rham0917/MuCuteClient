@@ -3,11 +3,9 @@ package com.mucheng.mucute.client.game.module.combat
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
-import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
-import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
 class AntiCrystalModule : Module("anticrystal", ModuleCategory.Misc) {
     private var ylevel by floatValue("ylevel", 0.4f, 0.1f..1.61f)
@@ -20,6 +18,7 @@ class AntiCrystalModule : Module("anticrystal", ModuleCategory.Misc) {
 
 
     }
+
     override fun onDisabled() {
 
         if (isSessionCreated) {
@@ -29,13 +28,11 @@ class AntiCrystalModule : Module("anticrystal", ModuleCategory.Misc) {
     }
 
 
-
     private fun sendToggleMessage(enabled: Boolean) {
 
         val status = if (enabled) "§aEnabled" else "§cDisabled"
 
         val message = "§l§b[MuCute] §r§7Anticrystal §8» $status"
-
 
 
         val textPacket = TextPacket().apply {
@@ -57,15 +54,13 @@ class AntiCrystalModule : Module("anticrystal", ModuleCategory.Misc) {
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
 
-        if (!isEnabled){
+        if (!isEnabled) {
 
             return false
-        }
+        } else if
+                       (packet is PlayerAuthInputPacket && isEnabled) {
 
-        else if
-                     (packet is PlayerAuthInputPacket && isEnabled){
-
-            packet.position.add(0.0,-ylevel.toDouble(),0.0)
+            packet.position.add(0.0, -ylevel.toDouble(), 0.0)
 
         }
 
