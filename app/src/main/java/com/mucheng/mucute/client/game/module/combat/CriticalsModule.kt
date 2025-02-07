@@ -59,10 +59,10 @@ class CriticalsModule : Module("critic", ModuleCategory.Combat) {
         }
 
 
-      else if (packet is MovePlayerPacket && isEnabled){
-
-            packet.position = packet.position.add(0.2,0.2,0.2)
-            packet.isOnGround = false
+      else if (packet is PlayerAuthInputPacket && isEnabled) {
+            packet.inputData.add(PlayerAuthInputData.START_JUMPING)
+            packet.inputData.add(PlayerAuthInputData.JUMPING)
+            packet.add = packet.position.add(0,0.2,0)
   }
 
         return false
