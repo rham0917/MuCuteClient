@@ -44,6 +44,7 @@ object TranslationManager {
         put("swiftness","Swiftness")
         put("insta_health","Instant Health")
         put("strength","Strength")
+        put("insta_damage","Instant Damage")
 
         // Below for module options
         put("flySpeed", "Fly Speed")
@@ -96,6 +97,8 @@ object TranslationManager {
         put("swiftness","见效快")
         put("insta_health","即时健康")
         put("strength","力量")
+        put("insta_damage","瞬间伤害")
+
 
         // Below for module options
         put("flySpeed", "飞行速度")
