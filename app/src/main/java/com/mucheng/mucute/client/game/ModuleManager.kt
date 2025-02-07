@@ -2,6 +2,7 @@ package com.mucheng.mucute.client.game
 
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
+import com.mucheng.mucute.client.game.module.combat.CriticalsModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.LevitationModule
@@ -68,6 +69,7 @@ object ModuleManager {
             add(MotionFlyModule())
             add(FreeCamModule())
             add(KillauraModule())
+            add(CriticalsModule())
         }
     }
 
