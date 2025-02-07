@@ -3,10 +3,10 @@ package com.mucheng.mucute.client.game.module.effect
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import com.mucheng.mucute.client.game.data.Effect
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
 class RegenModule : Module("regen", ModuleCategory.Effect) {
 
@@ -39,7 +39,6 @@ class RegenModule : Module("regen", ModuleCategory.Effect) {
         val message = "§l§b[MuCute] §r§7Regen §8» $status"
 
 
-
         val textPacket = TextPacket().apply {
 
             type = TextPacket.Type.RAW
@@ -57,7 +56,6 @@ class RegenModule : Module("regen", ModuleCategory.Effect) {
         session.clientBound(textPacket)
 
     }
-
 
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {

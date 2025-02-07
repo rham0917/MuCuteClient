@@ -8,12 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
-class PoisonModule : Module("poison", ModuleCategory.Effect){
-
-
-
-
-
+class PoisonModule : Module("poison", ModuleCategory.Effect) {
 
 
     private val amplifierValue by floatValue("Amplifier", 1f, 1f..5f)
@@ -64,9 +59,6 @@ class PoisonModule : Module("poison", ModuleCategory.Effect){
         }
         return false
     }
-
-
-
 
 
 }

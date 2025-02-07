@@ -8,8 +8,8 @@ import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
 import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
-import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
+import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class ZoomModule : Module("zoom", ModuleCategory.Visual) {
 

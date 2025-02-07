@@ -3,10 +3,10 @@ package com.mucheng.mucute.client.game.module.effect
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import com.mucheng.mucute.client.game.data.Effect
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
 class SlowFallModule : Module("slow_fall", ModuleCategory.Effect) {
 
@@ -36,7 +36,6 @@ class SlowFallModule : Module("slow_fall", ModuleCategory.Effect) {
         val status = if (enabled) "§aEnabled" else "§cDisabled"
 
         val message = "§l§b[MuCute] §r§7Slow Fall §8» $status"
-
 
 
         val textPacket = TextPacket().apply {

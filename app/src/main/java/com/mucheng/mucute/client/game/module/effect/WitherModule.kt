@@ -8,12 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
-class WitherModule : Module("wither", ModuleCategory.Effect){
-
-
-
-
-
+class WitherModule : Module("wither", ModuleCategory.Effect) {
 
 
     private val amplifierValue by floatValue("Amplifier", 1f, 1f..5f)
@@ -64,9 +59,6 @@ class WitherModule : Module("wither", ModuleCategory.Effect){
         }
         return false
     }
-
-
-
 
 
 }

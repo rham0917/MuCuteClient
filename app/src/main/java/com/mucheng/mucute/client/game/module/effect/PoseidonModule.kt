@@ -4,12 +4,12 @@ import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import com.mucheng.mucute.client.game.data.Effect
 import org.cloudburstmc.math.vector.Vector3f
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -51,7 +51,6 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
         val message = "§l§b[MuCute] §r§7Poseidon §8» $status"
 
 
-
         val textPacket = TextPacket().apply {
 
             type = TextPacket.Type.RAW
@@ -69,7 +68,6 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
         session.clientBound(textPacket)
 
     }
-
 
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {

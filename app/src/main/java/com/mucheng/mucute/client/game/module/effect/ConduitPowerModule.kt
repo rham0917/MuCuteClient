@@ -8,12 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
-class ConduitPowerModule : Module("conduitpower", ModuleCategory.Effect){
-
-
-
-
-
+class ConduitPowerModule : Module("conduitpower", ModuleCategory.Effect) {
 
 
     private val amplifierValue by floatValue("Amplifier", 1f, 1f..5f)
@@ -64,9 +59,6 @@ class ConduitPowerModule : Module("conduitpower", ModuleCategory.Effect){
         }
         return false
     }
-
-
-
 
 
 }

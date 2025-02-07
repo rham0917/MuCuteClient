@@ -11,7 +11,6 @@ import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 class NauseaModule : Module("nausea", ModuleCategory.Effect) {
 
 
-
     private val amplifierValue by floatValue("Amplifier", 1f, 1f..5f)
 
     override fun onEnabled() {
@@ -60,7 +59,6 @@ class NauseaModule : Module("nausea", ModuleCategory.Effect) {
         }
         return false
     }
-
 
 
 }

@@ -42,7 +42,6 @@ class NightVisionModule : Module("full_bright", ModuleCategory.Effect) {
         val message = "§l§b[MuCute] §r§7FullBright §8» $status"
 
 
-
         val textPacket = TextPacket().apply {
 
             type = TextPacket.Type.RAW

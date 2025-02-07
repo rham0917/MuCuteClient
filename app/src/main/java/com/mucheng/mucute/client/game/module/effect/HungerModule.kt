@@ -8,12 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
-class HungerModule : Module("hunger", ModuleCategory.Effect){
-
-
-
-
-
+class HungerModule : Module("hunger", ModuleCategory.Effect) {
 
 
     private val amplifierValue by floatValue("Amplifier", 1f, 1f..5f)
@@ -64,9 +59,6 @@ class HungerModule : Module("hunger", ModuleCategory.Effect){
         }
         return false
     }
-
-
-
 
 
 }

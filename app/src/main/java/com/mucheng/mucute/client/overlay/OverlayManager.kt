@@ -2,7 +2,6 @@ package com.mucheng.mucute.client.overlay
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.view.View
 import android.view.WindowManager
 import androidx.compose.ui.platform.compositionContext
 import androidx.lifecycle.Lifecycle
@@ -30,7 +29,8 @@ object OverlayManager {
     init {
         with(overlayWindows) {
             add(OverlayButton())
-            addAll(ModuleManager
+            addAll(
+                ModuleManager
                 .modules
                 .filter { it.isShortcutDisplayed }
                 .map { it.overlayShortcutButton })

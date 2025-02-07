@@ -4,9 +4,8 @@ import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
-import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
 class CriticalsModule : Module("critic", ModuleCategory.Combat) {
 
@@ -18,6 +17,7 @@ class CriticalsModule : Module("critic", ModuleCategory.Combat) {
         }
 
     }
+
     override fun onDisabled() {
 
         if (isSessionCreated) {
@@ -27,13 +27,11 @@ class CriticalsModule : Module("critic", ModuleCategory.Combat) {
     }
 
 
-
     private fun sendToggleMessage(enabled: Boolean) {
 
         val status = if (enabled) "§aEnabled" else "§cDisabled"
 
         val message = "§l§b[MuCute] §r§7Criticals §8» $status"
-
 
 
         val textPacket = TextPacket().apply {
@@ -55,17 +53,14 @@ class CriticalsModule : Module("critic", ModuleCategory.Combat) {
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
 
-        if (!isEnabled){
+        if (!isEnabled) {
 
             return false
-        }
-
-
-      else if (packet is PlayerAuthInputPacket && isEnabled) {
+        } else if (packet is PlayerAuthInputPacket && isEnabled) {
             packet.inputData.add(PlayerAuthInputData.START_JUMPING)
             packet.inputData.add(PlayerAuthInputData.JUMPING)
-            packet.position.add(0.0,0.2,0.0)
-  }
+            packet.position.add(0.0, 0.2, 0.0)
+        }
 
         return false
 

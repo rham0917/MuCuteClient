@@ -3,18 +3,15 @@ package com.mucheng.mucute.client.game.module.motion
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.math.vector.Vector3f
+import org.cloudburstmc.protocol.bedrock.data.Ability
+import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
+import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
+import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
+import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
-import org.cloudburstmc.protocol.bedrock.data.Ability
-import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
-import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
-import com.mucheng.mucute.client.game.FloatValue
-import com.mucheng.mucute.client.game.BoolValue
-import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
-import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
-import org.cloudburstmc.protocol.bedrock.packet.RequestAbilityPacket
 
 class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
@@ -77,29 +74,20 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
     }
 
 
-
     private fun handleFlyAbilities(isEnabled: Boolean) {
 
 
-
-            if (!canFly && isEnabled) {
-                enableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
-                session.clientBound(enableFlyAbilitiesPacket)
-                canFly = true
-            } else if (canFly && !isEnabled) {
-                disableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
-                session.clientBound(disableFlyAbilitiesPacket)
-                canFly = false
-            }
+        if (!canFly && isEnabled) {
+            enableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
+            session.clientBound(enableFlyAbilitiesPacket)
+            canFly = true
+        } else if (canFly && !isEnabled) {
+            disableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
+            session.clientBound(disableFlyAbilitiesPacket)
+            canFly = false
+        }
 
     }
-
-
-
-
-
-
-
 
 
     override fun beforePacketBound(packet: BedrockPacket): Boolean {
@@ -113,7 +101,11 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
                 }
                 val motionPacket = SetEntityMotionPacket().apply {
                     runtimeEntityId = session.localPlayer.runtimeEntityId
-                    motion = Vector3f.from(session.localPlayer.motionX * speedvalue, vertical + (if (jitterState) 0.1f else -0.1f), session.localPlayer.motionZ * speedvalue)
+                    motion = Vector3f.from(
+                        session.localPlayer.motionX * speedvalue,
+                        vertical + (if (jitterState) 0.1f else -0.1f),
+                        session.localPlayer.motionZ * speedvalue
+                    )
                 }
                 session.clientBound(motionPacket)
                 jitterState = !jitterState
