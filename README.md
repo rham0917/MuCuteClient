@@ -153,6 +153,12 @@ To install the APK for MuCuteClient, please follow these steps:
 5. **Launch the App**: Once installed, you can find MuCuteClient in your app drawer. Tap to launch
    and enjoy!
 
+6. **Reccomended Requirements**
+   1GB Storage Available
+   Stable Minecraft APK (1.21.51)
+   Andriod 5
+   Once you reach these requirements, You can use MuCuteClient With Ease!
+
 **Note**: Ensure that you have sufficient storage space and that your device meets the minimum
 requirements for running the app.
 
