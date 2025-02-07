@@ -2,13 +2,17 @@ package com.mucheng.mucute.client.game
 
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
+import com.mucheng.mucute.client.game.module.combat.AnticrystalModule
 import com.mucheng.mucute.client.game.module.combat.CriticalsModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
+import com.mucheng.mucute.client.game.module.effect.AbsoptionModule
+import com.mucheng.mucute.client.game.module.effect.BlindnessModule
 import com.mucheng.mucute.client.game.module.effect.FireResistanceModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.HealthBoostModule
 import com.mucheng.mucute.client.game.module.effect.InstantDamageModule
 import com.mucheng.mucute.client.game.module.effect.InstantHealthModule
+import com.mucheng.mucute.client.game.module.effect.InvisibilityModule
 import com.mucheng.mucute.client.game.module.effect.JumpBoostModule
 import com.mucheng.mucute.client.game.module.effect.LevitationModule
 import com.mucheng.mucute.client.game.module.effect.NauseaModule
@@ -16,6 +20,7 @@ import com.mucheng.mucute.client.game.module.effect.NightVisionModule
 import com.mucheng.mucute.client.game.module.effect.PoseidonModule
 import com.mucheng.mucute.client.game.module.effect.RegenModule
 import com.mucheng.mucute.client.game.module.effect.ResistanceModule
+import com.mucheng.mucute.client.game.module.effect.SaturationModule
 import com.mucheng.mucute.client.game.module.effect.SlowFallModule
 import com.mucheng.mucute.client.game.module.effect.StrengthModule
 import com.mucheng.mucute.client.game.module.effect.SwiftnessModule
@@ -88,6 +93,11 @@ object ModuleManager {
             add(InstantHealthModule())
             add(StrengthModule())
             add(InstantDamageModule())
+            add(InvisibilityModule())
+            add(SaturationModule())
+            add(AbsoptionModule())
+            add(BlindnessModule())
+            add(AnticrystalModule())
         }
     }
 
