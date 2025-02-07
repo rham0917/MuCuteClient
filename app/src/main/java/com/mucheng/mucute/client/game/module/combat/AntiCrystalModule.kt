@@ -10,7 +10,7 @@ import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
 class AnticrystalModule : Module("anticrystal", ModuleCategory.Misc) {
-
+    private var ylevel by floatValue("ylevel", 0.4f, 0.1f..1.61f)
     override fun onEnabled() {
 
         if (isSessionCreated) {
@@ -63,9 +63,9 @@ class AnticrystalModule : Module("anticrystal", ModuleCategory.Misc) {
         }
 
         else if
-                (packet is PlayerAuthInputPacket && isEnabled){
+                     (packet is PlayerAuthInputPacket && isEnabled){
 
-            packet.position.add(0.0,-0.5,0.0)
+            packet.position.add(0.0,-ylevel.toDouble(),0.0)
 
         }
 
