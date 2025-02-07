@@ -9,7 +9,7 @@ import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
-class AnticrystalModule : Module("anticrystal", ModuleCategory.Misc) {
+class AntiCrystalModule : Module("anticrystal", ModuleCategory.Misc) {
     private var ylevel by floatValue("ylevel", 0.4f, 0.1f..1.61f)
     override fun onEnabled() {
 
