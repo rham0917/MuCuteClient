@@ -29,7 +29,7 @@ class HealthBoostModule : Module("health_boost", ModuleCategory.Effect){
             session.clientBound(MobEffectPacket().apply {
                 runtimeEntityId = session.localPlayer.runtimeEntityId
                 event = MobEffectPacket.Event.REMOVE
-                effectId = 21
+                effectId = Effect.HEALTH_BOOST
             })
             sendToggleMessage(false)
         }
@@ -55,7 +55,7 @@ class HealthBoostModule : Module("health_boost", ModuleCategory.Effect){
                 session.clientBound(MobEffectPacket().apply {
                     runtimeEntityId = session.localPlayer.runtimeEntityId
                     event = MobEffectPacket.Event.ADD
-                    effectId = 21
+                    effectId = Effect.HEALTH_BOOST
                     amplifier = amplifierValue.toInt() - 1
                     isParticles = false
                     duration = 360000

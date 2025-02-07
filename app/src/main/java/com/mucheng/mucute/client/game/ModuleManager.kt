@@ -12,6 +12,7 @@ import com.mucheng.mucute.client.game.module.effect.NauseaModule
 import com.mucheng.mucute.client.game.module.effect.NightVisionModule
 import com.mucheng.mucute.client.game.module.effect.PoseidonModule
 import com.mucheng.mucute.client.game.module.effect.RegenModule
+import com.mucheng.mucute.client.game.module.effect.ResistanceModule
 import com.mucheng.mucute.client.game.module.effect.SlowFallModule
 import com.mucheng.mucute.client.game.module.misc.DesyncModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
@@ -76,6 +77,7 @@ object ModuleManager {
             add(NauseaModule())
             add(HealthBoostModule())
             add(JumpBoostModule())
+            add(ResistanceModule())
         }
     }
 

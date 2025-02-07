@@ -39,6 +39,7 @@ object TranslationManager {
         put("nausea","Nausea")
         put("health_boost","Health Boost")
         put("jump_boost","Jump Boost")
+        put("resistance", "Resistance")
 
         // Below for module options
         put("flySpeed", "Fly Speed")
@@ -86,6 +87,7 @@ object TranslationManager {
         put("nausea","恶心")
         put("health_boost","健康放大器")
         put("jump_boost","跳跃放大器")
+        put("resistance", "抗损坏能力")
 
         // Below for module options
         put("flySpeed", "飞行速度")

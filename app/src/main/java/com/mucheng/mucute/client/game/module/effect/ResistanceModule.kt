@@ -8,7 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
-class JumpBoostModule : Module("jump_boost", ModuleCategory.Effect){
+class ResistanceModule : Module("resistance", ModuleCategory.Effect){
 
 
 
@@ -29,7 +29,7 @@ class JumpBoostModule : Module("jump_boost", ModuleCategory.Effect){
             session.clientBound(MobEffectPacket().apply {
                 runtimeEntityId = session.localPlayer.runtimeEntityId
                 event = MobEffectPacket.Event.REMOVE
-                effectId = Effect.JUMP_BOOST
+                effectId = Effect.RESISTANCE
             })
             sendToggleMessage(false)
         }
@@ -37,7 +37,7 @@ class JumpBoostModule : Module("jump_boost", ModuleCategory.Effect){
 
     private fun sendToggleMessage(enabled: Boolean) {
         val status = if (enabled) "§aEnabled" else "§cDisabled"
-        val message = "§l§b[MuCute] §r§7JumpBoost §8» $status"
+        val message = "§l§b[MuCute] §r§7Resistance §8» $status"
 
         val textPacket = TextPacket().apply {
             type = TextPacket.Type.RAW
@@ -55,7 +55,7 @@ class JumpBoostModule : Module("jump_boost", ModuleCategory.Effect){
                 session.clientBound(MobEffectPacket().apply {
                     runtimeEntityId = session.localPlayer.runtimeEntityId
                     event = MobEffectPacket.Event.ADD
-                    effectId = Effect.JUMP_BOOST
+                    effectId = Effect.RESISTANCE
                     amplifier = amplifierValue.toInt() - 1
                     isParticles = false
                     duration = 360000
