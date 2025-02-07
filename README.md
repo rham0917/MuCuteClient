@@ -18,7 +18,7 @@ innovation in our development process. 🚫
 
 ## Install ⬆️
 
-[Click Here to Install](https://github.com/MuCuteTeam/MuCuteClient/releases/download/v1.0/app-debug.apk)
+[Click Here to Install](https://github.com/MuCuteTeam/MuCuteClient/releases/download/v1.0/app-release.apk)
 
 ![Divider](images/divider.png)
 
