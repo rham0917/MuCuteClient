@@ -45,6 +45,7 @@ object TranslationManager {
         put("insta_health","Instant Health")
         put("strength","Strength")
         put("insta_damage","Instant Damage")
+        put("anticrystal","Anti Crystal")
 
         // Below for module options
         put("flySpeed", "Fly Speed")
@@ -98,6 +99,7 @@ object TranslationManager {
         put("insta_health","即时健康")
         put("strength","力量")
         put("insta_damage","瞬间伤害")
+        put("anticrystal","反晶")
 
 
         // Below for module options
