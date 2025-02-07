@@ -6,6 +6,7 @@ import com.mucheng.mucute.client.game.module.combat.CriticalsModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.LevitationModule
+import com.mucheng.mucute.client.game.module.effect.NauseaModule
 import com.mucheng.mucute.client.game.module.effect.NightVisionModule
 import com.mucheng.mucute.client.game.module.effect.PoseidonModule
 import com.mucheng.mucute.client.game.module.effect.RegenModule
@@ -70,6 +71,7 @@ object ModuleManager {
             add(FreeCamModule())
             add(KillauraModule())
             add(CriticalsModule())
+            add(NauseaModule())
         }
     }
 
