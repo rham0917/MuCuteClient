@@ -7,6 +7,7 @@ import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.FireResistanceModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.HealthBoostModule
+import com.mucheng.mucute.client.game.module.effect.InstantHealthModule
 import com.mucheng.mucute.client.game.module.effect.JumpBoostModule
 import com.mucheng.mucute.client.game.module.effect.LevitationModule
 import com.mucheng.mucute.client.game.module.effect.NauseaModule
@@ -82,6 +83,7 @@ object ModuleManager {
             add(ResistanceModule())
             add(FireResistanceModule())
             add(SwiftnessModule())
+            add(InstantHealthModule())
         }
     }
 
