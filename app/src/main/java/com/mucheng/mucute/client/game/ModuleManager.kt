@@ -4,6 +4,7 @@ import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
 import com.mucheng.mucute.client.game.module.combat.CriticalsModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
+import com.mucheng.mucute.client.game.module.effect.FireResistanceModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.HealthBoostModule
 import com.mucheng.mucute.client.game.module.effect.JumpBoostModule
@@ -78,6 +79,7 @@ object ModuleManager {
             add(HealthBoostModule())
             add(JumpBoostModule())
             add(ResistanceModule())
+            add(FireResistanceModule())
         }
     }
 
