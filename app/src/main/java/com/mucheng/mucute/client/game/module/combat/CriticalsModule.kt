@@ -2,9 +2,11 @@ package com.mucheng.mucute.client.game.module.combat
 
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
+import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
+import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
 class CriticalsModule : Module("critic", ModuleCategory.Combat) {
 
@@ -62,7 +64,7 @@ class CriticalsModule : Module("critic", ModuleCategory.Combat) {
       else if (packet is PlayerAuthInputPacket && isEnabled) {
             packet.inputData.add(PlayerAuthInputData.START_JUMPING)
             packet.inputData.add(PlayerAuthInputData.JUMPING)
-            packet.add = packet.position.add(0,0.2,0)
+            packet.position.add(0.0,0.2,0.0)
   }
 
         return false
