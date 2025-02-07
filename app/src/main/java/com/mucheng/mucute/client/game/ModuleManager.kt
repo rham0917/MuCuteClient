@@ -1,15 +1,20 @@
 package com.mucheng.mucute.client.game
 
 import com.mucheng.mucute.client.application.AppContext
-import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
 import com.mucheng.mucute.client.game.module.combat.AntiCrystalModule
+import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
 import com.mucheng.mucute.client.game.module.combat.CriticalsModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.AbsoptionModule
+import com.mucheng.mucute.client.game.module.effect.BadOmenModule
 import com.mucheng.mucute.client.game.module.effect.BlindnessModule
+import com.mucheng.mucute.client.game.module.effect.ConduitPowerModule
+import com.mucheng.mucute.client.game.module.effect.DarknessModule
+import com.mucheng.mucute.client.game.module.effect.FatalPoisonModule
 import com.mucheng.mucute.client.game.module.effect.FireResistanceModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.HealthBoostModule
+import com.mucheng.mucute.client.game.module.effect.HungerModule
 import com.mucheng.mucute.client.game.module.effect.InstantDamageModule
 import com.mucheng.mucute.client.game.module.effect.InstantHealthModule
 import com.mucheng.mucute.client.game.module.effect.InvisibilityModule
@@ -17,6 +22,7 @@ import com.mucheng.mucute.client.game.module.effect.JumpBoostModule
 import com.mucheng.mucute.client.game.module.effect.LevitationModule
 import com.mucheng.mucute.client.game.module.effect.NauseaModule
 import com.mucheng.mucute.client.game.module.effect.NightVisionModule
+import com.mucheng.mucute.client.game.module.effect.PoisonModule
 import com.mucheng.mucute.client.game.module.effect.PoseidonModule
 import com.mucheng.mucute.client.game.module.effect.RegenModule
 import com.mucheng.mucute.client.game.module.effect.ResistanceModule
@@ -24,6 +30,9 @@ import com.mucheng.mucute.client.game.module.effect.SaturationModule
 import com.mucheng.mucute.client.game.module.effect.SlowFallModule
 import com.mucheng.mucute.client.game.module.effect.StrengthModule
 import com.mucheng.mucute.client.game.module.effect.SwiftnessModule
+import com.mucheng.mucute.client.game.module.effect.VillageHeroModule
+import com.mucheng.mucute.client.game.module.effect.WeaknessModule
+import com.mucheng.mucute.client.game.module.effect.WitherModule
 import com.mucheng.mucute.client.game.module.misc.DesyncModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
 import com.mucheng.mucute.client.game.module.misc.PositionLoggerModule
@@ -98,6 +107,15 @@ object ModuleManager {
             add(AbsoptionModule())
             add(BlindnessModule())
             add(AntiCrystalModule())
+            add(HungerModule())
+            add(WeaknessModule())
+            add(PoisonModule())
+            add(WitherModule())
+            add(FatalPoisonModule())
+            add(ConduitPowerModule())
+            add(BadOmenModule())
+            add(VillageHeroModule())
+            add(DarknessModule())
         }
     }
 
