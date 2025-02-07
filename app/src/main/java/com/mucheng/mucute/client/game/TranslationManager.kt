@@ -36,6 +36,9 @@ object TranslationManager {
         put("freecam", "FreeCam")
         put("player_tracer", "Player Tracker")
         put("critic", "Criticals")
+        put("nausea","Nausea")
+        put("health_boost","Health Boost")
+        put("jump_boost","Jump Boost")
 
         // Below for module options
         put("flySpeed", "Fly Speed")
@@ -80,6 +83,9 @@ object TranslationManager {
         put("freecam", "自由视角")
         put("player_tracer", "玩家追踪器")
         put("critic","批评家")
+        put("nausea","恶心")
+        put("health_boost","健康放大器")
+        put("jump_boost","跳跃放大器")
 
         // Below for module options
         put("flySpeed", "飞行速度")

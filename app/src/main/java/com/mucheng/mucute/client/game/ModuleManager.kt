@@ -6,6 +6,7 @@ import com.mucheng.mucute.client.game.module.combat.CriticalsModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.HasteModule
 import com.mucheng.mucute.client.game.module.effect.HealthBoostModule
+import com.mucheng.mucute.client.game.module.effect.JumpBoostModule
 import com.mucheng.mucute.client.game.module.effect.LevitationModule
 import com.mucheng.mucute.client.game.module.effect.NauseaModule
 import com.mucheng.mucute.client.game.module.effect.NightVisionModule
@@ -74,6 +75,7 @@ object ModuleManager {
             add(CriticalsModule())
             add(NauseaModule())
             add(HealthBoostModule())
+            add(JumpBoostModule())
         }
     }
 

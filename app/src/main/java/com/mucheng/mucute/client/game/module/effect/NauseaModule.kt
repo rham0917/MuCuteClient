@@ -8,7 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
-class NauseaModule : Module("Nausea", ModuleCategory.Effect) {
+class NauseaModule : Module("nausea", ModuleCategory.Effect) {
 
 
 

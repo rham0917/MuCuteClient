@@ -8,7 +8,7 @@ import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 
-class HealthBoostModule : Module("Health Boost", ModuleCategory.Effect){
+class HealthBoostModule : Module("health_boost", ModuleCategory.Effect){
 
 
 
