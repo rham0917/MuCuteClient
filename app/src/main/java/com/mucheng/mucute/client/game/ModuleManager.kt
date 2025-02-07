@@ -15,6 +15,7 @@ import com.mucheng.mucute.client.game.module.effect.PoseidonModule
 import com.mucheng.mucute.client.game.module.effect.RegenModule
 import com.mucheng.mucute.client.game.module.effect.ResistanceModule
 import com.mucheng.mucute.client.game.module.effect.SlowFallModule
+import com.mucheng.mucute.client.game.module.effect.SwiftnessModule
 import com.mucheng.mucute.client.game.module.misc.DesyncModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
 import com.mucheng.mucute.client.game.module.misc.PositionLoggerModule
@@ -80,6 +81,7 @@ object ModuleManager {
             add(JumpBoostModule())
             add(ResistanceModule())
             add(FireResistanceModule())
+            add(SwiftnessModule())
         }
     }
 
