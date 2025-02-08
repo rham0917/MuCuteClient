@@ -12,7 +12,7 @@ import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
     private var rangeValue by floatValue("range", 3.7f, 2f..7f)
-    private var attackInterval by intValue("cps", 5, 1..20)
+    private var attackInterval by intValue("Delay", 5, 1..20)
 
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
         if (!isEnabled) {
