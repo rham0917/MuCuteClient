@@ -13,6 +13,10 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
     private var rangeValue by floatValue("range", 3.7f, 2f..7f)
     private var attackInterval by intValue("Delay", 5, 1..20)
+    private var cpsValue by intValue("CPS", 10, 1..20)
+    private var packetMultiplier by intValue("Packet Multiplier", 1, 1..10)
+
+    private var lastAttackTime = 0L
 
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
         if (!isEnabled) {
@@ -21,14 +25,20 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
         val packet = interceptablePacket.packet
         if (packet is PlayerAuthInputPacket) {
-            if (packet.tick % attackInterval == 0L) {
+            val currentTime = System.currentTimeMillis()
+            val minAttackDelay = 1000L / cpsValue
+
+            if (packet.tick % attackInterval == 0L && (currentTime - lastAttackTime) >= minAttackDelay) {
                 val closestEntities = searchForClosestEntities()
                 if (closestEntities.isEmpty()) {
                     return
                 }
 
                 closestEntities.forEach { entity ->
-                    session.localPlayer.attack(entity)
+                    repeat(packetMultiplier) {
+                        session.localPlayer.attack(entity)
+                    }
+                    lastAttackTime = currentTime
                 }
             }
         }
