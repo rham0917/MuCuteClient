@@ -22,6 +22,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -50,6 +53,7 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.contentColorFor
@@ -74,6 +78,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
@@ -508,21 +513,20 @@ private fun GameCard() {
                 ) {
                     Column(
                         Modifier
-                            .padding(24.dp)
-                            .fillMaxWidth(),
+                            .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Text(
                             stringResource(R.string.game_settings),
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .align(Alignment.Start),
                             style = MaterialTheme.typography.headlineSmall
                         )
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             modifier = Modifier
-                                .fillMaxWidth()
                                 .verticalScroll(rememberScrollState())
                         ) {
                             val interactionSource = remember { MutableInteractionSource() }
@@ -533,7 +537,6 @@ private fun GameCard() {
                                 }
                             }
                             TextField(
-                                modifier = Modifier.fillMaxWidth(),
                                 value = selectedGame ?: "",
                                 onValueChange = {},
                                 readOnly = true,
@@ -595,7 +598,7 @@ private fun GameCard() {
                             if (Services.isActive) {
                                 Card(
                                     modifier = Modifier
-                                        .fillMaxWidth(),
+                                        .width(TextFieldDefaults.MinWidth),
                                     shape = MaterialTheme.shapes.medium,
                                     colors = CardDefaults.cardColors(
                                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -612,7 +615,7 @@ private fun GameCard() {
                                             modifier = Modifier
                                                 .size(20.dp)
                                         )
-                                        Column(Modifier.fillMaxWidth()) {
+                                        Column {
                                             Text(
                                                 stringResource(R.string.tips),
                                                 style = MaterialTheme.typography.bodyLarge
