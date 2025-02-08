@@ -6,7 +6,7 @@ import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.protocol.bedrock.data.entity.EntityEventType
 import org.cloudburstmc.protocol.bedrock.packet.EntityEventPacket
 
-class NoHurtCameraModule : Module("no_hurt_camera", ModuleCategory.Visual) {
+class NoHurtCameraModule : Module("no_hurt_cam", ModuleCategory.Visual) {
 
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
         if (!isEnabled) {
