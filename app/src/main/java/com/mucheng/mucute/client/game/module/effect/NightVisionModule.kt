@@ -33,7 +33,7 @@ class NightVisionModule : Module("nightVision", ModuleCategory.Effect) {
                 session.clientBound(MobEffectPacket().apply {
                     runtimeEntityId = session.localPlayer.runtimeEntityId
                     event = MobEffectPacket.Event.ADD
-                    effectId = Effect.NAUSEA
+                    effectId = Effect.NIGHT_VISION
                     amplifier = amplifierValue
                     isParticles = false
                     duration = 360000
