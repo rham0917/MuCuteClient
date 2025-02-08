@@ -7,18 +7,19 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,38 +37,36 @@ class CrashHandlerActivity : ComponentActivity() {
 
         setContent {
             MuCuteClientTheme {
-                Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            title = {
-                                Text(stringResource(R.string.crash_happened))
-                            }
-                        )
-                    }
-                ) {
-                    Column(
-                        Modifier
-                            .padding(it)
-                            .fillMaxSize()
-                            .scrollable(
-                                state = rememberScrollState(),
-                                orientation = Orientation.Vertical,
-                                overscrollEffect = null
-                            )
-                    ) {
-                        SelectionContainer {
-                            Text(
-                                message,
-                                style = MaterialTheme.typography.bodySmall,
-                                modifier = Modifier
-                                    .padding(10.dp)
+                CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
+                    Scaffold(
+                        topBar = {
+                            TopAppBar(
+                                title = {
+                                    Text(stringResource(R.string.crash_happened))
+                                }
                             )
                         }
+                    ) {
+                        Column(
+                            Modifier
+                                .padding(it)
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                        ) {
+                            SelectionContainer {
+                                Text(
+                                    message,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    modifier = Modifier
+                                        .padding(10.dp)
+                                )
+                            }
+                        }
                     }
-                }
-                BackHandler {
-                    Toast.makeText(this, getString(R.string.cannot_back), Toast.LENGTH_SHORT)
-                        .show()
+                    BackHandler {
+                        Toast.makeText(this, getString(R.string.cannot_back), Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
         }

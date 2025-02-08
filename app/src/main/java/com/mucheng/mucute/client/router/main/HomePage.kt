@@ -12,8 +12,6 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +26,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.rounded.Pause
@@ -210,11 +209,7 @@ fun HomePageContent() {
                 Column(
                     Modifier
                         .fillMaxSize()
-                        .scrollable(
-                            state = rememberScrollState(),
-                            orientation = Orientation.Vertical,
-                            overscrollEffect = null
-                        )
+                        .verticalScroll(rememberScrollState())
                         .padding(10.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
@@ -528,11 +523,7 @@ private fun GameCard() {
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .scrollable(
-                                    state = rememberScrollState(),
-                                    orientation = Orientation.Vertical,
-                                    overscrollEffect = null
-                                )
+                                .verticalScroll(rememberScrollState())
                         ) {
                             val interactionSource = remember { MutableInteractionSource() }
                             val isPressed by interactionSource.collectIsPressedAsState()

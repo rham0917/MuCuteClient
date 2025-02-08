@@ -15,7 +15,6 @@
     <application
         android:name=".application.AppContext"
         android:enableOnBackInvokedCallback="true"
-        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"

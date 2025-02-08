@@ -1,5 +1,6 @@
 package com.mucheng.mucute.client.game.module.visual
 
+import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -11,13 +12,12 @@ import org.cloudburstmc.protocol.bedrock.data.Ability
 import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
 import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
 import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
-class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
+class FreeCameraModule : Module("free_camera", ModuleCategory.Visual) {
 
     private var originalPosition: Vector3f? = null
 
@@ -72,9 +72,8 @@ class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onEnabled() {
+        super.onEnabled()
         if (isSessionCreated) {
-            sendToggleMessage(true)
-
             GlobalScope.launch {
                 for (i in 5 downTo 1) {
                     val countdownMessage = "§l§b[MuCute] §r§7FreeCam will enable in §e$i §7seconds"
@@ -96,9 +95,8 @@ class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
     }
 
     override fun onDisabled() {
+        super.onDisabled()
         if (isSessionCreated && originalPosition != null) {
-            sendToggleMessage(false)
-
             // Return to original position when disabled
             val motionPacket = SetEntityMotionPacket().apply {
                 runtimeEntityId = session.localPlayer.runtimeEntityId
@@ -113,21 +111,6 @@ class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
         }
     }
 
-    private fun sendToggleMessage(enabled: Boolean) {
-        val status = if (enabled) "§aEnabled" else "§cDisabled"
-        val message = "§l§b[MuCute] §r§7FreeCam §8» $status"
-
-        val textPacket = TextPacket().apply {
-            type = TextPacket.Type.RAW
-            isNeedsTranslation = false
-            this.message = message
-            xuid = ""
-            sourceName = ""
-        }
-
-        session.clientBound(textPacket)
-    }
-
     private fun sendCountdownMessage(message: String) {
         val textPacket = TextPacket().apply {
             type = TextPacket.Type.RAW
@@ -140,7 +123,10 @@ class FreeCamModule : Module("freecam", ModuleCategory.Visual) {
         session.clientBound(textPacket)
     }
 
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
-        return packet is PlayerAuthInputPacket && isEnabled
+    override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
+        val packet = interceptablePacket.packet
+        if (packet is PlayerAuthInputPacket && isEnabled) {
+            interceptablePacket.intercept()
+        }
     }
 }

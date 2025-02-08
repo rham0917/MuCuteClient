@@ -1,10 +1,10 @@
 package com.mucheng.mucute.client.game.module.misc
 
+import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.data.skin.SerializedSkin
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MoveEntityAbsolutePacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerListPacket
@@ -14,7 +14,7 @@ import kotlin.math.atan2
 import kotlin.math.ceil
 import kotlin.math.sqrt
 
-class EntityPositionTrackerModule : Module("player_tracer", ModuleCategory.Misc) {
+class PlayerTracerModule : Module("player_tracer", ModuleCategory.Misc) {
     // Store player info by entityId
     private val playersInfo = mutableMapOf<Long, PlayerInfo>()
     private var playerPosition = Vector3f.from(0f, 0f, 0f)
@@ -24,34 +24,7 @@ class EntityPositionTrackerModule : Module("player_tracer", ModuleCategory.Misc)
     private val previousTimestamps = mutableMapOf<Long, Long>()
 
     // Define a constant for the scan radius (in blocks)
-    private val scanRadius = intValue("Scan Radius", 500, 100..100000)
-
-    override fun onEnabled() {
-        if (isSessionCreated) {
-            sendToggleMessage(true)
-        }
-    }
-
-    override fun onDisabled() {
-        if (isSessionCreated) {
-            sendToggleMessage(false)
-        }
-    }
-
-    private fun sendToggleMessage(enabled: Boolean) {
-        val status = if (enabled) "§aEnabled" else "§cDisabled"
-        val message = "§l§b[MuCute] §r§7Entity Position Tracker §8» $status"
-
-        val textPacket = TextPacket().apply {
-            type = TextPacket.Type.RAW
-            isNeedsTranslation = false
-            this.message = message
-            xuid = ""
-            sourceName = ""
-        }
-
-        session.clientBound(textPacket)
-    }
+    private val scanRadius = intValue("scanRadius", 500, 100..100000)
 
     // Data class to hold player information
     data class PlayerInfo(
@@ -133,10 +106,13 @@ class EntityPositionTrackerModule : Module("player_tracer", ModuleCategory.Misc)
     }
 
     // Handle incoming packets
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
-        if (!isEnabled) return false
+    override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
+        if (!isEnabled) {
+            return
+        }
 
         // Process PlayerListPacket to store player information
+        val packet = interceptablePacket.packet
         if (packet is PlayerListPacket) {
             packet.entries.forEach { entry ->
                 playersInfo[entry.entityId] = PlayerInfo(
@@ -189,8 +165,6 @@ class EntityPositionTrackerModule : Module("player_tracer", ModuleCategory.Misc)
                 }
             }
         }
-
-        return false
     }
 
     // Calculate Euclidean distance

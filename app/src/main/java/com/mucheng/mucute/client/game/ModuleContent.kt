@@ -7,8 +7,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -159,11 +158,7 @@ private fun ChoiceValueContent(value: ListValue) {
         )
         Row(
             Modifier
-                .scrollable(
-                    state = rememberScrollState(),
-                    orientation = Orientation.Horizontal,
-                    overscrollEffect = null
-                )
+                .horizontalScroll(rememberScrollState())
         ) {
             value.listItems.forEach {
                 ElevatedFilterChip(

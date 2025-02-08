@@ -1,15 +1,14 @@
 package com.mucheng.mucute.client.game.module.effect
 
+import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import com.mucheng.mucute.client.game.data.Effect
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -17,17 +16,8 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
 
     private val speedMultiplier = 1.5f  // How much faster to move in water
 
-    override fun onEnabled() {
-
-        if (isSessionCreated) {
-
-            sendToggleMessage(true)
-
-        }
-
-    }
-
     override fun onDisabled() {
+        super.onDisabled()
         if (isSessionCreated) {
             // Remove effects
             session.clientBound(MobEffectPacket().apply {
@@ -40,37 +30,15 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
                 runtimeEntityId = session.localPlayer.runtimeEntityId
                 effectId = Effect.WATER_BREATHING
             })
-            sendToggleMessage(false)
         }
     }
 
-    private fun sendToggleMessage(enabled: Boolean) {
-
-        val status = if (enabled) "§aEnabled" else "§cDisabled"
-
-        val message = "§l§b[MuCute] §r§7Poseidon §8» $status"
-
-
-        val textPacket = TextPacket().apply {
-
-            type = TextPacket.Type.RAW
-
-            isNeedsTranslation = false
-
-            this.message = message
-
-            xuid = ""
-
-            sourceName = ""
-
+    override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
+        if (!isEnabled) {
+            return
         }
 
-        session.clientBound(textPacket)
-
-    }
-
-
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
+        val packet = interceptablePacket.packet
         if (packet is PlayerAuthInputPacket && isEnabled) {
             // Check for water or sinking
             if (packet.inputData.contains(PlayerAuthInputData.START_SWIMMING) ||
@@ -125,7 +93,6 @@ class PoseidonModule : Module("poseidon", ModuleCategory.Effect) {
                 duration = 360000
             })
         }
-        return false
     }
 
 

@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mucheng.mucute.client.overlay.OverlayShortcutButton
+import com.mucheng.mucute.client.util.translatedSelf
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -12,7 +13,7 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.put
 
-abstract class Module(val name: String, val category: ModuleCategory) : ComposedPacketHandler,
+abstract class Module(val name: String, val category: ModuleCategory) : InterruptiblePacketHandler,
     Configurable {
 
     open lateinit var session: GameSession
@@ -45,9 +46,13 @@ abstract class Module(val name: String, val category: ModuleCategory) : Composed
 
     override val values: MutableList<Value<*>> = ArrayList()
 
-    open fun onEnabled() {}
+    open fun onEnabled() {
+        sendToggleMessage(true)
+    }
 
-    open fun onDisabled() {}
+    open fun onDisabled() {
+        sendToggleMessage(false)
+    }
 
     open fun toJson() = buildJsonObject {
         put("state", isEnabled)
@@ -83,6 +88,19 @@ abstract class Module(val name: String, val category: ModuleCategory) : Composed
                 isShortcutDisplayed = true
             }
         }
+    }
+
+    private fun sendToggleMessage(enabled: Boolean) {
+        if (!isSessionCreated) {
+            return
+        }
+
+        val stateText = if (enabled) "enabled".translatedSelf else "disabled".translatedSelf
+        val status = (if (enabled) "§a" else "§c") + stateText
+        val moduleName = name.translatedSelf
+        val message = "§l§b[MuCute] §r§7${moduleName} §8» $status"
+
+        session.displayClientMessage(message)
     }
 
 }

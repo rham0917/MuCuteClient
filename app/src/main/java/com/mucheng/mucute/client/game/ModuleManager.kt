@@ -3,9 +3,9 @@ package com.mucheng.mucute.client.game
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.module.combat.AntiCrystalModule
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
-import com.mucheng.mucute.client.game.module.combat.CriticalsModule
+import com.mucheng.mucute.client.game.module.combat.CriticModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
-import com.mucheng.mucute.client.game.module.effect.AbsoptionModule
+import com.mucheng.mucute.client.game.module.effect.AbsorptionModule
 import com.mucheng.mucute.client.game.module.effect.BadOmenModule
 import com.mucheng.mucute.client.game.module.effect.BlindnessModule
 import com.mucheng.mucute.client.game.module.effect.ConduitPowerModule
@@ -24,10 +24,10 @@ import com.mucheng.mucute.client.game.module.effect.NauseaModule
 import com.mucheng.mucute.client.game.module.effect.NightVisionModule
 import com.mucheng.mucute.client.game.module.effect.PoisonModule
 import com.mucheng.mucute.client.game.module.effect.PoseidonModule
-import com.mucheng.mucute.client.game.module.effect.RegenModule
+import com.mucheng.mucute.client.game.module.effect.RegenerationModule
 import com.mucheng.mucute.client.game.module.effect.ResistanceModule
 import com.mucheng.mucute.client.game.module.effect.SaturationModule
-import com.mucheng.mucute.client.game.module.effect.SlowFallModule
+import com.mucheng.mucute.client.game.module.effect.SlowFallingModule
 import com.mucheng.mucute.client.game.module.effect.StrengthModule
 import com.mucheng.mucute.client.game.module.effect.SwiftnessModule
 import com.mucheng.mucute.client.game.module.effect.VillageHeroModule
@@ -37,17 +37,17 @@ import com.mucheng.mucute.client.game.module.misc.DesyncModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
 import com.mucheng.mucute.client.game.module.misc.PositionLoggerModule
 import com.mucheng.mucute.client.game.module.motion.AirJumpModule
-import com.mucheng.mucute.client.game.module.motion.AutoJumpModule
+import com.mucheng.mucute.client.game.module.motion.AntiAFKModule
 import com.mucheng.mucute.client.game.module.motion.AutoWalkModule
+import com.mucheng.mucute.client.game.module.motion.BhopModule
 import com.mucheng.mucute.client.game.module.motion.FlyModule
 import com.mucheng.mucute.client.game.module.motion.HighJumpModule
 import com.mucheng.mucute.client.game.module.motion.JetPackModule
 import com.mucheng.mucute.client.game.module.motion.MotionFlyModule
-import com.mucheng.mucute.client.game.module.motion.RandomMoveModule
 import com.mucheng.mucute.client.game.module.motion.SpeedModule
 import com.mucheng.mucute.client.game.module.motion.SprintModule
-import com.mucheng.mucute.client.game.module.visual.FreeCamModule
-import com.mucheng.mucute.client.game.module.visual.NoHurtCamModule
+import com.mucheng.mucute.client.game.module.visual.FreeCameraModule
+import com.mucheng.mucute.client.game.module.visual.NoHurtCameraModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -78,21 +78,21 @@ object ModuleManager {
             add(JetPackModule())
             add(LevitationModule())
             add(HighJumpModule())
-            add(SlowFallModule())
+            add(SlowFallingModule())
             add(PoseidonModule())
             add(AntiKnockbackModule())
-            add(RegenModule())
-            add(AutoJumpModule())
+            add(RegenerationModule())
+            add(BhopModule())
             add(SprintModule())
-            add(NoHurtCamModule())
+            add(NoHurtCameraModule())
             add(AutoWalkModule())
-            add(RandomMoveModule())
+            add(AntiAFKModule())
             add(DesyncModule())
             add(PositionLoggerModule())
             add(MotionFlyModule())
-            add(FreeCamModule())
+            add(FreeCameraModule())
             add(KillauraModule())
-            add(CriticalsModule())
+            add(CriticModule())
             add(NauseaModule())
             add(HealthBoostModule())
             add(JumpBoostModule())
@@ -104,7 +104,7 @@ object ModuleManager {
             add(InstantDamageModule())
             add(InvisibilityModule())
             add(SaturationModule())
-            add(AbsoptionModule())
+            add(AbsorptionModule())
             add(BlindnessModule())
             add(AntiCrystalModule())
             add(HungerModule())

@@ -1,20 +1,19 @@
 package com.mucheng.mucute.client.game.module.motion
 
+import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.protocol.bedrock.data.Ability
 import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
 import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
 import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.RequestAbilityPacket
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class FlyModule : Module("fly", ModuleCategory.Motion) {
 
-    private var flyspeed by floatValue("Fly Speed", 0.15f, 0.1f..1.5f)
+    private var flySpeed by floatValue("flySpeed", 0.15f, 0.1f..1.5f)
 
     private val enableFlyAbilitiesPacket = UpdateAbilitiesPacket().apply {
         playerPermission = PlayerPermission.OPERATOR
@@ -37,7 +36,7 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
                 )
             )
             walkSpeed = 0.1f
-            flySpeed = flyspeed
+            flySpeed = this@FlyModule.flySpeed
         })
     }
 
@@ -66,40 +65,16 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
 
     private var canFly = false
 
-    override fun onEnabled() {
-        if (isSessionCreated) {
-            sendToggleMessage(true)
-        }
-    }
-
-    override fun onDisabled() {
-        if (isSessionCreated) {
-            sendToggleMessage(false)
-        }
-    }
-
-    private fun sendToggleMessage(enabled: Boolean) {
-        val status = if (enabled) "§aEnabled" else "§cDisabled"
-        val message = "§l§b[MuCute] §r§7Fly §8» $status"
-
-        val textPacket = TextPacket().apply {
-            type = TextPacket.Type.RAW
-            isNeedsTranslation = false
-            this.message = message
-            xuid = ""
-            sourceName = ""
-        }
-
-        session.clientBound(textPacket)
-    }
-
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
+        val packet = interceptablePacket.packet
         if (packet is RequestAbilityPacket && packet.ability == Ability.FLYING) {
-            return true
+            interceptablePacket.intercept()
+            return
         }
 
         if (packet is UpdateAbilitiesPacket) {
-            return true
+            interceptablePacket.intercept()
+            return
         }
 
         if (packet is PlayerAuthInputPacket) {
@@ -113,7 +88,5 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
                 canFly = false
             }
         }
-
-        return false
     }
 }

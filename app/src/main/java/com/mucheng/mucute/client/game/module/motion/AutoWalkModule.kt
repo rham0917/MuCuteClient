@@ -1,12 +1,11 @@
 package com.mucheng.mucute.client.game.module.motion
 
+import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.math.vector.Vector3f
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import kotlin.concurrent.timer
 import kotlin.math.cos
 import kotlin.math.sin
@@ -31,35 +30,13 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
         }
     }
 
-    override fun onEnabled() {
-        if (isSessionCreated) {
-            sendToggleMessage(true)
-        }
-    }
-
-    override fun onDisabled() {
-        if (isSessionCreated) {
-            sendToggleMessage(false)
-        }
-    }
-
-    private fun sendToggleMessage(enabled: Boolean) {
-        val status = if (enabled) "§aEnabled" else "§cDisabled"
-        val message = "§l§b[MuCute] §r§7Auto Walk §8» $status"
-
-        val textPacket = TextPacket().apply {
-            type = TextPacket.Type.RAW
-            isNeedsTranslation = false
-            this.message = message
-            xuid = ""
-            sourceName = ""
+    override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
+        if (!isEnabled) {
+            return
         }
 
-        session.clientBound(textPacket)
-    }
-
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
-        if (packet is PlayerAuthInputPacket && isEnabled) {  // Only execute if the module is enabled
+        val packet = interceptablePacket.packet
+        if (packet is PlayerAuthInputPacket) {  // Only execute if the module is enabled
             // Call the function to control X and Z axis if module is enabled
             controlXZMovement(packet)
 
@@ -68,7 +45,6 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
                 controlYMovement()  // Apply upward motion if needed
             }
         }
-        return false
     }
 
     // Function to control X and Z movement based on the player's look direction

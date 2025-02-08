@@ -3,6 +3,9 @@ package com.mucheng.mucute.client.overlay
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.WindowManager
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.compositionContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelStore
@@ -31,9 +34,9 @@ object OverlayManager {
             add(OverlayButton())
             addAll(
                 ModuleManager
-                .modules
-                .filter { it.isShortcutDisplayed }
-                .map { it.overlayShortcutButton })
+                    .modules
+                    .filter { it.isShortcutDisplayed }
+                    .map { it.overlayShortcutButton })
         }
     }
 
@@ -75,13 +78,16 @@ object OverlayManager {
         }
     }
 
+    @OptIn(ExperimentalFoundationApi::class)
     private fun showOverlayWindow(context: Context, overlayWindow: OverlayWindow) {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val layoutParams = overlayWindow.layoutParams
         val composeView = overlayWindow.composeView
         composeView.setContent {
             MuCuteClientTheme {
-                overlayWindow.Content()
+                CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
+                    overlayWindow.Content()
+                }
             }
         }
         val lifecycleOwner = overlayWindow.lifecycleOwner

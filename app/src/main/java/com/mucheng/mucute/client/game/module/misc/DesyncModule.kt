@@ -1,14 +1,13 @@
 package com.mucheng.mucute.client.game.module.misc
 
+import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.random.Random
 
@@ -21,17 +20,13 @@ class DesyncModule : Module("desync", ModuleCategory.Misc) {
     private val maxResendInterval = 300L
 
     override fun onEnabled() {
-        if (isSessionCreated) {
-            sendToggleMessage(true)
-        }
+        super.onEnabled()
         isDesynced = true
     }
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onDisabled() {
-        if (isSessionCreated) {
-            sendToggleMessage(false)
-        }
+        super.onDisabled()
         isDesynced = false
 
         GlobalScope.launch {
@@ -46,26 +41,16 @@ class DesyncModule : Module("desync", ModuleCategory.Misc) {
         }
     }
 
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
-        if (isEnabled && isDesynced && packet is PlayerAuthInputPacket) {
+    override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
+        if (!isEnabled || !isDesynced) {
+            return
+        }
+
+        val packet = interceptablePacket.packet
+        if (packet is PlayerAuthInputPacket) {
             storedPackets.add(packet)
-            return true
+            interceptablePacket.intercept()
         }
-        return false
     }
 
-    private fun sendToggleMessage(enabled: Boolean) {
-        val status = if (enabled) "§aEnabled" else "§cDisabled"
-        val message = "§l§b[MuCute] §r§7Desync §8» $status"
-
-        val textPacket = TextPacket().apply {
-            type = TextPacket.Type.RAW
-            isNeedsTranslation = false
-            this.message = message
-            xuid = ""
-            sourceName = ""
-        }
-
-        session.clientBound(textPacket)
-    }
 }

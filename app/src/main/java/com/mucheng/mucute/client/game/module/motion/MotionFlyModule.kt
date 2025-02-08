@@ -1,5 +1,6 @@
 package com.mucheng.mucute.client.game.module.motion
 
+import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.math.vector.Vector3f
@@ -8,19 +9,18 @@ import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
 import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
-    private val verticalSpeedUp = floatValue("Vertical Speed (Up)", 7.0f, 1.0f..20.0f)
-    private val verticalSpeedDown = floatValue("Vertical Speed (Down)", 7.0f, 1.0f..20.0f)
-    private val motionInterval = floatValue("Hop Delay", 100.0f, 100.0f..600.0f)
+    private val verticalSpeedUp = floatValue("verticalUpSpeed", 7.0f, 1.0f..20.0f)
+    private val verticalSpeedDown = floatValue("verticalDownSpeed", 7.0f, 1.0f..20.0f)
+    private val motionInterval = floatValue("motionInterval", 100.0f, 100.0f..600.0f)
     private var lastMotionTime = 0L
-    private var speedvalue by floatValue("Glide Speed", 1.0f, 0.42f..3.2f)
-    private var FlySpeed by floatValue("Vanilla Fly", 2.15f, 1.0f..5.0f)
+    private var glideSpeed by floatValue("glideSpeed", 1.0f, 0.42f..3.2f)
+    private var vanillaFly by floatValue("vanillaFly", 2.15f, 1.0f..5.0f)
     private var jitterState = false
     private var canFly = false
 
@@ -46,7 +46,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
                 )
             )
             walkSpeed = 0.1f
-            flySpeed = FlySpeed
+            flySpeed = vanillaFly
         })
     }
 
@@ -75,8 +75,6 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
 
     private fun handleFlyAbilities(isEnabled: Boolean) {
-
-
         if (!canFly && isEnabled) {
             enableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
             session.clientBound(enableFlyAbilitiesPacket)
@@ -86,11 +84,10 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
             session.clientBound(disableFlyAbilitiesPacket)
             canFly = false
         }
-
     }
 
-
-    override fun beforePacketBound(packet: BedrockPacket): Boolean {
+    override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
+        val packet = interceptablePacket.packet
         if (packet is PlayerAuthInputPacket) {
             handleFlyAbilities(isEnabled)
             if (isEnabled && System.currentTimeMillis() - lastMotionTime >= motionInterval.value) {
@@ -102,9 +99,9 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
                 val motionPacket = SetEntityMotionPacket().apply {
                     runtimeEntityId = session.localPlayer.runtimeEntityId
                     motion = Vector3f.from(
-                        session.localPlayer.motionX * speedvalue,
+                        session.localPlayer.motionX * glideSpeed,
                         vertical + (if (jitterState) 0.1f else -0.1f),
-                        session.localPlayer.motionZ * speedvalue
+                        session.localPlayer.motionZ * glideSpeed
                     )
                 }
                 session.clientBound(motionPacket)
@@ -112,6 +109,5 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
                 lastMotionTime = System.currentTimeMillis()
             }
         }
-        return false
     }
 }

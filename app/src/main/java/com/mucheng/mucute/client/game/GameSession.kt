@@ -1,5 +1,6 @@
 package com.mucheng.mucute.client.game
 
+import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.entity.LocalPlayer
 import com.mucheng.mucute.client.game.world.Level
 import com.mucheng.mucute.relay.MuCuteRelaySession
@@ -13,6 +14,12 @@ class GameSession(val muCuteRelaySession: MuCuteRelaySession) : ComposedPacketHa
 
     val level = Level(this)
 
+    private val versionName by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        AppContext.instance.packageManager.getPackageInfo(
+            AppContext.instance.packageName, 0
+        ).versionName
+    }
+
     fun clientBound(packet: BedrockPacket) {
         muCuteRelaySession.clientBound(packet)
     }
@@ -25,11 +32,16 @@ class GameSession(val muCuteRelaySession: MuCuteRelaySession) : ComposedPacketHa
         localPlayer.onPacketBound(packet)
         level.onPacketBound(packet)
 
+        val interceptablePacket = InterceptablePacket(packet)
+
         for (module in ModuleManager.modules) {
-            if (module.beforePacketBound(packet)) {
+            module.beforePacketBound(interceptablePacket)
+            if (interceptablePacket.isIntercepted) {
                 return true
             }
         }
+
+        displayClientMessage("[MuCuteClient] $versionName")
 
         return false
     }
