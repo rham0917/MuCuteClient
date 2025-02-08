@@ -41,7 +41,7 @@ class GameSession(val muCuteRelaySession: MuCuteRelaySession) : ComposedPacketHa
             }
         }
 
-        displayClientMessage("[MuCuteClient] $versionName")
+        displayClientMessage("[MuCuteClient] $versionName", TextPacket.Type.TIP)
 
         return false
     }
