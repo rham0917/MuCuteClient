@@ -12,9 +12,9 @@ import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
     private var rangeValue by floatValue("range", 3.7f, 2f..7f)
-    private var attackInterval by intValue("Delay", 5, 1..20)
-    private var cpsValue by intValue("CPS", 10, 1..20)
-    private var packetMultiplier by intValue("Packet Multiplier", 1, 1..10)
+    private var attackInterval by intValue("delay", 5, 1..20)
+    private var cpsValue by intValue("cps", 10, 1..20)
+    private var boost by intValue("boost", 1, 1..10)
 
     private var lastAttackTime = 0L
 
@@ -35,7 +35,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
                 }
 
                 closestEntities.forEach { entity ->
-                    repeat(packetMultiplier) {
+                    repeat(boost) {
                         session.localPlayer.attack(entity)
                     }
                     lastAttackTime = currentTime

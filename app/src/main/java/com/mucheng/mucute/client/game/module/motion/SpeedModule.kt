@@ -14,7 +14,7 @@ import kotlin.math.sin
 
 class SpeedModule : Module("speed", ModuleCategory.Motion) {
 
-    private var speedValue by floatValue("Speed", 1.3f, 0.1f..5f)
+    private var speedValue by floatValue("speed", 1.3f, 0.1f..5f)
 
 
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {

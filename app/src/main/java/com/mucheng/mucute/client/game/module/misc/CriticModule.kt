@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.combat
+package com.mucheng.mucute.client.game.module.misc
 
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
@@ -6,7 +6,7 @@ import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
-class CriticModule : Module("critic", ModuleCategory.Combat) {
+class CriticModule : Module("critic", ModuleCategory.Misc) {
 
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
         if (!isEnabled) {

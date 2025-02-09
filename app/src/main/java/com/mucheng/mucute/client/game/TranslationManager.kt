@@ -63,6 +63,8 @@ object TranslationManager {
         put("hunger", "Hunger")
 
         // Below for module options
+        put("boost", "Boost")
+        put("times", "Times")
         put("flySpeed", "Fly Speed")
         put("range", "Range")
         put("cps", "CPS")
@@ -135,6 +137,8 @@ object TranslationManager {
         put("hunger", "饥饿")
 
         // Below for module options
+        put("boost", "倍率")
+        put("times", "次数")
         put("flySpeed", "飞行速度")
         put("range", "范围")
         put("cps", "CPS")

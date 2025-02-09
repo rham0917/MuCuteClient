@@ -1,26 +1,23 @@
 package com.mucheng.mucute.client.game.module.motion
 
+import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.math.vector.Vector3f
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
-import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
-import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
-import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 import org.cloudburstmc.protocol.bedrock.data.Ability
 import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
-import com.mucheng.mucute.client.game.FloatValue
-import com.mucheng.mucute.client.game.BoolValue
-import com.mucheng.mucute.client.game.InterceptablePacket
 import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
 import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
+import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
+import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
-    private val verticalSpeedUp = floatValue("Vertical Speed (Up)", 7.0f, 1.0f..20.0f)
-    private val verticalSpeedDown = floatValue("Vertical Speed (Down)", 7.0f, 1.0f..20.0f)
-    private val motionInterval = floatValue("Hop Delay", 100.0f, 100.0f..600.0f)
+    private val verticalSpeedUp = floatValue("verticalUpSpeed", 7.0f, 1.0f..20.0f)
+    private val verticalSpeedDown = floatValue("verticalDownSpeed", 7.0f, 1.0f..20.0f)
+    private val motionInterval = floatValue("delay", 100.0f, 100.0f..600.0f)
     private var lastMotionTime = 0L
     private var jitterState = false
     private var canFly = false
@@ -31,7 +28,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
         abilityLayers.add(AbilityLayer().apply {
             layerType = AbilityLayer.Type.BASE
             abilitiesSet.addAll(Ability.entries.toTypedArray())
-            abilityValues.addAll(Ability.values().toList())
+            abilityValues.addAll(Ability.entries)
             walkSpeed = 0.1f
             flySpeed = 2.19f
         })

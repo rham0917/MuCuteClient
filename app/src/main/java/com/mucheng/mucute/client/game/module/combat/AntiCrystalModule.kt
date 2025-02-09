@@ -6,7 +6,7 @@ import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
-class AntiCrystalModule : Module("anti_crystal", ModuleCategory.Misc) {
+class AntiCrystalModule : Module("anti_crystal", ModuleCategory.Combat) {
 
     private var ylevel by floatValue("ylevel", 0.4f, 0.1f..1.61f)
 

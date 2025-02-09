@@ -4,7 +4,7 @@ package com.mucheng.mucute.client.game
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.module.combat.AntiCrystalModule
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
-import com.mucheng.mucute.client.game.module.combat.CriticModule
+import com.mucheng.mucute.client.game.module.misc.CriticModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.AbsorptionModule
 import com.mucheng.mucute.client.game.module.effect.BadOmenModule
