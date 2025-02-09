@@ -4,7 +4,7 @@ package com.mucheng.mucute.client.game
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.module.combat.AntiCrystalModule
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
-import com.mucheng.mucute.client.game.module.misc.CriticModule
+// import com.mucheng.mucute.client.game.module.misc.CriticModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.AbsorptionModule
 import com.mucheng.mucute.client.game.module.effect.BadOmenModule
@@ -34,10 +34,10 @@ import com.mucheng.mucute.client.game.module.effect.SwiftnessModule
 import com.mucheng.mucute.client.game.module.effect.VillageHeroModule
 import com.mucheng.mucute.client.game.module.effect.WeaknessModule
 import com.mucheng.mucute.client.game.module.effect.WitherModule
+// import com.mucheng.mucute.client.game.module.misc.CrasherModule
 import com.mucheng.mucute.client.game.module.misc.DesyncModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
 import com.mucheng.mucute.client.game.module.misc.PositionLoggerModule
-import com.mucheng.mucute.client.game.module.misc.CrashModule
 import com.mucheng.mucute.client.game.module.motion.AirJumpModule
 import com.mucheng.mucute.client.game.module.motion.AntiAFKModule
 import com.mucheng.mucute.client.game.module.motion.AutoWalkModule
@@ -95,7 +95,7 @@ object ModuleManager {
             add(MotionFlyModule())
             add(FreeCameraModule())
             add(KillauraModule())
-            add(CriticModule())
+           // add(CriticModule())
             add(NauseaModule())
             add(HealthBoostModule())
             add(JumpBoostModule())
@@ -120,7 +120,10 @@ object ModuleManager {
             add(VillageHeroModule())
             add(DarknessModule())
             add(TimeShiftModule())
-            add(CrashModule())
+          //  add(CrasherModule())
+
+
+
         }
     }
 
