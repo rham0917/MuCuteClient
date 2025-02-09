@@ -26,7 +26,7 @@ object TranslationManager {
         put("regeneration", "regen")
         put("bhop", "BHOP")
         put("sprint", "Sprint")
-        put("no_hurt_cam", "No Hurt Camera")
+        put("no_hurt_camera", "No Hurt Camera")
         put("anti_afk", "Anti AFK")
         put("auto_walk", "Auto Walk")
         put("desync", "Desync")
