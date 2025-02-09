@@ -61,6 +61,7 @@ object TranslationManager {
         put("absorption", "Absorption")
         put("blindness", "Blindness")
         put("hunger", "Hunger")
+        put("time_shift", "Time Changer")
 
         // Below for module options
         put("boost", "Boost")
@@ -83,6 +84,7 @@ object TranslationManager {
         put("disabled", "Disabled")
         put("players_only", "Players Only")
         put("mobs_only", "Mob Aura")
+        put("time", "Time")
     }
 
     private fun zh() = buildMap {
@@ -137,6 +139,7 @@ object TranslationManager {
         put("absorption", "伤害吸收")
         put("blindness", "失明")
         put("hunger", "饥饿")
+        put("time_shift", "时间修改器")
 
         // Below for module options
         put("boost", "倍率")
@@ -159,6 +162,7 @@ object TranslationManager {
         put("disabled", "禁用")
         put("players_only", "仅限玩家")
         put("mobs_only", "生物光环")
+        put("time", "时间")
 
     }
 
@@ -167,4 +171,3 @@ object TranslationManager {
     }
 
 }
-
