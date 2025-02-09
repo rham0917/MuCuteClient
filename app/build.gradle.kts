@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.lombok)
-    // alias(libs.plugins.checkerframework)
     kotlin("plugin.serialization") version libs.versions.kotlin
 }
 
@@ -92,15 +91,16 @@ android {
 }
 
 configurations.all {
-    // Do not uncomment this, it's necessary to run relay
-    // exclude(group = "com.nukkitx", module = "natives")
+
 }
 
 fun DependencyHandler.implementationRelay() {
+    debugImplementation(platform(libs.log4j.bom))
+    debugImplementation(libs.log4j.api)
+    debugImplementation(libs.log4j.core)
     implementation(files("libs/MuCuteRelay.jar"))
-    implementation(libs.minecraftauth)
-    implementation(libs.jackson.databind)
     implementation(libs.bundles.netty)
+    implementation(libs.netty.transport.native.epoll)
     implementation(libs.expiringmap)
     implementation(libs.network.common)
     implementation(platform(libs.fastutil.bom))
@@ -111,16 +111,16 @@ fun DependencyHandler.implementationRelay() {
     implementation(libs.jose4j)
     implementation(libs.math)
     implementation(libs.nbt)
-    implementation(libs.lmbda)
     implementation(libs.snappy)
-    debugImplementation(platform(libs.log4j.bom))
-    debugImplementation(libs.log4j.api)
-    debugImplementation(libs.log4j.core)
+    implementation(libs.guava)
+    implementation(libs.gson)
+    implementation(libs.http.client)
+    implementation(libs.bcprov)
+    implementation(libs.okhttp)
 }
 
 dependencies {
     implementationRelay()
-//    coreLibraryDesugaring(libs.desugar)
     implementation(libs.kotlinx.serialization.json.jvm)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
