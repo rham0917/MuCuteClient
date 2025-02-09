@@ -11,6 +11,8 @@ import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
 class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
+    private var playersOnly by boolValue("players_only", true)
+
     private var rangeValue by floatValue("range", 3.7f, 2f..7f)
     private var attackInterval by intValue("delay", 5, 1..20)
     private var cpsValue by intValue("cps", 10, 1..20)
@@ -47,9 +49,15 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
     private fun Entity.isTarget(): Boolean {
         return when (this) {
             is LocalPlayer -> false
-            is Player -> !this.isBot()
-            is EntityUnknown -> true
-            else -> false
+            is Player -> {
+                if (playersOnly) {
+                    !this.isBot() 
+                } else {
+                    !this.isBot()
+                }
+            }
+            is EntityUnknown -> !playersOnly 
+            else -> !playersOnly 
         }
     }
 
