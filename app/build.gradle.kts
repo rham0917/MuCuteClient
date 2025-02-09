@@ -74,7 +74,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-//        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -100,7 +99,6 @@ fun DependencyHandler.implementationRelay() {
     debugImplementation(libs.log4j.core)
     implementation(files("libs/MuCuteRelay.jar"))
     implementation(libs.bundles.netty)
-    implementation(libs.netty.transport.native.epoll)
     implementation(libs.expiringmap)
     implementation(libs.network.common)
     implementation(platform(libs.fastutil.bom))
