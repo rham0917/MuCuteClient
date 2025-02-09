@@ -49,6 +49,7 @@ import com.mucheng.mucute.client.game.module.motion.SpeedModule
 import com.mucheng.mucute.client.game.module.motion.SprintModule
 import com.mucheng.mucute.client.game.module.visual.FreeCameraModule
 import com.mucheng.mucute.client.game.module.visual.NoHurtCameraModule
+import com.mucheng.mucute.client.game.module.visual.TimeShiftModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -117,6 +118,8 @@ object ModuleManager {
             add(BadOmenModule())
             add(VillageHeroModule())
             add(DarknessModule())
+            add(TimeShiftModule())
+
         }
     }
 
