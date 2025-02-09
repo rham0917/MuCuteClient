@@ -6,6 +6,7 @@ import com.mucheng.mucute.client.game.ModuleCategory
 import com.mucheng.mucute.client.game.entity.Entity
 import com.mucheng.mucute.client.game.entity.EntityUnknown
 import com.mucheng.mucute.client.game.entity.LocalPlayer
+import com.mucheng.mucute.client.game.entity.MobList
 import com.mucheng.mucute.client.game.entity.Player
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
@@ -18,7 +19,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
     private var rangeValue by floatValue("range", 3.7f, 2f..7f)
     private var attackInterval by intValue("delay", 5, 1..20)
     private var cpsValue by intValue("cps", 10, 1..20)
-    private var boost by intValue("boost", 1, 1..10)
+    private var boost by intValue("Packets", 1, 1..10)
 
     private var lastAttackTime = 0L
 
@@ -75,87 +76,9 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
     // Add new function to check if entity is a mob
     private fun EntityUnknown.isMob(): Boolean {
-        // Add mob entity types here
-        val mobTypes = listOf(
-            "minecraft:armadillo",
-            "minecraft:bat",
-            "minecraft:bee",
-            "minecraft:blaze",
-            "minecraft:bogged",
-            "minecraft:camel",
-            "minecraft:cat",
-            "minecraft:cave_spider",
-            "minecraft:chicken",
-            "minecraft:cod",
-            "minecraft:cow",
-            "minecraft:creeper",
-            "minecraft:dolphin",
-            "minecraft:donkey",
-            "minecraft:drowned",
-            "minecraft:elder_guardian",
-            "minecraft:enderman",
-            "minecraft:endermite",
-            "minecraft:evoker",
-            "minecraft:fox",
-            "minecraft:frog",
-            "minecraft:ghast",
-            "minecraft:glow_squid",
-            "minecraft:goat",
-            "minecraft:guardian",
-            "minecraft:hoglin",
-            "minecraft:horse",
-            "minecraft:husk",
-            "minecraft:illusioner",
-            "minecraft:iron_golem",
-            "minecraft:llama",
-            "minecraft:magma_cube",
-            "minecraft:mooshroom",
-            "minecraft:mule",
-            "minecraft:ocelot",
-            "minecraft:panda",
-            "minecraft:parrot",
-            "minecraft:phantom",
-            "minecraft:pig",
-            "minecraft:piglin",
-            "minecraft:piglin_brute",
-            "minecraft:pillager",
-            "minecraft:polar_bear",
-            "minecraft:pufferfish",
-            "minecraft:rabbit",
-            "minecraft:ravager",
-            "minecraft:salmon",
-            "minecraft:sheep",
-            "minecraft:shulker",
-            "minecraft:silverfish",
-            "minecraft:skeleton",
-            "minecraft:skeleton_horse",
-            "minecraft:slime",
-            "minecraft:snow_golem",
-            "minecraft:spider",
-            "minecraft:squid",
-            "minecraft:stray",
-            "minecraft:strider",
-            "minecraft:tadpole",
-            "minecraft:trader_llama",
-            "minecraft:tropical_fish",
-            "minecraft:turtle",
-            "minecraft:vex",
-            "minecraft:villager",
-            "minecraft:vindicator",
-            "minecraft:wandering_trader",
-            "minecraft:warden",
-            "minecraft:witch",
-            "minecraft:wither",
-            "minecraft:wither_skeleton",
-            "minecraft:wolf",
-            "minecraft:zoglin",
-            "minecraft:zombie",
-            "minecraft:zombie_horse",
-            "minecraft:zombie_villager",
-            "minecraft:zombified_piglin"
-        )
-        return this.identifier in mobTypes
+        return this.identifier in MobList.mobTypes
     }
+
 
     private fun Player.isBot(): Boolean {
         if (this is LocalPlayer) return false
