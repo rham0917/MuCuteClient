@@ -85,6 +85,10 @@ object TranslationManager {
         put("players_only", "Players Only")
         put("mobs_only", "Mob Aura")
         put("time", "Time")
+        put("keep_distance","Distance")
+        put("tp_speed","Teleport Speed")
+        put("packets","Packets")
+        put("tp_aura","TP Aura")
     }
 
     private fun zh() = buildMap {
@@ -163,6 +167,10 @@ object TranslationManager {
         put("players_only", "仅限玩家")
         put("mobs_only", "生物光环")
         put("time", "时间")
+        put("keep_distance","距离")
+        put("tp_speed","传送速度")
+        put("packets","数据包")
+        put("tp_aura","传送光环")
 
     }
 
