@@ -89,6 +89,10 @@ object TranslationManager {
         put("tp_speed","Teleport Speed")
         put("packets","Packets")
         put("tp_aura","TP Aura")
+        put("teleport_behind","TP Behind")
+        put("strafe_angle","Strafe Angle")
+        put("strafe_speed","Strafe Speed")
+        put("strafe_radius","Strafe Radius")
     }
 
     private fun zh() = buildMap {
@@ -171,6 +175,10 @@ object TranslationManager {
         put("tp_speed","传送速度")
         put("packets","数据包")
         put("tp_aura","传送光环")
+        put("teleport_behind","传送到后面")
+        put("strafe_angle","扫射角")
+        put("strafe_speed","扫射速度")
+        put("strafe_radius","扫射半径")
 
     }
 

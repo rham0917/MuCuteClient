@@ -7,13 +7,15 @@ import com.mucheng.mucute.client.game.entity.*
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
-
+import kotlin.math.cos
+import kotlin.math.sin
 class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
     private var playersOnly by boolValue("players_only", true)
     private var mobsOnly by boolValue("mobs_only", false)
     private var tpAuraEnabled by boolValue("tp_aura", false) // TP Aura toggle
-
+    private var strafe by boolValue("strafe", false)
+    private var teleportBehind by boolValue("teleport_behind", false) // Default to true
     private var rangeValue by floatValue("range", 3.7f, 2f..7f)
     private var attackInterval by intValue("delay", 5, 1..20)
     private var cpsValue by intValue("cps", 10, 1..20)
@@ -21,7 +23,9 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
     private var tpspeed by intValue("tp_speed", 1000, 100..2000)
 
     private var distanceToKeep by floatValue("keep_distance", 2.0f, 1f..5f)
-
+    private var strafeAngle by floatValue("strafe_angle", 0.0f, 0.0f..360.0f)
+    private val strafeSpeed by floatValue("strafe_speed", 1.0f, 0.1f..2.0f)
+    private val strafeRadius by floatValue("strafe_radius", 1.0f, 0.1f..5.0f)
     private var lastAttackTime = 0L
     private var tpCooldown = 0L // Cooldown for teleportation to prevent spamming
 
@@ -47,39 +51,93 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
                     repeat(boost) {
                         session.localPlayer.attack(entity) // Attack the entity multiple times
                     }
-
+                    if (strafe) {
+                        strafeAroundTarget(entity)
+                    }
                     lastAttackTime = currentTime
                 }
             }
         }
     }
+    private fun strafeAroundTarget(entity: Entity) {
+        val targetPos = entity.vec3Position
 
+        // Calculate the new strafe position
+        strafeAngle += strafeSpeed
+        if (strafeAngle >= 360.0) {
+            strafeAngle -= 360.0f
+        }
+
+        // Calculate the circular motion offset
+        val offsetX = strafeRadius * cos(strafeAngle)
+        val offsetZ = strafeRadius * sin(strafeAngle)
+
+        // Adjust the player's position using MovePlayerPacket
+        val newPosition = targetPos.add(offsetX.toFloat(), 0f, offsetZ.toFloat())
+
+        val movePlayerPacket = MovePlayerPacket().apply {
+            runtimeEntityId = session.localPlayer.runtimeEntityId
+            position = newPosition
+            rotation = Vector3f.from(0f, 0f, 0f) // Keep the current rotation (optional)
+            mode = MovePlayerPacket.Mode.NORMAL
+            isOnGround = true
+            ridingRuntimeEntityId = 0
+            tick = session.localPlayer.tickExists
+        }
+
+        session.clientBound(movePlayerPacket)
+    }
     private fun teleportTo(entity: Entity, distance: Float) {
         val targetPosition = entity.vec3Position
         val playerPosition = session.localPlayer.vec3Position
 
-        // Calculate direction vector from the player to the target (X and Z only)
-        val direction = Vector3f.from(
-            targetPosition.x - playerPosition.x,
-            0f,  // No modification to Y-axis
-            targetPosition.z - playerPosition.z
-        )
+        val newPosition = if (teleportBehind) {
+            val targetYaw = Math.toRadians(entity.vec3Rotation.y.toDouble()).toFloat()
 
-        // Normalize the direction to make it a unit vector
-        val length = direction.length()
-        val normalizedDirection = if (length != 0f) {
-            Vector3f.from(direction.x / length, 0f, direction.z / length)  // No normalization for Y
+            // Corrected direction calculation for behind
+            val direction = Vector3f.from(
+                sin(targetYaw),  // Fixed: Removed negative sign to get correct direction
+                0f,
+                -cos(targetYaw)
+            )
+
+            val length = direction.length()
+            val normalizedDirection = if (length != 0f) {
+                Vector3f.from(direction.x / length, 0f, direction.z / length)
+            } else {
+                direction
+            }
+
+            Vector3f.from(
+                targetPosition.x + normalizedDirection.x * distance,
+                targetPosition.y,
+                targetPosition.z + normalizedDirection.z * distance
+            )
         } else {
-            direction
+            // Calculate direction vector from the player to the target
+            val direction = Vector3f.from(
+                targetPosition.x - playerPosition.x,
+                0f,  // No modification to Y-axis
+                targetPosition.z - playerPosition.z
+            )
+
+            // Normalize the direction to make it a unit vector
+            val length = direction.length()
+            val normalizedDirection = if (length != 0f) {
+                Vector3f.from(direction.x / length, 0f, direction.z / length)  // No normalization for Y
+            } else {
+                direction
+            }
+
+            // Calculate new position, offsetting by 'distance' blocks away from the target
+            Vector3f.from(
+                targetPosition.x - normalizedDirection.x * distance,
+                targetPosition.y,  // Follow the target's Y-axis
+                targetPosition.z - normalizedDirection.z * distance
+            )
         }
 
-        // Calculate new position, offsetting by 'distanceToKeep' blocks away from the target (X and Z only)
-        val newPosition = Vector3f.from(
-            targetPosition.x - normalizedDirection.x * distance,
-            playerPosition.y,  // Keep the current Y-axis position to avoid sinking
-            targetPosition.z - normalizedDirection.z * distance
-        )
-
+        // Create the MovePlayerPacket to teleport the player
         val movePlayerPacket = MovePlayerPacket().apply {
             runtimeEntityId = session.localPlayer.runtimeEntityId
             position = newPosition
@@ -90,8 +148,10 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
             tick = session.localPlayer.tickExists // Use current player's tick
         }
 
-        session.clientBound(movePlayerPacket) // Send teleportation packet
+        // Send the teleportation packet
+        session.clientBound(movePlayerPacket)
     }
+
 
 
 
