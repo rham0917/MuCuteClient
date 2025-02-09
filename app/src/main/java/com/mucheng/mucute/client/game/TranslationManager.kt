@@ -82,6 +82,7 @@ object TranslationManager {
         put("enabled", "Enabled")
         put("disabled", "Disabled")
         put("players_only", "Players Only")
+        put("mobs_only", "Mob Aura")
     }
 
     private fun zh() = buildMap {
@@ -157,6 +158,7 @@ object TranslationManager {
         put("enabled", "启用")
         put("disabled", "禁用")
         put("players_only", "仅限玩家")
+        put("mobs_only", "生物光环")
 
     }
 
@@ -165,3 +167,4 @@ object TranslationManager {
     }
 
 }
+
