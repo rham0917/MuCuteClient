@@ -15,7 +15,7 @@ desugar = "2.1.4"
 
 minecraft-auth = "4.1.1"
 jackson-databind = "2.15.3"
-log4j = "2.24.2"
+log4j = "2.24.3"
 netty = "4.2.0.RC2"
 expiringmap = "0.5.11"
 network = "1.6.28-SNAPSHOT"
