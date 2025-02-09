@@ -81,6 +81,7 @@ object TranslationManager {
         put("delay", "Delay")
         put("enabled", "Enabled")
         put("disabled", "Disabled")
+        put("players_only", "Players Only")
     }
 
     private fun zh() = buildMap {
@@ -155,6 +156,8 @@ object TranslationManager {
         put("delay", "延迟")
         put("enabled", "启用")
         put("disabled", "禁用")
+        put("players_only", "仅限玩家")
+
     }
 
     fun getTranslationMap(language: String): Map<String, String> {
