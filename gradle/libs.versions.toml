@@ -14,7 +14,7 @@ navigationCompose = "2.8.6"
 desugar = "2.1.4"
 
 minecraft-auth = "4.1.1"
-jackson-databind = "2.15.3"
+jackson-databind = "2.18.2"
 log4j = "2.24.3"
 netty = "4.2.0.RC2"
 expiringmap = "0.5.11"
