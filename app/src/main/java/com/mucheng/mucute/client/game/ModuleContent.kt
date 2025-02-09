@@ -144,7 +144,6 @@ private fun ModuleCard(module: Module) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChoiceValueContent(value: ListValue) {
     Column(
