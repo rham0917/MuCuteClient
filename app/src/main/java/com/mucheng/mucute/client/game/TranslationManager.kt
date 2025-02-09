@@ -62,6 +62,7 @@ object TranslationManager {
         put("blindness", "Blindness")
         put("hunger", "Hunger")
         put("time_shift", "Time Changer")
+        put("crash", "Crash")
 
         // Below for module options
         put("boost", "Boost")
@@ -148,6 +149,7 @@ object TranslationManager {
         put("blindness", "失明")
         put("hunger", "饥饿")
         put("time_shift", "时间修改器")
+        put("crash", "崩溃")
 
         // Below for module options
         put("boost", "倍率")
