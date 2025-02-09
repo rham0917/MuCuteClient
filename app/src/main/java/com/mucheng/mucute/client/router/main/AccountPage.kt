@@ -187,7 +187,11 @@ fun AccountPageContent() {
                                             )
                                         },
                                         onClick = {
-
+                                            AccountManager.accounts.remove(account)
+                                            if (account == AccountManager.currentAccount) {
+                                                AccountManager.selectAccount(null)
+                                            }
+                                            AccountManager.save()
                                             showAccountActionDropdownMenu = false
                                         }
                                     )

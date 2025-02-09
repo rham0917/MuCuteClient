@@ -6,6 +6,4 @@
 -keepclassmembers class * {
     @com.google.gson.annotations.SerializedName <fields>;
 }
--keep class net.raphimc.minecraftauth.** { *; }
--keep class io.jsonwebtoken.** { *; }
--keep class com.nukkitx.natives.** { *; }
+-keep class coelho.msftauth.api.** { *; }
