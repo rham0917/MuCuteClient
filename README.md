@@ -18,7 +18,7 @@ innovation in our development process. 🚫
 
 ## Install ⬆️
 
-[Click Here to Install](https://objects.githubusercontent.com/github-production-release-asset-2e65be/915523455/631ae9f3-5a2f-4a0b-b096-6c999da62b8f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20250210%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250210T202419Z&X-Amz-Expires=300&X-Amz-Signature=42d3f5a67d4da6aaa95d0161875aec094bb8414271666781d5cbac73d4cbfc18&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dapp-release.apk&response-content-type=application%2Fvnd.android.package-archive)
+[Click Here to Install](https://github.com/MuCuteTeam/MuCuteClient/releases/download/install/app-release.apk)
 
 ![Divider](images/divider.png)
 
