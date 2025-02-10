@@ -18,7 +18,6 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
     private val verticalSpeedUp = floatValue("verticalUpSpeed", 7.0f, 1.0f..20.0f)
     private val verticalSpeedDown = floatValue("verticalDownSpeed", 7.0f, 1.0f..20.0f)
     private val motionInterval = floatValue("delay", 100.0f, 100.0f..600.0f)
-    private val flySpeed = floatValue("speed", 0.8f, 0f..5f)
     private var lastMotionTime = 0L
     private var jitterState = false
     private var canFly = false
@@ -31,6 +30,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
             abilitiesSet.addAll(Ability.entries.toTypedArray())
             abilityValues.addAll(Ability.entries)
             walkSpeed = 0.1f
+            private val flySpeed = floatValue("speed", 0.8f, 0f..5f)
         })
     }
 
