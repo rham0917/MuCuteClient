@@ -160,26 +160,23 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
         return when (this) {
             is LocalPlayer -> false
             is Player -> {
-                if (mobsOnly) {
-                    false
-                } else if (playersOnly) {
+                if (playersOnly || (playersOnly && mobsOnly)) {
                     !this.isBot()
                 } else {
-                    !this.isBot()
+                    false
                 }
             }
             is EntityUnknown -> {
-                if (mobsOnly) {
+                if (mobsOnly || (playersOnly && mobsOnly)) {
                     isMob()
-                } else if (playersOnly) {
-                    false
                 } else {
-                    true
+                    false
                 }
             }
             else -> false
         }
     }
+
 
     private fun EntityUnknown.isMob(): Boolean {
         return this.identifier in MobList.mobTypes
