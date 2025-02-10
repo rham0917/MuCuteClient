@@ -19,8 +19,8 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
     private var rangeValue by floatValue("range", 3.7f, 2f..7f)
     private var attackInterval by intValue("delay", 5, 1..20)
     private var cpsValue by intValue("cps", 10, 1..20)
-    private var boost by intValue("packets", 1, 1..10)
-    private var tpspeed by intValue("tp_speed", 1000, 100..2000)
+    private var packets by intValue("packets", 1, 1..10)
+    private var tpSpeed by intValue("tp_speed", 1000, 100..2000)
 
     private var distanceToKeep by floatValue("keep_distance", 2.0f, 1f..5f)
     private var strafeAngle by floatValue("strafe_angle", 0.0f, 0.0f..360.0f)
@@ -43,12 +43,12 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
                 closestEntities.forEach { entity ->
                     // Handle teleportation once when TP Aura is enabled
-                    if (tpAuraEnabled && (currentTime - tpCooldown) >= tpspeed) { // Add a cooldown for teleportation
+                    if (tpAuraEnabled && (currentTime - tpCooldown) >= tpSpeed) { // Add a cooldown for teleportation
                         teleportTo(entity, distanceToKeep)
                         tpCooldown = currentTime // Update teleportation cooldown
                     }
 
-                    repeat(boost) {
+                    repeat(packets) {
                         session.localPlayer.attack(entity) // Attack the entity multiple times
                     }
                     if (strafe) {

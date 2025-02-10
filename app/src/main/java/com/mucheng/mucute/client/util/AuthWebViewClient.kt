@@ -8,6 +8,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.util.Base64
 import android.util.Log
+import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -42,9 +43,11 @@ class AuthWebView @JvmOverloads constructor(
     var callback: ((success: Boolean) -> Unit)? = null
 
     init {
+        CookieManager.getInstance()
+            .removeAllCookies(null)
+
         setBackgroundColor(Color.TRANSPARENT)
         settings.javaScriptEnabled = true
-        settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webViewClient = AuthWebViewClient()
     }
 
@@ -83,8 +86,8 @@ class AuthWebView @JvmOverloads constructor(
 
                         callback?.invoke(true)
                     } catch (t: Throwable) {
-                        Log.e("AuthWebView", "Obtain access token: $t")
-                        handler.post { loadData(t.toString()) }
+                        Log.e("AuthWebView", "Obtain access token: ${t.stackTraceToString()}")
+                        handler.post { loadData(t.stackTraceToString()) }
                     }
                 }
                 return true
@@ -135,8 +138,8 @@ class AuthWebView @JvmOverloads constructor(
 
                     callback?.invoke(true)
                 } catch (t: Throwable) {
-                    Log.e("AuthWebView", "Obtain access token: $t")
-                    handler.post { loadData(t.toString()) }
+                    Log.e("AuthWebView", "Obtain access token: ${t.stackTraceToString()}")
+                    handler.post { loadData(t.stackTraceToString()) }
                 }
             }
             return true

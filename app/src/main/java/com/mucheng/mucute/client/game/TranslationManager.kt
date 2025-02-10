@@ -66,7 +66,6 @@ object TranslationManager {
 
 
         // Below for module options
-        put("boost", "Boost")
         put("times", "Times")
         put("flySpeed", "Fly Speed")
         put("range", "Range")
@@ -90,6 +89,7 @@ object TranslationManager {
         put("keep_distance","Distance")
         put("tp_speed","Teleport Speed")
         put("packets","Packets")
+        put("strafe", "Strafe")
         put("tp_aura","TP Aura")
         put("teleport_behind","TP Behind")
         put("strafe_angle","Strafe Angle")
@@ -155,7 +155,6 @@ object TranslationManager {
 
 
         // Below for module options
-        put("boost", "倍率")
         put("times", "次数")
         put("flySpeed", "飞行速度")
         put("range", "范围")
@@ -178,13 +177,13 @@ object TranslationManager {
         put("time", "时间")
         put("keep_distance","距离")
         put("tp_speed","传送速度")
-        put("packets","数据包")
+        put("packets","发包次数")
+        put("strafe", "环绕")
         put("tp_aura","传送光环")
-        put("teleport_behind","传送到后面")
-        put("strafe_angle","扫射角")
-        put("strafe_speed","扫射速度")
-        put("strafe_radius","扫射半径")
-
+        put("teleport_behind","传送到身后")
+        put("strafe_angle","环绕角")
+        put("strafe_speed","环绕速度")
+        put("strafe_radius","环绕半径")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {
