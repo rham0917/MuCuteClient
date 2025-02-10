@@ -30,7 +30,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
             abilitiesSet.addAll(Ability.entries.toTypedArray())
             abilityValues.addAll(Ability.entries)
             walkSpeed = 0.1f
-            flySpeed = 2.19f
+            flySpeed = 0.75f
         })
     }
 
