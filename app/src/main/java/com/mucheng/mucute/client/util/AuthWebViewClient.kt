@@ -45,7 +45,6 @@ class AuthWebView @JvmOverloads constructor(
         CookieManager.getInstance()
             .removeAllCookies(null)
 
-        setBackgroundColor(Color.TRANSPARENT)
         settings.javaScriptEnabled = true
         webViewClient = AuthWebViewClient()
     }
