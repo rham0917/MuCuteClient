@@ -73,7 +73,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
                     else -> 0f
                 }
                 val motionPacket = SetEntityMotionPacket().apply {
-                    runtimeEntityId = session. localPlayer.runtimeEntityId
+                    runtimeEntityId = session.localPlayer.runtimeEntityId
                     motion = Vector3f.from(0f, vertical + (if (jitterState) 0.1f else -0.1f), 0f)
                 }
                 session.clientBound(motionPacket)

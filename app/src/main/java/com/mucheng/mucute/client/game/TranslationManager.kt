@@ -86,15 +86,15 @@ object TranslationManager {
         put("players_only", "Players Only")
         put("mobs_only", "Mob Aura")
         put("time", "Time")
-        put("keep_distance","Distance")
-        put("tp_speed","Teleport Speed")
-        put("packets","Packets")
+        put("keep_distance", "Distance")
+        put("tp_speed", "Teleport Speed")
+        put("packets", "Packets")
         put("strafe", "Strafe")
-        put("tp_aura","TP Aura")
-        put("teleport_behind","TP Behind")
-        put("strafe_angle","Strafe Angle")
-        put("strafe_speed","Strafe Speed")
-        put("strafe_radius","Strafe Radius")
+        put("tp_aura", "TP Aura")
+        put("teleport_behind", "TP Behind")
+        put("strafe_angle", "Strafe Angle")
+        put("strafe_speed", "Strafe Speed")
+        put("strafe_radius", "Strafe Radius")
     }
 
     private fun zh() = buildMap {
@@ -153,7 +153,6 @@ object TranslationManager {
         put("crash", "崩溃")
 
 
-
         // Below for module options
         put("times", "次数")
         put("flySpeed", "飞行速度")
@@ -175,15 +174,15 @@ object TranslationManager {
         put("players_only", "仅限玩家")
         put("mobs_only", "生物光环")
         put("time", "时间")
-        put("keep_distance","距离")
-        put("tp_speed","传送速度")
-        put("packets","发包次数")
+        put("keep_distance", "距离")
+        put("tp_speed", "传送速度")
+        put("packets", "发包次数")
         put("strafe", "环绕")
-        put("tp_aura","传送光环")
-        put("teleport_behind","传送到身后")
-        put("strafe_angle","环绕角")
-        put("strafe_speed","环绕速度")
-        put("strafe_radius","环绕半径")
+        put("tp_aura", "传送光环")
+        put("teleport_behind", "传送到身后")
+        put("strafe_angle", "环绕角")
+        put("strafe_speed", "环绕速度")
+        put("strafe_radius", "环绕半径")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {
