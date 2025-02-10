@@ -30,7 +30,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
             abilitiesSet.addAll(Ability.entries.toTypedArray())
             abilityValues.addAll(Ability.entries)
             walkSpeed = 0.1f
-            val flySpeed = floatValue("speed", 0.8f, 0f..5f)
+            flySpeed = floatValue("speed", 0.8f, 0f..5f)
         })
     }
 
