@@ -182,7 +182,7 @@ requirements for running the app.
 
 ## Badges
 
-![GitHub issues](https://img.shields.io/github/issues/MuCuteTeam/MuCuteRelay) ![GitHub stars](https://img.shields.io/github/stars/MuCuteTeam/MuCuteRelay)
+![GitHub issues](https://img.shields.io/github/issues/MuCuteTeam/MuCuteClient) ![GitHub stars](https://img.shields.io/github/stars/MuCuteTeam/MuCuteClient)
 
 ![Divider](images/divider.png)
 ![Background](images/background.png)
