@@ -23,7 +23,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
     private var packets by intValue("packets", 1, 1..100)
     private var tpSpeed by intValue("tp_speed", 1000, 0..2000)
 
-    private var distanceToKeep by floatValue("keep_distance", 2.0f, 1f..10f)
+    private var distanceToKeep by floatValue("keep_distance", 2.0f, 0f..10f)
     private var strafeAngle by floatValue("strafe_angle", 0.0f, 0.0f..360.0f)
     private val strafeSpeed by floatValue("strafe_speed", 1.0f, 0.1f..5.0f)
     private val strafeRadius by floatValue("strafe_radius", 1.0f, 0.1f..20.0f)
