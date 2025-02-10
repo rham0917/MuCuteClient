@@ -23,7 +23,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
     private var jitterState = false
     private var canFly = false
 
-    private val flyAbilitiesPacket = UpdateAbilitiesPacket().apply {
+    private var flyAbilitiesPacket = UpdateAbilitiesPacket().apply {
         playerPermission = PlayerPermission.OPERATOR
         commandPermission = CommandPermission.OWNER
         abilityLayers.add(AbilityLayer().apply {
