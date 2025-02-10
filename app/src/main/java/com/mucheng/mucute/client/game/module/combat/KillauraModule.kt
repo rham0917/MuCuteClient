@@ -9,6 +9,7 @@ import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import kotlin.math.cos
 import kotlin.math.sin
+
 class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
     private var playersOnly by boolValue("players_only", true)
