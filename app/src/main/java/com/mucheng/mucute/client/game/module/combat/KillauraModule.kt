@@ -3,7 +3,11 @@ package com.mucheng.mucute.client.game.module.combat
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
-import com.mucheng.mucute.client.game.entity.*
+import com.mucheng.mucute.client.game.entity.Entity
+import com.mucheng.mucute.client.game.entity.EntityUnknown
+import com.mucheng.mucute.client.game.entity.LocalPlayer
+import com.mucheng.mucute.client.game.entity.MobList
+import com.mucheng.mucute.client.game.entity.Player
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
@@ -60,6 +64,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
             }
         }
     }
+
     private fun strafeAroundTarget(entity: Entity) {
         val targetPos = entity.vec3Position
 
@@ -88,6 +93,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
         session.clientBound(movePlayerPacket)
     }
+
     private fun teleportTo(entity: Entity, distance: Float) {
         val targetPosition = entity.vec3Position
         val playerPosition = session.localPlayer.vec3Position
@@ -125,7 +131,11 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
             // Normalize the direction to make it a unit vector
             val length = direction.length()
             val normalizedDirection = if (length != 0f) {
-                Vector3f.from(direction.x / length, 0f, direction.z / length)  // No normalization for Y
+                Vector3f.from(
+                    direction.x / length,
+                    0f,
+                    direction.z / length
+                )  // No normalization for Y
             } else {
                 direction
             }
@@ -154,8 +164,6 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
     }
 
 
-
-
     private fun Entity.isTarget(): Boolean {
         return when (this) {
             is LocalPlayer -> false
@@ -166,6 +174,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
                     false
                 }
             }
+
             is EntityUnknown -> {
                 if (mobsOnly || (playersOnly && mobsOnly)) {
                     isMob()
@@ -173,6 +182,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
                     false
                 }
             }
+
             else -> false
         }
     }

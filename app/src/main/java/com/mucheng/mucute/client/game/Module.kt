@@ -98,7 +98,7 @@ abstract class Module(val name: String, val category: ModuleCategory) : Interrup
         val stateText = if (enabled) "enabled".translatedSelf else "disabled".translatedSelf
         val status = (if (enabled) "§a" else "§c") + stateText
         val moduleName = name.translatedSelf
-        val message = "§l§b[MuCute] §r§7${moduleName} §8» $status"
+        val message = "§l§b[MuCuteClient] §r§7${moduleName} §8» $status"
 
         session.displayClientMessage(message)
     }

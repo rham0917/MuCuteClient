@@ -10,16 +10,15 @@ import android.util.Base64
 import android.util.Log
 import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.google.gson.JsonParser
-import com.mucheng.mucute.relay.util.XboxDeviceInfo
-import com.mucheng.mucute.relay.util.fetchIdentityToken
 import com.mucheng.mucute.client.game.AccountManager
 import com.mucheng.mucute.client.model.Account
+import com.mucheng.mucute.relay.util.XboxDeviceInfo
 import com.mucheng.mucute.relay.util.XboxGamerTagException
 import com.mucheng.mucute.relay.util.base64Decode
+import com.mucheng.mucute.relay.util.fetchIdentityToken
 import com.mucheng.mucute.relay.util.fetchRawChain
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.cloudburstmc.protocol.bedrock.util.EncryptionUtils
@@ -46,7 +45,6 @@ class AuthWebView @JvmOverloads constructor(
         CookieManager.getInstance()
             .removeAllCookies(null)
 
-        setBackgroundColor(Color.TRANSPARENT)
         settings.javaScriptEnabled = true
         webViewClient = AuthWebViewClient()
     }
