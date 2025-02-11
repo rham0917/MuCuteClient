@@ -2,6 +2,7 @@ package com.mucheng.mucute.client.overlay
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.View
 import android.view.WindowManager
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -83,6 +84,7 @@ object OverlayManager {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val layoutParams = overlayWindow.layoutParams
         val composeView = overlayWindow.composeView
+        composeView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         composeView.setContent {
             MuCuteClientTheme {
                 CompositionLocalProvider(LocalOverscrollConfiguration provides null) {

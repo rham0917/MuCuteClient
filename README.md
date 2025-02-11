@@ -18,7 +18,7 @@ innovation in our development process. 🚫
 
 ## Install ⬆️
 
-[Click Here to Install](https://github.com/MuCuteTeam/MuCuteClient/releases/download/v1.0/app-release.apk)
+[Click Here to Install](https://github.com/MuCuteTeam/MuCuteClient/releases/download/install/app-release.apk)
 
 ![Divider](images/divider.png)
 
@@ -182,7 +182,7 @@ requirements for running the app.
 
 ## Badges
 
-![GitHub issues](https://img.shields.io/github/issues/MuCuteTeam/MuCuteRelay.svg) ![GitHub stars](https://img.shields.io/github/stars/MuCuteTeam/MuCuteRelay.svg)
+![GitHub issues](https://img.shields.io/github/issues/MuCuteTeam/MuCuteClient) ![GitHub stars](https://img.shields.io/github/stars/MuCuteTeam/MuCuteClient)
 
 ![Divider](images/divider.png)
 ![Background](images/background.png)

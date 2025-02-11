@@ -8,6 +8,7 @@ import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
 import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
 import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
+import org.cloudburstmc.protocol.bedrock.packet.RequestAbilityPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
@@ -63,25 +64,30 @@ class NoClipModule : Module("no_clip", ModuleCategory.Misc) {
     }
 
     private var noClipEnabled = false
-    private var lastNoClipPacketTime = System.currentTimeMillis()
+
 
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
         val packet = interceptablePacket.packet
-        if (packet is PlayerAuthInputPacket) {
-            val currentTime = System.currentTimeMillis()
-            if (currentTime - lastNoClipPacketTime < 200) {
-                return
-            }
+        if (packet is RequestAbilityPacket && packet.ability == Ability.NO_CLIP) {
+            interceptablePacket.intercept()
+            return
+        }
 
+        if (packet is UpdateAbilitiesPacket) {
+            interceptablePacket.intercept()
+            return
+        }
+
+        if (packet is PlayerAuthInputPacket) {
             if (!noClipEnabled && isEnabled) {
                 enableNoClipAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
                 session.clientBound(enableNoClipAbilitiesPacket)
+                noClipEnabled = true
             } else if (noClipEnabled && !isEnabled) {
                 disableNoClipAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
                 session.clientBound(disableNoClipAbilitiesPacket)
+                noClipEnabled = false
             }
-
-            lastNoClipPacketTime = currentTime
         }
     }
 

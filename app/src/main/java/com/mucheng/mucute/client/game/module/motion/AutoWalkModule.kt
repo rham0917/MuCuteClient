@@ -95,6 +95,10 @@ class AutoWalkModule : Module("auto_walk", ModuleCategory.Motion) {
 
     // Apply a slight jump every 2 seconds
     private fun applyJump() {
+        if (!isSessionCreated) {
+            return
+        }
+
         if (!isJumping) {  // Ensure we're not already jumping
             isJumping = true  // Mark as jumping
 

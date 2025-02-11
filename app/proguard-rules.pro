@@ -7,3 +7,5 @@
     @com.google.gson.annotations.SerializedName <fields>;
 }
 -keep class coelho.msftauth.api.** { *; }
+-keep class com.mucheng.mucute.client.util.** { *; }
+-keep class com.mucheng.mucute.client.game.AccountManager { *; }

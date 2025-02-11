@@ -8,17 +8,17 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.util.Base64
 import android.util.Log
+import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.google.gson.JsonParser
-import com.mucheng.mucute.relay.util.XboxDeviceInfo
-import com.mucheng.mucute.relay.util.fetchIdentityToken
 import com.mucheng.mucute.client.game.AccountManager
 import com.mucheng.mucute.client.model.Account
+import com.mucheng.mucute.relay.util.XboxDeviceInfo
 import com.mucheng.mucute.relay.util.XboxGamerTagException
 import com.mucheng.mucute.relay.util.base64Decode
+import com.mucheng.mucute.relay.util.fetchIdentityToken
 import com.mucheng.mucute.relay.util.fetchRawChain
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.cloudburstmc.protocol.bedrock.util.EncryptionUtils
@@ -42,9 +42,10 @@ class AuthWebView @JvmOverloads constructor(
     var callback: ((success: Boolean) -> Unit)? = null
 
     init {
-        setBackgroundColor(Color.TRANSPARENT)
+        CookieManager.getInstance()
+            .removeAllCookies(null)
+
         settings.javaScriptEnabled = true
-        settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webViewClient = AuthWebViewClient()
     }
 
@@ -83,8 +84,8 @@ class AuthWebView @JvmOverloads constructor(
 
                         callback?.invoke(true)
                     } catch (t: Throwable) {
-                        Log.e("AuthWebView", "Obtain access token: $t")
-                        handler.post { loadData(t.toString()) }
+                        Log.e("AuthWebView", "Obtain access token: ${t.stackTraceToString()}")
+                        handler.post { loadData(t.stackTraceToString()) }
                     }
                 }
                 return true
@@ -135,8 +136,8 @@ class AuthWebView @JvmOverloads constructor(
 
                     callback?.invoke(true)
                 } catch (t: Throwable) {
-                    Log.e("AuthWebView", "Obtain access token: $t")
-                    handler.post { loadData(t.toString()) }
+                    Log.e("AuthWebView", "Obtain access token: ${t.stackTraceToString()}")
+                    handler.post { loadData(t.stackTraceToString()) }
                 }
             }
             return true

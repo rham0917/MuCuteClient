@@ -46,6 +46,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.DialogProperties
 import com.mucheng.mucute.client.R
 import com.mucheng.mucute.client.game.AccountManager
+import com.mucheng.mucute.client.model.Account
 import com.mucheng.mucute.client.util.AuthWebView
 import com.mucheng.mucute.client.util.LocalSnackbarHostState
 import com.mucheng.mucute.client.util.SnackbarHostStateScope
@@ -62,7 +63,7 @@ fun AccountPageContent() {
         val context = LocalContext.current
         val coroutineScope = rememberCoroutineScope()
         var showAddAccountDropDownMenu by remember { mutableStateOf(false) }
-        var showAccountActionDropdownMenu by remember { mutableStateOf(false) }
+        var selectedAccountAction: Account? by remember { mutableStateOf(null) }
         var deviceInfo: XboxDeviceInfo? by remember { mutableStateOf(null) }
         val snackbarHostState = LocalSnackbarHostState.current
 
@@ -116,10 +117,10 @@ fun AccountPageContent() {
                             modifier = Modifier
                                 .animateItem()
                                 .clickable {
-                                    if (AccountManager.currentAccount != null) {
-                                        AccountManager.selectAccount(null)
-                                    } else {
+                                    if (AccountManager.currentAccount != account) {
                                         AccountManager.selectAccount(account)
+                                    } else {
+                                        AccountManager.selectAccount(null)
                                     }
                                 },
                             colors = ListItemDefaults.colors(
@@ -142,14 +143,15 @@ fun AccountPageContent() {
                             trailingContent = {
                                 IconButton(
                                     onClick = {
-                                        showAccountActionDropdownMenu = true
+                                        selectedAccountAction = account
                                     }
                                 ) {
                                     Icon(Icons.Rounded.MoreVert, contentDescription = null)
                                 }
+
                                 DropdownMenu(
-                                    expanded = showAccountActionDropdownMenu,
-                                    onDismissRequest = { showAccountActionDropdownMenu = false }
+                                    expanded = selectedAccountAction == account,
+                                    onDismissRequest = { selectedAccountAction = null }
                                 ) {
                                     DropdownMenuItem(
                                         text = {
@@ -168,12 +170,12 @@ fun AccountPageContent() {
                                             )
                                         },
                                         onClick = {
-                                            if (AccountManager.currentAccount != null) {
-                                                AccountManager.selectAccount(null)
-                                            } else {
+                                            if (AccountManager.currentAccount != account) {
                                                 AccountManager.selectAccount(account)
+                                            } else {
+                                                AccountManager.selectAccount(null)
                                             }
-                                            showAccountActionDropdownMenu = false
+                                            selectedAccountAction = null
                                         }
                                     )
                                     DropdownMenuItem(
@@ -192,7 +194,7 @@ fun AccountPageContent() {
                                                 AccountManager.selectAccount(null)
                                             }
                                             AccountManager.save()
-                                            showAccountActionDropdownMenu = false
+                                            selectedAccountAction = null
                                         }
                                     )
                                 }

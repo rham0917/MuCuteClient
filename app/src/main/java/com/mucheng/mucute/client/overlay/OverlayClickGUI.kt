@@ -63,8 +63,6 @@ class OverlayClickGUI : OverlayWindow() {
 
     @Composable
     override fun Content() {
-        val config = LocalConfiguration.current
-        val isLandscape = config.orientation == Configuration.ORIENTATION_LANDSCAPE
         Column(
             Modifier
                 .fillMaxSize()
@@ -80,15 +78,7 @@ class OverlayClickGUI : OverlayWindow() {
             ElevatedCard(
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
-                    .then(
-                        if (isLandscape) Modifier.padding(
-                            horizontal = 100.dp,
-                            vertical = 40.dp
-                        ) else Modifier.padding(
-                            horizontal = 40.dp,
-                            vertical = 80.dp
-                        )
-                    )
+                    .padding(40.dp)
                     .fillMaxSize()
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },

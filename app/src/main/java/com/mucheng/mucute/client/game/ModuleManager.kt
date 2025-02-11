@@ -1,10 +1,11 @@
 package com.mucheng.mucute.client.game
 
 
+// import com.mucheng.mucute.client.game.module.misc.CriticModule
+// import com.mucheng.mucute.client.game.module.misc.CrasherModule
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.module.combat.AntiCrystalModule
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
-import com.mucheng.mucute.client.game.module.misc.CriticModule
 import com.mucheng.mucute.client.game.module.combat.KillauraModule
 import com.mucheng.mucute.client.game.module.effect.AbsorptionModule
 import com.mucheng.mucute.client.game.module.effect.BadOmenModule
@@ -50,8 +51,8 @@ import com.mucheng.mucute.client.game.module.motion.SprintModule
 import com.mucheng.mucute.client.game.module.visual.FreeCameraModule
 import com.mucheng.mucute.client.game.module.visual.NoHurtCameraModule
 import com.mucheng.mucute.client.game.module.visual.TimeShiftModule
+import com.mucheng.mucute.client.game.module.visual.WeatherControlModule
 import com.mucheng.mucute.client.game.module.visual.ZoomModule
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
@@ -94,7 +95,7 @@ object ModuleManager {
             add(MotionFlyModule())
             add(FreeCameraModule())
             add(KillauraModule())
-            add(CriticModule())
+            // add(CriticModule())
             add(NauseaModule())
             add(HealthBoostModule())
             add(JumpBoostModule())
@@ -119,6 +120,9 @@ object ModuleManager {
             add(VillageHeroModule())
             add(DarknessModule())
             add(TimeShiftModule())
+            add(WeatherControlModule())
+            //  add(CrasherModule())
+
 
         }
     }

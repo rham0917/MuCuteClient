@@ -13,7 +13,7 @@ data class CaptureModeModel(
         fun from(sharedPreferences: SharedPreferences): CaptureModeModel {
             val serverHostName = sharedPreferences.getString(
                 "capture_mode_model_server_host_name",
-                "geo.hivebedrock.network"
+                "play.lbsg.net"
             )!!
             val serverPort = sharedPreferences.getInt(
                 "capture_mode_model_server_port",

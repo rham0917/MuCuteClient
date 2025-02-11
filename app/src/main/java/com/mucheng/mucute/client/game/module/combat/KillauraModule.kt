@@ -3,12 +3,17 @@ package com.mucheng.mucute.client.game.module.combat
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
-import com.mucheng.mucute.client.game.entity.*
+import com.mucheng.mucute.client.game.entity.Entity
+import com.mucheng.mucute.client.game.entity.EntityUnknown
+import com.mucheng.mucute.client.game.entity.LocalPlayer
+import com.mucheng.mucute.client.game.entity.MobList
+import com.mucheng.mucute.client.game.entity.Player
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import kotlin.math.cos
 import kotlin.math.sin
+
 class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
     private var playersOnly by boolValue("players_only", true)
@@ -16,14 +21,14 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
     private var tpAuraEnabled by boolValue("tp_aura", false) // TP Aura toggle
     private var strafe by boolValue("strafe", false)
     private var teleportBehind by boolValue("teleport_behind", false) // Default to true
-    private var rangeValue by floatValue("range", 3.7f, 2f..7f)
+    private var rangeValue by floatValue("range", 3.7f, 2f..20f)
     private var attackInterval by intValue("delay", 5, 1..20)
     private var cpsValue by intValue("cps", 10, 1..20)
-    private var boost by intValue("packets", 1, 1..10)
-    private var tpspeed by intValue("tp_speed", 1000, 100..2000)
+    private var packets by intValue("packets", 2, 1..10)
+    private var tpSpeed by intValue("tp_speed", 500, 100..2000)
 
     private var distanceToKeep by floatValue("keep_distance", 2.0f, 1f..5f)
-    private var strafeAngle by floatValue("strafe_angle", 0.0f, 0.0f..360.0f)
+    private var strafeAngle = 0.0f
     private val strafeSpeed by floatValue("strafe_speed", 1.0f, 0.1f..2.0f)
     private val strafeRadius by floatValue("strafe_radius", 1.0f, 0.1f..5.0f)
     private var lastAttackTime = 0L
@@ -43,12 +48,12 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
                 closestEntities.forEach { entity ->
                     // Handle teleportation once when TP Aura is enabled
-                    if (tpAuraEnabled && (currentTime - tpCooldown) >= tpspeed) { // Add a cooldown for teleportation
+                    if (tpAuraEnabled && (currentTime - tpCooldown) >= tpSpeed) { // Add a cooldown for teleportation
                         teleportTo(entity, distanceToKeep)
                         tpCooldown = currentTime // Update teleportation cooldown
                     }
 
-                    repeat(boost) {
+                    repeat(packets) {
                         session.localPlayer.attack(entity) // Attack the entity multiple times
                     }
                     if (strafe) {
@@ -59,6 +64,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
             }
         }
     }
+
     private fun strafeAroundTarget(entity: Entity) {
         val targetPos = entity.vec3Position
 
@@ -87,6 +93,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
         session.clientBound(movePlayerPacket)
     }
+
     private fun teleportTo(entity: Entity, distance: Float) {
         val targetPosition = entity.vec3Position
         val playerPosition = session.localPlayer.vec3Position
@@ -124,7 +131,11 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
             // Normalize the direction to make it a unit vector
             val length = direction.length()
             val normalizedDirection = if (length != 0f) {
-                Vector3f.from(direction.x / length, 0f, direction.z / length)  // No normalization for Y
+                Vector3f.from(
+                    direction.x / length,
+                    0f,
+                    direction.z / length
+                )  // No normalization for Y
             } else {
                 direction
             }
@@ -153,32 +164,29 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
     }
 
 
-
-
     private fun Entity.isTarget(): Boolean {
         return when (this) {
             is LocalPlayer -> false
             is Player -> {
-                if (mobsOnly) {
-                    false
-                } else if (playersOnly) {
+                if (playersOnly || (playersOnly && mobsOnly)) {
                     !this.isBot()
                 } else {
-                    !this.isBot()
+                    false
                 }
             }
+
             is EntityUnknown -> {
-                if (mobsOnly) {
+                if (mobsOnly || (playersOnly && mobsOnly)) {
                     isMob()
-                } else if (playersOnly) {
-                    false
                 } else {
-                    true
+                    false
                 }
             }
+
             else -> false
         }
     }
+
 
     private fun EntityUnknown.isMob(): Boolean {
         return this.identifier in MobList.mobTypes

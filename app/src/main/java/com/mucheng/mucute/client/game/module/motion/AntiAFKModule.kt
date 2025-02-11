@@ -3,10 +3,6 @@ package com.mucheng.mucute.client.game.module.motion
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
@@ -14,10 +10,11 @@ import kotlin.random.Random
 
 class AntiAFKModule : Module("anti_afk", ModuleCategory.Motion) {
 
-    private val maxMoveDistance by floatValue("repeat", 4.5f, 2.0f..10.0f)
-    private val moveCooldown by intValue("delay", 300, 100..1000)
+    private val glitchInterval by intValue("interval", 200, 50..1000)
+    private val intensity by floatValue("intensity", 0.5f, 0.1f..2.0f)
 
-    @OptIn(DelicateCoroutinesApi::class)
+    private var lastGlitchTime = 0L
+
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
         if (!isEnabled) {
             return
@@ -25,26 +22,34 @@ class AntiAFKModule : Module("anti_afk", ModuleCategory.Motion) {
 
         val packet = interceptablePacket.packet
         if (packet is PlayerAuthInputPacket) {
-            GlobalScope.launch {
-                while (isEnabled) {
-                    delay(moveCooldown.toLong())
+            val currentTime = System.currentTimeMillis()
 
-                    // Generate random movement only for X and Z (no Y-axis movement)
-                    val randomX = Random.nextFloat() * maxMoveDistance - (maxMoveDistance / 2)
-                    val randomZ = Random.nextFloat() * maxMoveDistance - (maxMoveDistance / 2)
+            if (currentTime - lastGlitchTime >= glitchInterval) {
+                lastGlitchTime = currentTime
 
-                    val motionPacket = SetEntityMotionPacket().apply {
-                        runtimeEntityId = session.localPlayer.runtimeEntityId
-                        motion = Vector3f.from(
-                            randomX,  // X-axis movement
-                            session.localPlayer.motionY, // Keep current Y motion
-                            randomZ   // Z-axis movement
-                        )
-                    }
-
-                    session.clientBound(motionPacket)
+                val randomOffset = Vector3f.from(
+                    (Random.nextFloat() - 0.5f) * intensity,
+                    (Random.nextFloat() - 0.5f) * intensity,
+                    (Random.nextFloat() - 0.5f) * intensity
+                )
+                
+                val motionPacket = SetEntityMotionPacket().apply {
+                    runtimeEntityId = session.localPlayer.runtimeEntityId
+                    motion = randomOffset
                 }
+                session.clientBound(motionPacket)
             }
+        }
+    }
+
+    override fun onDisabled() {
+        super.onDisabled()
+        if (isSessionCreated) {
+            val resetPacket = SetEntityMotionPacket().apply {
+                runtimeEntityId = session.localPlayer.runtimeEntityId
+                motion = Vector3f.ZERO
+            }
+            session.clientBound(resetPacket)
         }
     }
 }
