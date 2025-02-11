@@ -53,4 +53,3 @@ class AntiAFKModule : Module("anti_afk", ModuleCategory.Motion) {
         }
     }
 }
-}
