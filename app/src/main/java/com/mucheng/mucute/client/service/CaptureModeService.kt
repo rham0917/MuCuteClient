@@ -74,19 +74,6 @@ open class CaptureModeService : Service() {
     }
 
     private fun startMuCuteRelay() {
-        if (Build.VERSION.SDK_INT >= 34) {
-            startForeground(
-                1,
-                Services.createNotification(this@CaptureModeService),
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
-            )
-        } else {
-            startForeground(
-                1,
-                Services.createNotification(this@CaptureModeService)
-            )
-        }
-
         thread(name = "RakThread") {
             val tokenCacheFile = File(cacheDir, "token_cache.json")
             val gameSettingsSharedPreferences =
