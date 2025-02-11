@@ -118,12 +118,8 @@ fun HomePageContent() {
                 return@block
             }
 
-            if (!Services.isActive) {
-                // TODO: Start relay & show UI
-                return@block
-            }
-
-            // TODO: Stop relay and dismmiss UI
+            Services.toggle(context, mainScreenViewModel.captureModeModel.value)
+            
         }
         val postNotificationPermissionLauncher = rememberLauncherForActivityResult(
             ActivityResultContracts.RequestPermission()
