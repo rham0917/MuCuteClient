@@ -119,15 +119,11 @@ fun HomePageContent() {
             }
 
             if (!Services.isActive) {
-                val intent = Intent(Services.ACTION_CAPTURE_START)
-                intent.setPackage(context.packageName)
-                context.startForegroundService(intent)
+                // TODO: Start relay & show UI
                 return@block
             }
 
-            val intent = Intent(Services.ACTION_CAPTURE_STOP)
-            intent.setPackage(context.packageName)
-            context.startForegroundService(intent)
+            // TODO: Stop relay and dismmiss UI
         }
         val postNotificationPermissionLauncher = rememberLauncherForActivityResult(
             ActivityResultContracts.RequestPermission()
