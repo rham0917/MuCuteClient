@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -37,6 +38,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,13 +52,24 @@ import com.mucheng.mucute.client.R
 import com.mucheng.mucute.client.overlay.OverlayManager
 import com.mucheng.mucute.client.util.translatedSelf
 import kotlin.math.roundToInt
+import java.util.HashMap
+
+private val moduleCache = HashMap<ModuleCategory, List<Module>>()
+
+private fun fetchCachedModules(moduleCategory: ModuleCategory): List<Module> {
+    val cachedModules = moduleCache[moduleCategory] ?: ModuleManager
+                .modules
+                .fastFilter {
+                    it.category === moduleCategory
+                }
+    moduleCache[moduleCategory] = cachedModules
+    return cachedModules
+}
 
 @Composable
 fun ModuleContent(moduleCategory: ModuleCategory) {
-    val modules = ModuleManager
-        .modules
-        .fastFilter { it.category === moduleCategory }
-
+    val modules = fetchCachedModules(moduleCategory)
+    
     LazyColumn(
         Modifier
             .fillMaxSize(),
