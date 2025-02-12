@@ -21,9 +21,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MuCuteClientTheme {
-                CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
-                    Navigation()
-                }
+                Navigation()
             }
         }
     }

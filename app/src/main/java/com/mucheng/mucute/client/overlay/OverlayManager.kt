@@ -84,12 +84,9 @@ object OverlayManager {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val layoutParams = overlayWindow.layoutParams
         val composeView = overlayWindow.composeView
-        composeView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         composeView.setContent {
             MuCuteClientTheme {
-                CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
                     overlayWindow.Content()
-                }
             }
         }
         val lifecycleOwner = overlayWindow.lifecycleOwner

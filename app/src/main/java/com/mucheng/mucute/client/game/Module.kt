@@ -13,7 +13,12 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.put
 
-abstract class Module(val name: String, val category: ModuleCategory, defaultEnabled: Boolean = false, val private: Boolean = false,) : InterruptiblePacketHandler,
+abstract class Module(
+    val name: String,
+    val category: ModuleCategory,
+    defaultEnabled: Boolean = false,
+    val private: Boolean = false
+) : InterruptiblePacketHandler,
     Configurable {
 
     open lateinit var session: GameSession

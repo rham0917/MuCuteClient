@@ -62,7 +62,7 @@ object TranslationManager {
         put("blindness", "Blindness")
         put("hunger", "Hunger")
         put("time_shift", "Time Changer")
-        put("weather_control", "Weather Changer")
+        put("weather_controller", "Weather Controller")
         put("crash", "Crash")
 
 
@@ -99,6 +99,8 @@ object TranslationManager {
         put("clear", "Clear")
         put("rain", "Rain")
         put("thunderstorm", "Thunderstorm")
+        put("intensity", "Intensity")
+        put("interval", "Interval")
     }
 
     private fun zh() = buildMap {
@@ -155,7 +157,7 @@ object TranslationManager {
         put("hunger", "饥饿")
         put("time_shift", "时间修改器")
         put("crash", "崩溃")
-        put("weather_changer", "天气改变者")
+        put("weather_controller", "天气控制器")
 
         // Below for module options
         put("times", "次数")
@@ -190,6 +192,8 @@ object TranslationManager {
         put("clear", "晴朗")
         put("rain", "雨")
         put("thunderstorm", "雷雨")
+        put("intensity", "强度")
+        put("interval", "间隔")
     }
 
     fun getTranslationMap(language: String): Map<String, String> {

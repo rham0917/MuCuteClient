@@ -37,7 +37,6 @@ class CrashHandlerActivity : ComponentActivity() {
 
         setContent {
             MuCuteClientTheme {
-                CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
                     Scaffold(
                         topBar = {
                             TopAppBar(
@@ -67,7 +66,6 @@ class CrashHandlerActivity : ComponentActivity() {
                         Toast.makeText(this, getString(R.string.cannot_back), Toast.LENGTH_SHORT)
                             .show()
                     }
-                }
             }
         }
     }

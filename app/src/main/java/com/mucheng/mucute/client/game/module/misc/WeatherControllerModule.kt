@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.visual
+package com.mucheng.mucute.client.game.module.misc
 
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
@@ -8,11 +8,11 @@ import org.cloudburstmc.protocol.bedrock.data.LevelEvent
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.math.vector.Vector3f
 
-class WeatherControlModule : Module("weather_control", ModuleCategory.Visual) {
+class WeatherControllerModule : Module("weather_controller", ModuleCategory.Misc) {
 
-    private var clearWeather by boolValue("clear", true)
-    private var rainWeather by boolValue("rain", false)
-    private var thunderWeather by boolValue("thunderstorm", false)
+    private var clear by boolValue("clear", true)
+    private var rain by boolValue("rain", false)
+    private var thunderstorm by boolValue("thunderstorm", false)
 
     private var lastUpdate = 0L
     private var lastPosition = Vector3f.ZERO
@@ -42,17 +42,17 @@ class WeatherControlModule : Module("weather_control", ModuleCategory.Visual) {
                 })
 
                 when {
-                    clearWeather -> {
+                    clear -> {
 
                     }
-                    rainWeather -> {
+                    rain -> {
                         session.clientBound(LevelEventPacket().apply {
                             type = LevelEvent.START_RAINING
                             position = lastPosition
                             data = 10000
                         })
                     }
-                    thunderWeather -> {
+                    thunderstorm -> {
                         session.clientBound(LevelEventPacket().apply {
                             type = LevelEvent.START_RAINING
                             position = lastPosition

@@ -1,5 +1,6 @@
 package com.mucheng.mucute.client.util
 
+import com.mucheng.mucute.relay.MuCuteRelay
 import kotlinx.serialization.Contextual
 import okhttp3.Headers
 import okhttp3.MediaType.Companion.toMediaType
@@ -45,10 +46,12 @@ data class Realm(
     val clubId: Int
 )
 
-private val REALMS_ENDPOINT = "https://pocket.realms.minecraft.net"
+private const val REALMS_ENDPOINT = "https://pocket.realms.minecraft.net"
+
 class RealmManager(private val token: String) {
-    fun GetRealms(): List<Realm>? {
-        val request = Request(
+
+    fun getRealms(): List<Realm>? {
+        val request = request(
             "$REALMS_ENDPOINT/api/realms",
             "GET",
             null,
@@ -68,8 +71,8 @@ class RealmManager(private val token: String) {
         return realmList
     }
 
-    fun GetRealm(id: Int): Realm? {
-        val request = Request(
+    fun getRealm(id: Int): Realm? {
+        val request = request(
             "$REALMS_ENDPOINT /worlds/$id",
             "GET",
             null,
@@ -89,8 +92,8 @@ class RealmManager(private val token: String) {
         return realm
     }
 
-    fun GetRealmAddress(id: Int): String? {
-        val request = Request(
+    fun getRealmAddress(id: Int): String? {
+        val request = request(
             "$REALMS_ENDPOINT/server/$id/join",
             "GET",
             null,
@@ -110,8 +113,8 @@ class RealmManager(private val token: String) {
         return address
     }
 
-    fun AcceptRealmInvite(inviteCode: String): Realm? {
-        val request = Request(
+    fun acceptRealmInvite(inviteCode: String): Realm? {
+        val request = request(
             "$REALMS_ENDPOINT/ /invites/v1/link/accept/$inviteCode",
             "POST",
             null,
@@ -138,11 +141,11 @@ class RealmManager(private val token: String) {
             add("content-type", "application/json")
             add("accept", "*/*")
             add("user-agent", "MCPE/UWP")
-            add("client-version", MinecraftUtils.RECOMMENDED_VERSION)
+            add("client-version", MuCuteRelay.DefaultCodec.minecraftVersion)
         }.build();
     }
 
-    private fun Request(url: String, method: String, body: String?, headers: Headers): Request {
+    private fun request(url: String, method: String, body: String?, headers: Headers): Request {
         return Request.Builder()
             .url(url)
             .method(method, body?.toRequestBody("json".toMediaType()))

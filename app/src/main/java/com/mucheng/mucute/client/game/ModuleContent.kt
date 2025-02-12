@@ -1,5 +1,6 @@
 package com.mucheng.mucute.client.game
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
@@ -9,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -21,11 +23,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChipDefaults
@@ -37,48 +39,71 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.fastFilter
 import androidx.compose.ui.util.fastForEach
 import com.mucheng.mucute.client.R
 import com.mucheng.mucute.client.overlay.OverlayManager
 import com.mucheng.mucute.client.util.translatedSelf
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
-import java.util.HashMap
 
 private val moduleCache = HashMap<ModuleCategory, List<Module>>()
 
 private fun fetchCachedModules(moduleCategory: ModuleCategory): List<Module> {
     val cachedModules = moduleCache[moduleCategory] ?: ModuleManager
-                .modules
-                .fastFilter {
-                    !it.private && it.category === moduleCategory
-                }
-    moduleCache[moduleCategory] = cachedModules 
+        .modules
+        .filter {
+            !it.private && it.category === moduleCategory
+        }
+    moduleCache[moduleCategory] = cachedModules
     return cachedModules
 }
 
 @Composable
 fun ModuleContent(moduleCategory: ModuleCategory) {
-    val modules = fetchCachedModules(moduleCategory)
-    
-    LazyColumn(
-        Modifier
-            .fillMaxSize(),
-        contentPadding = PaddingValues(10.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+    var modules: List<Module>? by remember(moduleCategory) { mutableStateOf(moduleCache[moduleCategory]) }
+
+    LaunchedEffect(modules) {
+        if (modules == null) {
+            withContext(Dispatchers.IO) {
+                modules = fetchCachedModules(moduleCategory)
+            }
+        }
+    }
+
+    Crossfade(
+        targetState = modules
     ) {
-        items(modules.size) {
-            val module = modules[it]
-            ModuleCard(module)
+        if (it != null) {
+            LazyColumn(
+                Modifier
+                    .fillMaxSize(),
+                contentPadding = PaddingValues(10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items(it.size) { index ->
+                    val module = it[index]
+                    ModuleCard(module)
+                }
+            }
+        } else {
+            Box(Modifier.fillMaxSize()) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+            }
         }
     }
 }

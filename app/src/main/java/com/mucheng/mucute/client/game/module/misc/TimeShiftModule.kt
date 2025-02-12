@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.game.module.visual
+package com.mucheng.mucute.client.game.module.misc
 
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
@@ -6,9 +6,9 @@ import com.mucheng.mucute.client.game.ModuleCategory
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetTimePacket
 
-class TimeShiftModule : Module("time_shift", ModuleCategory.Visual) {
+class TimeShiftModule : Module("time_shift", ModuleCategory.Misc) {
 
-    private val timeOfDay by intValue("time", 6000, 0..24000)
+    private val time by intValue("time", 6000, 0..24000)
     private var lastTimeUpdate = 0L
 
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
@@ -25,7 +25,7 @@ class TimeShiftModule : Module("time_shift", ModuleCategory.Visual) {
                 lastTimeUpdate = currentTime
 
                 val timePacket = SetTimePacket()
-                timePacket.setTime(timeOfDay)
+                timePacket.time = time
                 session.clientBound(timePacket)
             }
         }
@@ -35,7 +35,7 @@ class TimeShiftModule : Module("time_shift", ModuleCategory.Visual) {
         super.onDisabled()
         if (isSessionCreated) {
             val timePacket = SetTimePacket()
-            timePacket.setTime(0)
+            timePacket.time = 0
             session.clientBound(timePacket)
         }
     }

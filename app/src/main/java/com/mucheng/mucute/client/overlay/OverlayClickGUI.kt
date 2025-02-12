@@ -116,10 +116,10 @@ class OverlayClickGUI : OverlayWindow() {
                         label = "animatedPage",
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.surfaceContainer),
+                            .background(MaterialTheme.colorScheme.surfaceContainer)
                     ) { moduleCategory ->
                         Box(Modifier.fillMaxSize()) {
-                            if (moduleCategory === ModuleCategory.Config) {
+                            if (moduleCategory == ModuleCategory.Config) {
                                 ConfigCategoryContent()
                                 return@Box
                             }
