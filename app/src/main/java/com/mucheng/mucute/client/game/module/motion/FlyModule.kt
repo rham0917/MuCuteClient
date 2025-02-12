@@ -72,21 +72,36 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
             return
         }
 
-        if (packet is UpdateAbilitiesPacket) {
-            interceptablePacket.intercept()
-            return
-        }
-
-        if (packet is PlayerAuthInputPacket) {
-            if (!canFly && isEnabled) {
+        if ((
+            canFly != isEnabled ||
+            // check if the fly speed has changed since the last update
+            MotionVarModule.LastUpdateAbilitiesPacket.value?.abilityLayers?.get(0)?.flySpeed != this@FlyModule.flySpeed) &&
+            packet is PlayerAuthInputPacket
+        ) {
+            var abilitiesPacket = MotionVarModule.LastUpdateAbilitiesPacket.value?.clone();
+            if (abilitiesPacket == null) {
                 enableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
-                session.clientBound(enableFlyAbilitiesPacket)
-                canFly = true
-            } else if (canFly && !isEnabled) {
                 disableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
-                session.clientBound(disableFlyAbilitiesPacket)
-                canFly = false
+                abilitiesPacket =
+                    if (isEnabled) enableFlyAbilitiesPacket else disableFlyAbilitiesPacket
             }
+            val abilityLayer = abilitiesPacket.abilityLayers[0];
+            abilityLayer.abilityValues.addAll(
+//                     these are probably added by default, but just in case...
+                arrayOf(
+                    Ability.FLY_SPEED,
+                    Ability.WALK_SPEED
+                )
+            )
+            if (isEnabled) {
+                abilityLayer.abilityValues.add(Ability.MAY_FLY)
+                abilityLayer.flySpeed = this@FlyModule.flySpeed
+            } else {
+                abilityLayer.abilityValues.remove(Ability.MAY_FLY)
+            }
+
+            session.clientBound(abilitiesPacket)
+            canFly = isEnabled
         }
     }
 }

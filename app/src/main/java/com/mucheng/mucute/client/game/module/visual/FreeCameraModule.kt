@@ -10,10 +10,12 @@ import kotlinx.coroutines.launch
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.data.Ability
 import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
+import org.cloudburstmc.protocol.bedrock.data.GameType
 import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
 import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
+import org.cloudburstmc.protocol.bedrock.packet.SetPlayerGameTypePacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
@@ -21,56 +23,14 @@ class FreeCameraModule : Module("free_camera", ModuleCategory.Visual) {
 
     private var originalPosition: Vector3f? = null
 
-    private val enableFlyNoClipPacket = UpdateAbilitiesPacket().apply {
-        playerPermission = PlayerPermission.OPERATOR
-        commandPermission = CommandPermission.OWNER
-        abilityLayers.add(AbilityLayer().apply {
-            layerType = AbilityLayer.Type.BASE
-            abilitiesSet.addAll(Ability.entries.toTypedArray())
-            abilityValues.addAll(
-                arrayOf(
-                    Ability.BUILD,
-                    Ability.MINE,
-                    Ability.DOORS_AND_SWITCHES,
-                    Ability.OPEN_CONTAINERS,
-                    Ability.ATTACK_PLAYERS,
-                    Ability.ATTACK_MOBS,
-                    Ability.MAY_FLY,
-                    Ability.FLY_SPEED,
-                    Ability.WALK_SPEED,
-                    Ability.NO_CLIP,
-                    Ability.OPERATOR_COMMANDS
-                )
-            )
-            walkSpeed = 0.1f
-            flySpeed = 0.15f
-        })
+    private val enableFlyNoClipPacket = SetPlayerGameTypePacket().apply {
+        gamemode = GameType.SPECTATOR.ordinal
     }
 
-    private val disableFlyNoClipPacket = UpdateAbilitiesPacket().apply {
-        playerPermission = PlayerPermission.OPERATOR
-        commandPermission = CommandPermission.OWNER
-        abilityLayers.add(AbilityLayer().apply {
-            layerType = AbilityLayer.Type.BASE
-            abilitiesSet.addAll(Ability.entries.toTypedArray())
-            abilityValues.addAll(
-                arrayOf(
-                    Ability.BUILD,
-                    Ability.MINE,
-                    Ability.DOORS_AND_SWITCHES,
-                    Ability.OPEN_CONTAINERS,
-                    Ability.ATTACK_PLAYERS,
-                    Ability.ATTACK_MOBS,
-                    Ability.OPERATOR_COMMANDS
-                )
-            )
-            walkSpeed = 0.1f
-        })
+    private val disableFlyNoClipPacket = SetPlayerGameTypePacket().apply {
+        gamemode = GameType.SURVIVAL.ordinal
     }
 
-    private var isFlyNoClipEnabled = false
-
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onEnabled() {
         super.onEnabled()
         if (isSessionCreated) {
@@ -87,9 +47,7 @@ class FreeCameraModule : Module("free_camera", ModuleCategory.Visual) {
                     session.localPlayer.posY,
                     session.localPlayer.posZ
                 )
-                enableFlyNoClipPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
                 session.clientBound(enableFlyNoClipPacket)
-                isFlyNoClipEnabled = true
             }
         }
     }
@@ -105,9 +63,7 @@ class FreeCameraModule : Module("free_camera", ModuleCategory.Visual) {
             session.clientBound(motionPacket)
             originalPosition = null
 
-            disableFlyNoClipPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
             session.clientBound(disableFlyNoClipPacket)
-            isFlyNoClipEnabled = false
         }
     }
 

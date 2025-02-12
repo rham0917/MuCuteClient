@@ -60,9 +60,9 @@ private fun fetchCachedModules(moduleCategory: ModuleCategory): List<Module> {
     val cachedModules = moduleCache[moduleCategory] ?: ModuleManager
                 .modules
                 .fastFilter {
-                    it.category === moduleCategory
+                    !it.private && it.category === moduleCategory
                 }
-    moduleCache[moduleCategory] = cachedModules
+    moduleCache[moduleCategory] = cachedModules 
     return cachedModules
 }
 

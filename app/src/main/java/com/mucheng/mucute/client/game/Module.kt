@@ -13,12 +13,12 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.put
 
-abstract class Module(val name: String, val category: ModuleCategory) : InterruptiblePacketHandler,
+abstract class Module(val name: String, val category: ModuleCategory, defaultEnabled: Boolean = false, val private: Boolean = false,) : InterruptiblePacketHandler,
     Configurable {
 
     open lateinit var session: GameSession
 
-    private var _isEnabled by mutableStateOf(false)
+    private var _isEnabled by mutableStateOf(defaultEnabled)
 
     var isEnabled: Boolean
         get() = _isEnabled
