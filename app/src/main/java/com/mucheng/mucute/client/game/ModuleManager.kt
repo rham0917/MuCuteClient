@@ -37,6 +37,7 @@ import com.mucheng.mucute.client.game.module.effect.WeaknessModule
 import com.mucheng.mucute.client.game.module.effect.WitherModule
 import com.mucheng.mucute.client.game.module.misc.DesyncModule
 import com.mucheng.mucute.client.game.module.misc.NoClipModule
+import com.mucheng.mucute.client.game.module.misc.PlayerTracerModule
 import com.mucheng.mucute.client.game.module.misc.PositionLoggerModule
 import com.mucheng.mucute.client.game.module.misc.TimeShiftModule
 import com.mucheng.mucute.client.game.module.misc.WeatherControllerModule
@@ -124,6 +125,7 @@ object ModuleManager {
             add(WeatherControllerModule())
             //  add(CrasherModule())
             add(MotionVarModule())
+            add(PlayerTracerModule())
 
         }
     }
