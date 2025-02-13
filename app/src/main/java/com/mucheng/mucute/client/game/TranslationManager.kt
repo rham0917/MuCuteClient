@@ -197,7 +197,18 @@ object TranslationManager {
     }
 
     fun getTranslationMap(language: String): Map<String, String> {
-        return map[language] ?: map["en"]!!
+        val translationMap = map[language]
+        if (translationMap != null) {
+            return translationMap
+        }
+
+        map.forEach { (key, value) ->
+            if (key.startsWith(language)) {
+                return value
+            }
+        }
+
+        return map["en"]!!
     }
 
 }

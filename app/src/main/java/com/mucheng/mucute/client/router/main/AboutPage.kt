@@ -66,7 +66,6 @@ fun AboutPageContent() {
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     CopyrightCard()
-                    WorkModeCard()
                     LoginModeCard()
                 }
             }
@@ -94,26 +93,6 @@ private fun CopyrightCard() {
             )
             Text(
                 stringResource(R.string.copyright),
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-    }
-}
-
-@Composable
-private fun WorkModeCard() {
-    OutlinedCard(
-        modifier = Modifier
-            .fillMaxWidth(),
-        shape = MaterialTheme.shapes.medium
-    ) {
-        Column(Modifier.padding(15.dp)) {
-            Text(
-                stringResource(R.string.what_is_working_mode),
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Text(
-                stringResource(R.string.work_mode_introduction),
                 style = MaterialTheme.typography.bodySmall
             )
         }

@@ -9,7 +9,7 @@
     <string name="stop">停止</string>
     <string name="overlay_permission_denied">遮罩权限被拒绝</string>
     <string name="notification_permission_denied">通知权限被拒绝</string>
-    <string name="request_overlay_permission">我们需要遮罩权限以显示功能悬浮窗</string>
+    <string name="request_overlay_permission">我们需要悬浮窗权限以显示功能悬浮窗</string>
     <string name="game_settings">游戏设置</string>
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
@@ -34,9 +34,8 @@
     <string name="has_been_selected">（已选择）</string>
     <string name="about">关于</string>
     <string name="settings">设置</string>
-    <string name="header_introduction">欢迎加入我们的 QQ 群：542992134</string>
-    <string name="what_is_working_mode">工作模式是什么？</string>
-    <string name="work_mode_introduction">捕获模式通过建立一个代理套接字，使得它可以与客户端和服务器双向通信。代理模式通过建立一个代理套接字，并通过 VPN 传输数据包给它实现双向通信。</string>
+    <string name="header_introduction">欢迎加入我们的 Discord 社区：discord.gg/mucute</string>
+    <string name="copyright">©2024-2025 MuCuteTeam 版权所有</string>
     <string name="how_do_i_switch_login_mode">如何切换登录模式？</string>
     <string name="login_mode_introduction">如果你想要以在线模式登录，请添加账户并选择。如果你想要以离线模式登录，请取消选择账户。</string>
     <string name="combat">战斗</string>
@@ -46,7 +45,6 @@
     <string name="config">配置</string>
     <string name="request_ignore_battery_optimization">我们需要忽略电池优化以保持连接</string>
     <string name="ignore_battery_optimization_denied">忽略电池优化权限被拒绝</string>
-    <string name="current_language">zh</string>
     <string name="shortcut">快捷方式</string>
     <string name="crash_happened">发生崩溃</string>
     <string name="cannot_back">崩溃已发生不允许返回，你只能重启应用</string>

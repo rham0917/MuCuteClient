@@ -1,4 +1,4 @@
-package com.mucheng.mucute.client.util
+package com.mucheng.mucute.client.game
 
 import com.mucheng.mucute.relay.MuCuteRelay
 import kotlinx.serialization.Contextual

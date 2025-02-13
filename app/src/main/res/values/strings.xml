@@ -11,7 +11,7 @@
     <string name="stop">Stop</string>
     <string name="overlay_permission_denied">Overlay permission denied</string>
     <string name="notification_permission_denied">Notification permission denied</string>
-    <string name="request_overlay_permission">We need mask permission to display the function floating window</string>
+    <string name="request_overlay_permission">We need overlay permission to display the function floating window</string>
     <string name="game_settings">Game Settings</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
@@ -36,10 +36,8 @@
     <string name="has_been_selected">(Selected)</string>
     <string name="about">About</string>
     <string name="settings">Settings</string>
-    <string name="header_introduction">Welcome to join our QQ group: 542992134</string>
-    <string name="copyright" translatable="false">"©2024 Cai Mucheng. All rights reserved. "</string>
-    <string name="what_is_working_mode">What is working mode?</string>
-    <string name="work_mode_introduction">Capture mode enables bidirectional communication with the client and server by establishing a proxy socket. Proxy mode enables bidirectional communication by establishing a proxy socket and transmitting packets to it through VPN.</string>
+    <string name="header_introduction">Welcome to join our Discord community: discord.gg/mucute</string>
+    <string name="copyright">"©2024-2025 MuCuteTeam. All rights reserved. "</string>
     <string name="how_do_i_switch_login_mode">How do I switch login modes?</string>
     <string name="login_mode_introduction">If you want to log in in online mode, add the account and select it. If you want to log in in offline mode, deselect the account.</string>
     <string name="combat">Combat</string>
@@ -49,7 +47,6 @@
     <string name="config">Config</string>
     <string name="request_ignore_battery_optimization">We need to ignore battery optimization to stay connected</string>
     <string name="ignore_battery_optimization_denied">Ignore battery optimization permission denied</string>
-    <string name="current_language">en</string>
     <string name="shortcut">Shortcut</string>
     <string name="crash_happened">Crash Happened</string>
     <string name="cannot_back">A crash has occurred and you are not allowed to return. You can only restart the app.</string>
