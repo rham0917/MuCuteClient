@@ -64,14 +64,14 @@ object Services {
                 ModuleManager.loadConfig()
             }.exceptionOrNull()?.let {
                 it.printStackTrace()
-                context.toast("Load configuration error: ${it.message}");
+                context.toast("Load configuration error: ${it.message}")
             }
 
             runCatching {
                 Definitions.loadBlockPalette()
             }.exceptionOrNull()?.let {
                 it.printStackTrace()
-                context.toast("Load block palette error: ${it.message}");
+                context.toast("Load block palette error: ${it.message}")
             }
 
             val sessionEncryptor = if (AccountManager.currentAccount == null) {
@@ -105,7 +105,7 @@ object Services {
                 }
             }.exceptionOrNull()?.let {
                 it.printStackTrace()
-                context.toast("Start MuCuteRelay error: ${it.stackTraceToString()}");
+                context.toast("Start MuCuteRelay error: ${it.stackTraceToString()}")
             }
 
         }

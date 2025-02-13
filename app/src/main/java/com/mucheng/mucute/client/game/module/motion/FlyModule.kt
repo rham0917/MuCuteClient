@@ -72,7 +72,7 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
         val packet = interceptablePacket.packet
 
 
-        if(isEnabled) {
+        if (isEnabled) {
             if (packet is PlayerAuthInputPacket) {
                 if (packet.inputData.contains(PlayerAuthInputData.JUMP_DOWN)) {
                     val motionPacket = SetEntityMotionPacket().apply {

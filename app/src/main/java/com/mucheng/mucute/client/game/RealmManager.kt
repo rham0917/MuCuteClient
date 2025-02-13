@@ -142,7 +142,7 @@ class RealmManager(private val token: String) {
             add("accept", "*/*")
             add("user-agent", "MCPE/UWP")
             add("client-version", MuCuteRelay.DefaultCodec.minecraftVersion)
-        }.build();
+        }.build()
     }
 
     private fun request(url: String, method: String, body: String?, headers: Headers): Request {
