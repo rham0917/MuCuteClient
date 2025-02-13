@@ -4,22 +4,14 @@ package com.mucheng.mucute.client.game.module.motion
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
-import org.cloudburstmc.math.vector.Vector3f
-import org.cloudburstmc.protocol.bedrock.data.Ability
-import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
-import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
-import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
-import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
-import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
-import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class SpeedModule : Module("speed", ModuleCategory.Motion) {
 
     private var speedValue by floatValue("speed", 1.3f, 0.1f..5f)
 
     override fun onDisabled() {
-        val abilities = MotionVarModule.LastUpdateAbilitiesPacket.value?.clone() ?: return
+        val abilities = MotionVarModule.lastUpdateAbilitiesPacket?.clone() ?: return
 
         abilities.abilityLayers[0].walkSpeed = 0.1f
         session.clientBound(abilities)
@@ -53,7 +45,7 @@ class SpeedModule : Module("speed", ModuleCategory.Motion) {
 //                session.clientBound(motionPacket)
 //            }
 //             This code is used instead to fix the velocity decrease issue as we're setting the speed as expected by the client.
-            val abilities = MotionVarModule.LastUpdateAbilitiesPacket.value?.clone() ?: return
+            val abilities = MotionVarModule.lastUpdateAbilitiesPacket?.clone() ?: return
             if (speedValue == abilities.abilityLayers[0].walkSpeed) return
 
             abilities.abilityLayers[0].walkSpeed = speedValue

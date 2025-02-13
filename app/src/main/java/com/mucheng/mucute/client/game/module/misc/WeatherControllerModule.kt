@@ -3,10 +3,10 @@ package com.mucheng.mucute.client.game.module.misc
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
-import org.cloudburstmc.protocol.bedrock.packet.LevelEventPacket
-import org.cloudburstmc.protocol.bedrock.data.LevelEvent
-import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.math.vector.Vector3f
+import org.cloudburstmc.protocol.bedrock.data.LevelEvent
+import org.cloudburstmc.protocol.bedrock.packet.LevelEventPacket
+import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 
 class WeatherControllerModule : Module("weather_controller", ModuleCategory.Misc) {
 
@@ -45,6 +45,7 @@ class WeatherControllerModule : Module("weather_controller", ModuleCategory.Misc
                     clear -> {
 
                     }
+
                     rain -> {
                         session.clientBound(LevelEventPacket().apply {
                             type = LevelEvent.START_RAINING
@@ -52,6 +53,7 @@ class WeatherControllerModule : Module("weather_controller", ModuleCategory.Misc
                             data = 10000
                         })
                     }
+
                     thunderstorm -> {
                         session.clientBound(LevelEventPacket().apply {
                             type = LevelEvent.START_RAINING

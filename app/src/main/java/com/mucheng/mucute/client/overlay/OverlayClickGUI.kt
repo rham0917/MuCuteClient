@@ -1,6 +1,5 @@
 package com.mucheng.mucute.client.overlay
 
-import android.content.res.Configuration
 import android.os.Build
 import android.view.WindowManager
 import androidx.compose.animation.AnimatedContent
@@ -27,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp

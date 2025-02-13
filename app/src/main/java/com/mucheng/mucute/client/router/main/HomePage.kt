@@ -119,7 +119,7 @@ fun HomePageContent() {
             }
 
             Services.toggle(context, mainScreenViewModel.captureModeModel.value)
-            
+
         }
         val postNotificationPermissionLauncher = rememberLauncherForActivityResult(
             ActivityResultContracts.RequestPermission()

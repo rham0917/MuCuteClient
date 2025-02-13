@@ -2,11 +2,8 @@ package com.mucheng.mucute.client.overlay
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.view.View
 import android.view.WindowManager
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.LocalOverscrollConfiguration
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.compositionContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelStore
@@ -86,7 +83,7 @@ object OverlayManager {
         val composeView = overlayWindow.composeView
         composeView.setContent {
             MuCuteClientTheme {
-                    overlayWindow.Content()
+                overlayWindow.Content()
             }
         }
         val lifecycleOwner = overlayWindow.lifecycleOwner

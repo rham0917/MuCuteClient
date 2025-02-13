@@ -2,7 +2,6 @@ package com.mucheng.mucute.client.util
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet

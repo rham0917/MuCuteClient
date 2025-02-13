@@ -73,19 +73,19 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
         }
 
         if ((
-            canFly != isEnabled ||
-            // check if the fly speed has changed since the last update
-            MotionVarModule.LastUpdateAbilitiesPacket.value?.abilityLayers?.get(0)?.flySpeed != this@FlyModule.flySpeed) &&
+                    canFly != isEnabled ||
+                            // check if the fly speed has changed since the last update
+                            MotionVarModule.lastUpdateAbilitiesPacket?.abilityLayers?.get(0)?.flySpeed != this@FlyModule.flySpeed) &&
             packet is PlayerAuthInputPacket
         ) {
-            var abilitiesPacket = MotionVarModule.LastUpdateAbilitiesPacket.value?.clone();
+            var abilitiesPacket = MotionVarModule.lastUpdateAbilitiesPacket?.clone()
             if (abilitiesPacket == null) {
                 enableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
                 disableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
                 abilitiesPacket =
                     if (isEnabled) enableFlyAbilitiesPacket else disableFlyAbilitiesPacket
             }
-            val abilityLayer = abilitiesPacket.abilityLayers[0];
+            val abilityLayer = abilitiesPacket.abilityLayers[0]
             abilityLayer.abilityValues.addAll(
 //                     these are probably added by default, but just in case...
                 arrayOf(

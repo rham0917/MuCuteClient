@@ -32,7 +32,7 @@ class AntiAFKModule : Module("anti_afk", ModuleCategory.Motion) {
                     (Random.nextFloat() - 0.5f) * intensity,
                     (Random.nextFloat() - 0.5f) * intensity
                 )
-                
+
                 val motionPacket = SetEntityMotionPacket().apply {
                     runtimeEntityId = session.localPlayer.runtimeEntityId
                     motion = randomOffset
