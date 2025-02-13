@@ -17,14 +17,14 @@ import kotlin.math.sin
 class KillauraModule : Module("killaura", ModuleCategory.Combat) {
 
     private var playersOnly by boolValue("players_only", true)
-    private var mobsOnly by boolValue("mobs_only", false)
+    private var mobsOnly by boolValue("mobs_only", true)
     private var tpAuraEnabled by boolValue("tp_aura", false) // TP Aura toggle
     private var strafe by boolValue("strafe", false)
     private var teleportBehind by boolValue("teleport_behind", false) // Default to true
     private var rangeValue by floatValue("range", 3.7f, 2f..20f)
     private var attackInterval by intValue("delay", 5, 1..20)
-    private var cpsValue by intValue("cps", 10, 1..20)
-    private var packets by intValue("packets", 2, 1..10)
+    private var cpsValue by intValue("cps", 5, 1..20)
+    private var packets by intValue("packets", 1, 1..10)
     private var tpSpeed by intValue("tp_speed", 500, 100..2000)
 
     private var distanceToKeep by floatValue("keep_distance", 2.0f, 1f..5f)
