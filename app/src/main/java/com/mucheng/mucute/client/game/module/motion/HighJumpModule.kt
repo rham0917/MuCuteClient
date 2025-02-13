@@ -19,16 +19,19 @@ class HighJumpModule : Module("high_jump", ModuleCategory.Motion) {
 
         val packet = interceptablePacket.packet
         if (packet is PlayerAuthInputPacket) {
-            if (packet.inputData.contains(PlayerAuthInputData.JUMP_DOWN)) {
-                val motionPacket = SetEntityMotionPacket().apply {
-                    runtimeEntityId = session.localPlayer.runtimeEntityId
-                    motion = Vector3f.from(
-                        session.localPlayer.motionX,
-                        jumpHeight,
-                        session.localPlayer.motionZ
-                    )
+
+            if (packet.motion.length() > 0.0 && packet.inputData.contains(PlayerAuthInputData.VERTICAL_COLLISION)) {
+                if (packet.inputData.contains(PlayerAuthInputData.JUMP_DOWN)) {
+                    val motionPacket = SetEntityMotionPacket().apply {
+                        runtimeEntityId = session.localPlayer.runtimeEntityId
+                        motion = Vector3f.from(
+                            session.localPlayer.motionX,
+                            jumpHeight,
+                            session.localPlayer.motionZ
+                        )
+                    }
+                    session.clientBound(motionPacket)
                 }
-                session.clientBound(motionPacket)
             }
         }
     }
