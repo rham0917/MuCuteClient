@@ -21,7 +21,7 @@ class KillauraModule : Module("killaura", ModuleCategory.Combat) {
     private var tpAuraEnabled by boolValue("tp_aura", false) // TP Aura toggle
     private var strafe by boolValue("strafe", false)
     private var teleportBehind by boolValue("teleport_behind", false) // Default to true
-    private var rangeValue by floatValue("range", 3.7f, 2f..20f)
+    private var rangeValue by floatValue("range", 3.7f, 2f..7f)
     private var attackInterval by intValue("delay", 5, 1..20)
     private var cpsValue by intValue("cps", 5, 1..20)
     private var packets by intValue("packets", 1, 1..10)
