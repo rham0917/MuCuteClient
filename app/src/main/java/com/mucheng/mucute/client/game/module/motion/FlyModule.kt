@@ -3,12 +3,15 @@ package com.mucheng.mucute.client.game.module.motion
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
+import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.data.Ability
 import org.cloudburstmc.protocol.bedrock.data.AbilityLayer
+import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.protocol.bedrock.data.PlayerPermission
 import org.cloudburstmc.protocol.bedrock.data.command.CommandPermission
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.RequestAbilityPacket
+import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class FlyModule : Module("fly", ModuleCategory.Motion) {
@@ -67,41 +70,45 @@ class FlyModule : Module("fly", ModuleCategory.Motion) {
 
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
         val packet = interceptablePacket.packet
+
+
+        if(isEnabled) {
+            if (packet is PlayerAuthInputPacket) {
+                if (packet.inputData.contains(PlayerAuthInputData.JUMP_DOWN)) {
+                    val motionPacket = SetEntityMotionPacket().apply {
+                        runtimeEntityId = session.localPlayer.runtimeEntityId
+                        motion = Vector3f.from(
+                            session.localPlayer.motionX,
+                            0.42f,
+                            session.localPlayer.motionZ
+                        )
+                    }
+                    session.clientBound(motionPacket)
+                }
+            }
+        }
         if (packet is RequestAbilityPacket && packet.ability == Ability.FLYING) {
             interceptablePacket.intercept()
             return
         }
 
-        if ((
-                    canFly != isEnabled ||
-                            // check if the fly speed has changed since the last update
-                            MotionVarModule.lastUpdateAbilitiesPacket?.abilityLayers?.get(0)?.flySpeed != this@FlyModule.flySpeed) &&
-            packet is PlayerAuthInputPacket
-        ) {
-            var abilitiesPacket = MotionVarModule.lastUpdateAbilitiesPacket?.clone()
-            if (abilitiesPacket == null) {
-                enableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
-                disableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
-                abilitiesPacket =
-                    if (isEnabled) enableFlyAbilitiesPacket else disableFlyAbilitiesPacket
-            }
-            val abilityLayer = abilitiesPacket.abilityLayers[0]
-            abilityLayer.abilityValues.addAll(
-//                     these are probably added by default, but just in case...
-                arrayOf(
-                    Ability.FLY_SPEED,
-                    Ability.WALK_SPEED
-                )
-            )
-            if (isEnabled) {
-                abilityLayer.abilityValues.add(Ability.MAY_FLY)
-                abilityLayer.flySpeed = this@FlyModule.flySpeed
-            } else {
-                abilityLayer.abilityValues.remove(Ability.MAY_FLY)
-            }
+        if (packet is UpdateAbilitiesPacket) {
+            interceptablePacket.intercept()
+            return
+        }
 
-            session.clientBound(abilitiesPacket)
-            canFly = isEnabled
+        if (packet is PlayerAuthInputPacket) {
+            if (!canFly && isEnabled) {
+                enableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
+                session.clientBound(enableFlyAbilitiesPacket)
+                canFly = true
+
+
+            } else if (canFly && !isEnabled) {
+                disableFlyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
+                session.clientBound(disableFlyAbilitiesPacket)
+                canFly = false
+            }
         }
     }
 }
