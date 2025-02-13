@@ -29,6 +29,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
             layerType = AbilityLayer.Type.BASE
             abilitiesSet.addAll(Ability.entries.toTypedArray())
             abilityValues.addAll(Ability.entries)
+            walkSpeed = 0.1f
             flySpeed = 2.19f
         })
     }
