@@ -10,9 +10,9 @@ integrity of the original client. 🎮✨
 
 ## Notice
 
-MuCuteClient is developed independently and does not utilize any code from protohax. Any attempts to
-take down this repository based on this claim will not be entertained. We value originality and
-innovation in our development process. 🚫
+**MuCuteClient is developed independently and does not utilize any code from protohax. Any attempts to
+take down this repository based on this claim will not be entertained and we will pursue action. We value originality and
+innovation in our development process. 🚫**
 
 ![Divider](images/divider.png)
 
@@ -78,10 +78,10 @@ The **MuCuteClient** is officially owned by the **MuCuteClient Group**. By using
 - **Distribute, redistribute, or sell** modified versions of the client in any form.  
 - Use the **MuCuteClient** name in a way that implies an **official association** on websites, Discord servers, or other platforms.  
 - Claim **ownership** of the project in any public or private setting.  
-
+  
 
 ### ⚠️ Compliance:  
-Failure to follow these terms may result in content removal or enforcement of our rights.  
+Failure to follow these terms may result in content removal or enforcement of our rights.  We do not tolerate any attempt to evade this warning.
 
 Thank you for respecting these guidelines and supporting **MuCuteClient**!
 
