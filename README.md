@@ -59,11 +59,8 @@ Here are some screenshots of the app in action:
 If you encounter any bugs or have suggestions for features, please reach out through the following
 channels:
 
-- Connect with us
-  on [QQ](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0teULf5spCrBeznoVuQPZzaqvB1QdlLJ&authKey=MjXaE2ZlTEDqF2OZJx4BwgXvs8epkgpsxrXX3WDQ42YYZPdS%2BxiYKK7xJqwQ6%2FpS&noverify=0&group_code=542992134)
-  for ongoing discussions. 💬
 - Join our [Telegram](https://t.me/mucuteclient) channel for updates and community interaction. 📱
-- Join our [Discord](https://discord.gg/7Xx6GVwS) channel for more activities 🥳
+- Join our [Discord](https://discord.gg/mucute) channel for more activities 🥳
 ![Divider](images/divider.png)
 
 ## License 📝  
@@ -173,7 +170,7 @@ requirements for running the app.
 ## Social Links 🌐
 
 - Join our [Telegram](https://t.me/mucuteclient) channel for updates and community interaction. 📱
-- Join our [Discord](https://discord.gg/7Xx6GVwS) channel for more activities 🥳
+- Join our [Discord](https://discord.gg/mucute) channel for more activities 🥳
 
 ![Divider](images/divider.png)
 
