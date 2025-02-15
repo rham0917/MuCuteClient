@@ -27,7 +27,7 @@
     <string name="failed_to_launch_game">启动游戏失败。</string>
     <string name="account">账户</string>
     <string name="add_account">添加账户</string>
-    <string name="fetch_account_failed">获取账户失败</string>
+    <string name="fetch_account_failed">获取账户失败：%s</string>
     <string name="delete">删除</string>
     <string name="select">选择</string>
     <string name="unselect">取消选择</string>
@@ -49,6 +49,8 @@
     <string name="crash_happened">发生崩溃</string>
     <string name="cannot_back">崩溃已发生不允许返回，你只能重启应用</string>
     <string name="effect">效果</string>
-    <string name="login_in">以 %s 的身份登录</string>
+    <string name="login_in">用 %s 登录</string>
     <string name="fetch_account_successfully">获取账户成功</string>
+    <string name="xbox_device_code">Xbox 设备码</string>
+    <string name="refresh">刷新</string>
 </resources>

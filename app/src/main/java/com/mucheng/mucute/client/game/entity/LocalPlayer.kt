@@ -110,13 +110,6 @@ class LocalPlayer(val session: GameSession) : Player(0L, 0L, UUID.randomUUID(), 
     fun attack(entity: Entity) {
         swing()
 
-        Log.e(
-            "Inventory", """
-            hotbarSlot: ${inventory.heldItemSlot}
-            hand: ${inventory.hand}
-        """.trimIndent()
-        )
-
         val inventoryTransactionPacket = InventoryTransactionPacket()
         inventoryTransactionPacket.transactionType = InventoryTransactionType.ITEM_USE_ON_ENTITY
         inventoryTransactionPacket.actionType = 1

@@ -18,11 +18,10 @@ import com.mucheng.mucute.relay.MuCuteRelaySession
 import com.mucheng.mucute.relay.address.MuCuteAddress
 import com.mucheng.mucute.relay.definition.Definitions
 import com.mucheng.mucute.relay.listener.AutoCodecPacketListener
-import com.mucheng.mucute.relay.listener.EncryptedLoginPacketListener
 import com.mucheng.mucute.relay.listener.GamingPacketHandler
-import com.mucheng.mucute.relay.listener.XboxLoginPacketListener
-import com.mucheng.mucute.relay.util.XboxIdentityTokenCacheFileSystem
-import com.mucheng.mucute.relay.util.captureMuCuteRelay
+import com.mucheng.mucute.relay.listener.OfflineLoginPacketListener
+import com.mucheng.mucute.relay.listener.OnlineLoginPacketListener
+import com.mucheng.mucute.relay.util.captureGamePacket
 import java.io.File
 import kotlin.concurrent.thread
 
@@ -58,7 +57,10 @@ object Services {
             OverlayManager.show(context)
         }
 
-        this.thread = thread(name = "MuCuteRelayThread") {
+        this.thread = thread(
+            name = "MuCuteRelayThread",
+            priority = Thread.MAX_PRIORITY
+        ) {
             // Load module configurations
             runCatching {
                 ModuleManager.loadConfig()
@@ -74,21 +76,10 @@ object Services {
                 context.toast("Load block palette error: ${it.message}")
             }
 
-            val sessionEncryptor = if (AccountManager.currentAccount == null) {
-                EncryptedLoginPacketListener()
-            } else {
-                AccountManager.currentAccount?.let { account ->
-                    Log.e("MuCuteRelay", "Logged in as ${account.remark}")
-                    XboxLoginPacketListener({ account.refresh() }, account.platform).also {
-                        it.tokenCache =
-                            XboxIdentityTokenCacheFileSystem(tokenCacheFile, account.remark)
-                    }
-                }
-            }
-
+            val selectedAccount = AccountManager.selectedAccount
             // Start MuCuteRelay to capture game packets
             runCatching {
-                muCuteRelay = captureMuCuteRelay(
+                muCuteRelay = captureGamePacket(
                     remoteAddress = MuCuteAddress(
                         captureModeModel.serverHostName,
                         captureModeModel.serverPort
@@ -97,10 +88,12 @@ object Services {
                     initModules(this)
 
                     listeners.add(AutoCodecPacketListener(this))
-                    sessionEncryptor?.let {
-                        it.muCuteRelaySession = this
-                        listeners.add(it)
-                    }
+                    listeners.add(
+                        if (selectedAccount == null) OfflineLoginPacketListener(this) else OnlineLoginPacketListener(
+                            this,
+                            selectedAccount
+                        )
+                    )
                     listeners.add(GamingPacketHandler(this))
                 }
             }.exceptionOrNull()?.let {
@@ -114,13 +107,13 @@ object Services {
     private fun off() {
         thread(name = "MuCuteRelayThread") {
             ModuleManager.saveConfig()
+            handler.post {
+                OverlayManager.dismiss()
+            }
             isActive = false
             muCuteRelay?.disconnect()
             thread?.interrupt()
             thread = null
-            handler.post {
-                OverlayManager.dismiss()
-            }
         }
     }
 
@@ -138,6 +131,7 @@ object Services {
         for (module in ModuleManager.modules) {
             module.session = session
         }
+        Log.e("Services", "Init session")
     }
 
 }

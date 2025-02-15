@@ -89,32 +89,8 @@ android {
     }
 }
 
-configurations.all {
-
-}
-
 fun DependencyHandler.implementationRelay() {
-    debugImplementation(platform(libs.log4j.bom))
-    debugImplementation(libs.log4j.api)
-    debugImplementation(libs.log4j.core)
     implementation(files("libs/MuCuteRelay.jar"))
-    implementation(libs.bundles.netty)
-    implementation(libs.expiringmap)
-    implementation(libs.network.common)
-    implementation(platform(libs.fastutil.bom))
-    implementation(libs.fastutil.long.common)
-    implementation(libs.fastutil.long.obj.maps)
-    implementation(libs.fastutil.int.obj.maps)
-    implementation(libs.fastutil.obj.int.maps)
-    implementation(libs.jose4j)
-    implementation(libs.math)
-    implementation(libs.nbt)
-    implementation(libs.snappy)
-    implementation(libs.guava)
-    implementation(libs.gson)
-    implementation(libs.http.client)
-    implementation(libs.bcprov)
-    implementation(libs.okhttp)
 }
 
 dependencies {
