@@ -91,6 +91,7 @@ android {
 
 fun DependencyHandler.implementationRelay() {
     implementation(files("libs/MuCuteRelay.jar"))
+    implementation(files("libs/atlantis.jar"))
 }
 
 dependencies {
