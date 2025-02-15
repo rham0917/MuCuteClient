@@ -10,3 +10,5 @@
 -keep class net.raphimc.minecraftauth.** { *; }
 -keep class net.lenni0451.commons.httpclient.** { *; }
 -keep class com.mucheng.mucute.client.game.AccountManager { *; }
+-keep class org.jose4j.** { *; }
+-keep class com.fasterxml.jackson.** { *; }
