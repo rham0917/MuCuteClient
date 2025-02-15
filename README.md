@@ -8,6 +8,10 @@ integrity of the original client. 🎮✨
 
 ![Divider](images/divider.png)
 
+## Offical Page 
+**This is the offical github page of MuCuteClient any other repository that is not a fork will be labeled as a  fake. Please report any fakes you see immediately. Thank you** ✅ 
+
+
 ## Notice
 
 **MuCuteClient is developed independently and does not utilize any code from protohax. Any attempts to
