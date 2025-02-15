@@ -15,10 +15,11 @@ import org.cloudburstmc.protocol.bedrock.packet.UpdateAbilitiesPacket
 
 class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
-    private val verticalSpeedUp by floatValue("verticalUpSpeed", 7.0f, 1.0f..20.0f)
-    private val verticalSpeedDown by floatValue("verticalDownSpeed", 7.0f, 1.0f..20.0f)
-    private val motionInterval by floatValue("delay", 100f, 10f..600f)
-    private val flySpeedValue by floatValue("speed", 1f, 0f..10f)
+    private val verticalSpeedUp = floatValue("verticalUpSpeed", 7.0f, 1.0f..20.0f)
+    private val verticalSpeedDown = floatValue("verticalDownSpeed", 7.0f, 1.0f..20.0f)
+    private val motionInterval = floatValue("delay", 100, 10..600)
+    private val flySpeedValue = floatValue("flySpeed", 1.0f, 0.1f..10.0f)
+
     private var lastMotionTime = 0L
     private var jitterState = false
     private var canFly = false
@@ -31,7 +32,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
             abilitiesSet.addAll(Ability.entries.toTypedArray())
             abilityValues.addAll(Ability.entries)
             walkSpeed = 0.1f
-            flySpeed = flySpeedValue
+            flySpeed = flySpeedValue.value // 수정된 부분: FloatValue의 실제 값을 사용
         })
     }
 
@@ -51,29 +52,30 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
         if (canFly != isEnabled) {
             flyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
             resetAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
-            flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue.value
+
+            // flySpeed 값을 최신화
+            flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue.value // 수정된 부분: FloatValue의 실제 값을 사용
+
             if (isEnabled) {
-                flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue.value
                 session.clientBound(flyAbilitiesPacket)
-            } else {
                 flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue.value
+            } else {
                 session.clientBound(resetAbilitiesPacket)
+                flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue.value
             }
             canFly = isEnabled
         }
     }
 
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
-
         val packet = interceptablePacket.packet
-
 
         if (packet is PlayerAuthInputPacket) {
             handleFlyAbilities(isEnabled)
-            if (isEnabled && System.currentTimeMillis() - lastMotionTime >= motionInterval) {
+            if (isEnabled && System.currentTimeMillis() - lastMotionTime >= motionInterval.value) {
                 val vertical = when {
-                    packet.inputData.contains(PlayerAuthInputData.WANT_UP) -> verticalSpeedUp
-                    packet.inputData.contains(PlayerAuthInputData.WANT_DOWN) -> -verticalSpeedDown
+                    packet.inputData.contains(PlayerAuthInputData.WANT_UP) -> verticalSpeedUp.value
+                    packet.inputData.contains(PlayerAuthInputData.WANT_DOWN) -> -verticalSpeedDown.value
                     else -> 0f
                 }
                 val motionPacket = SetEntityMotionPacket().apply {
@@ -85,6 +87,5 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
                 lastMotionTime = System.currentTimeMillis()
             }
         }
-
     }
 }
