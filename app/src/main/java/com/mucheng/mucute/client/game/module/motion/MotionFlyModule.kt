@@ -32,7 +32,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
             abilitiesSet.addAll(Ability.entries.toTypedArray())
             abilityValues.addAll(Ability.entries)
             walkSpeed = 0.1f
-            flySpeed = flySpeedValue.value
+            flySpeed = flySpeedValue
         })
     }
 
@@ -52,13 +52,13 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
         if (canFly != isEnabled) {
             flyAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
             resetAbilitiesPacket.uniqueEntityId = session.localPlayer.uniqueEntityId
-            flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue.value
+            flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue
             if (isEnabled) {
                 session.clientBound(flyAbilitiesPacket)
-                flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue.value
+                flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue
             } else {
                 session.clientBound(resetAbilitiesPacket)
-                flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue.value
+                flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue
             }
             canFly = isEnabled
         }
