@@ -1,4 +1,4 @@
-# (っ◔◡◔)っ 🩷 MuCuteClient 🩷
+# (っ◊h◊)っ 🩵 MuCuteClient 🩵
 
 <img src="images/logo.png" alt="Logo" width="30%" />
 
@@ -7,6 +7,10 @@ Minecraft Bedrock Edition. Our goal is to enhance your gaming experience while m
 integrity of the original client. 🎮✨
 
 ![Divider](images/divider.png)
+
+## Offical Page 
+**This is the offical github page of MuCuteClient any other repository that is not a fork will be labeled as a  fake. Please report any fakes you see immediately. Thank you** ✅ 
+
 
 ## Notice
 
@@ -61,29 +65,22 @@ channels:
 
 - Join our [Telegram](https://t.me/mucuteclient) channel for updates and community interaction. 📱
 - Join our [Discord](https://discord.gg/mucute) channel for more activities 🥳
+
+![Divider](images/divider.png)
+
+## Credits
+
+Credits for Part of the code:
+- **Hax0r**: [GitHub Profile](https://github.com/hax0r31337)
+- **Wlenk**: [GitHub Profile](https://github.com/Wlenk)
+
 ![Divider](images/divider.png)
 
 ## License 📝  
 
-The **MuCuteClient** is officially owned by the **MuCuteClient Group**. By using the community name, logo, or any related files, you agree to the following terms:  
+MuCuteClient is licensed under the **GNU General Public License v3.0 (GPLv3)**. By using this software, you agree to the terms and conditions outlined in this license.
 
-
-### ✅ Permitted Uses:  
-- Use the **MuCuteClient** name and logo in promotional materials (e.g., YouTube videos).  
-- Modify the client for **personal use**.  
-- Contribute to development by **forking and working** with the source code on GitHub.  
-
-
-### ❌ Prohibited Uses:  
-- **Distribute, redistribute, or sell** modified versions of the client in any form.  
-- Use the **MuCuteClient** name in a way that implies an **official association** on websites, Discord servers, or other platforms.  
-- Claim **ownership** of the project in any public or private setting.  
-  
-
-### ⚠️ Compliance:  
-Failure to follow these terms may result in content removal or enforcement of our rights.  We do not tolerate any attempt to evade this warning.
-
-Thank you for respecting these guidelines and supporting **MuCuteClient**!
+For more details, see the [LICENSE](https://www.gnu.org/licenses/gpl-3.0.en.html) file.
 
 ![Divider](images/divider.png)
 
@@ -156,11 +153,11 @@ To install the APK for MuCuteClient, please follow these steps:
 5. **Launch the App**: Once installed, you can find MuCuteClient in your app drawer. Tap to launch
    and enjoy!
 
-6. **Reccomended Requirements**
-   1GB Storage Available
-   Stable Minecraft APK (1.21.51)
-   Andriod 9 and up
-   Once you reach these requirements, You can use MuCuteClient With Ease!
+6. **Recommended Requirements**
+   - 1GB Storage Available
+   - Stable Minecraft APK (1.21.51)
+   - Android 9 and up
+   - Once you meet these requirements, you can use MuCuteClient with ease!
 
 **Note**: Ensure that you have sufficient storage space and that your device meets the minimum
 requirements for running the app.
@@ -177,6 +174,3 @@ requirements for running the app.
 ## Badges
 
 ![GitHub issues](https://img.shields.io/github/issues/MuCuteTeam/MuCuteClient) ![GitHub stars](https://img.shields.io/github/stars/MuCuteTeam/MuCuteClient)
-
-![Divider](images/divider.png)
-![Background](images/background.png)
