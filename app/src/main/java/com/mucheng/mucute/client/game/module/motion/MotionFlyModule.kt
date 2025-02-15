@@ -18,15 +18,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
     private val verticalSpeedUp by floatValue("verticalUpSpeed", 7.0f, 1.0f..20.0f)
     private val verticalSpeedDown by floatValue("verticalDownSpeed", 7.0f, 1.0f..20.0f)
     private val motionInterval by floatValue("delay", 10f, 10f..600f)
-
-    private val flySpeedValue by floatValue("speed", 1.0f, 0.1f..10.0f).apply {
-        onChange { newValue -> 
-            flyAbilitiesPacket.abilityLayers[0].flySpeed = newValue
-            if (isEnabled) {
-                session.clientBound(flyAbilitiesPacket)
-            }
-        }
-    }
+    private val flySpeedValue by floatValue("speed", 1.0f, 0.1f..10.0f)
     
     private var lastMotionTime = 0L
     private var jitterState = false
@@ -63,15 +55,19 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
             flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue
             if (isEnabled) {
                 session.clientBound(flyAbilitiesPacket)
+                flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue
             } else {
                 session.clientBound(resetAbilitiesPacket)
+                flyAbilitiesPacket.abilityLayers[0].flySpeed = flySpeedValue
             }
             canFly = isEnabled
         }
     }
 
     override fun beforePacketBound(interceptablePacket: InterceptablePacket) {
+
         val packet = interceptablePacket.packet
+
 
         if (packet is PlayerAuthInputPacket) {
             handleFlyAbilities(isEnabled)
@@ -82,4 +78,14 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
                     else -> 0f
                 }
                 val motionPacket = SetEntityMotionPacket().apply {
-                    runtimeEntityId = session.local
+                    runtimeEntityId = session.localPlayer.runtimeEntityId
+                    motion = Vector3f.from(0f, vertical + (if (jitterState) 0.1f else -0.1f), 0f)
+                }
+                session.clientBound(motionPacket)
+                jitterState = !jitterState
+                lastMotionTime = System.currentTimeMillis()
+            }
+        }
+
+    }
+}
