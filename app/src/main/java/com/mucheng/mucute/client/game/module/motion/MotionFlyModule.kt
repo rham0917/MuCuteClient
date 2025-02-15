@@ -17,7 +17,7 @@ class MotionFlyModule : Module("motion_fly", ModuleCategory.Motion) {
 
     private val verticalSpeedUp by floatValue("verticalUpSpeed", 7.0f, 1.0f..20.0f)
     private val verticalSpeedDown by floatValue("verticalDownSpeed", 7.0f, 1.0f..20.0f)
-    private val motionInterval by floatValue("delay", 100.0f, 100.0f..600.0f)
+    private val motionInterval by floatValue("delay", 10, 10..600)
     private val flySpeedValue by floatValue("speed", 1.0f, 0.1f..10.0f)
     
     private var lastMotionTime = 0L
