@@ -1,6 +1,6 @@
 package com.mucheng.mucute.client.game
 
-
+import com.mucheng.mucute.client.game.module.misc.AntiKickModule
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.module.combat.AntiCrystalModule
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
@@ -71,6 +71,7 @@ object ModuleManager {
 
     init {
         with(_modules) {
+            add(AntiKickModule())
             add(FlyModule())
             add(ZoomModule())
             add(AirJumpModule())
@@ -122,7 +123,6 @@ object ModuleManager {
             add(WeatherControllerModule())
             add(MotionVarModule())
             add(PlayerTracerModule())
-
         }
     }
 
