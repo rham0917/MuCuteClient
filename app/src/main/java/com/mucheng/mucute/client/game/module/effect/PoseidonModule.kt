@@ -3,7 +3,7 @@ package com.mucheng.mucute.client.game.module.effect
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
-import com.mucheng.mucute.client.game.data.Effect
+import io.atlantis.myths.data.Effect
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData
 import org.cloudburstmc.protocol.bedrock.packet.MobEffectPacket

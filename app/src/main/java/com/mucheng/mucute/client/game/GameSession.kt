@@ -1,8 +1,8 @@
 package com.mucheng.mucute.client.game
 
 import com.mucheng.mucute.client.application.AppContext
-import com.mucheng.mucute.client.game.entity.LocalPlayer
-import com.mucheng.mucute.client.game.world.Level
+import io.atlantis.myths.entity.LocalPlayer
+import io.atlantis.myths.world.Level
 import com.mucheng.mucute.relay.MuCuteRelaySession
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket
