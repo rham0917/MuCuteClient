@@ -19,7 +19,7 @@ abstract class Module(
     defaultEnabled: Boolean = false,
     val private: Boolean = false
 ) : InterruptiblePacketHandler,
-    Configurable {
+    AutoConfiguration {
 
     open lateinit var session: GameSession
 

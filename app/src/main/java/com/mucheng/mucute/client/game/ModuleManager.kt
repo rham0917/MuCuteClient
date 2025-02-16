@@ -1,8 +1,6 @@
 package com.mucheng.mucute.client.game
 
-
-// import com.mucheng.mucute.client.game.module.misc.CriticModule
-// import com.mucheng.mucute.client.game.module.misc.CrasherModule
+import com.mucheng.mucute.client.game.module.misc.AntiKickModule
 import com.mucheng.mucute.client.application.AppContext
 import com.mucheng.mucute.client.game.module.combat.AntiCrystalModule
 import com.mucheng.mucute.client.game.module.combat.AntiKnockbackModule
@@ -73,6 +71,7 @@ object ModuleManager {
 
     init {
         with(_modules) {
+            add(AntiKickModule())
             add(FlyModule())
             add(ZoomModule())
             add(AirJumpModule())
@@ -97,7 +96,6 @@ object ModuleManager {
             add(MotionFlyModule())
             add(FreeCameraModule())
             add(KillauraModule())
-            // add(CriticModule())
             add(NauseaModule())
             add(HealthBoostModule())
             add(JumpBoostModule())
@@ -123,10 +121,8 @@ object ModuleManager {
             add(DarknessModule())
             add(TimeShiftModule())
             add(WeatherControllerModule())
-            //  add(CrasherModule())
             add(MotionVarModule())
             add(PlayerTracerModule())
-
         }
     }
 

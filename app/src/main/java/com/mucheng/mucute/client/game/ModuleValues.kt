@@ -10,7 +10,7 @@ import kotlinx.serialization.json.float
 import kotlinx.serialization.json.int
 import kotlin.reflect.KProperty
 
-interface Configurable {
+interface AutoConfiguration {
 
     val values: MutableList<Value<*>>
 

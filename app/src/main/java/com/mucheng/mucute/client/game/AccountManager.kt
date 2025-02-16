@@ -1,116 +1,120 @@
 package com.mucheng.mucute.client.game
 
-import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.core.content.edit
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonDeserializer
-import com.google.gson.JsonElement
-import com.google.gson.JsonPrimitive
-import com.google.gson.JsonSerializationContext
-import com.google.gson.JsonSerializer
+import com.google.gson.JsonParser
 import com.mucheng.mucute.client.application.AppContext
-import com.mucheng.mucute.client.model.Account
-import com.mucheng.mucute.relay.util.XboxDeviceInfo
+import com.mucheng.mucute.relay.util.AuthUtils
+import com.mucheng.mucute.relay.util.refresh
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import net.raphimc.minecraftauth.MinecraftAuth
+import net.raphimc.minecraftauth.step.bedrock.session.StepFullBedrockSession.FullBedrockSession
 import java.io.File
-import java.lang.reflect.Type
 
 object AccountManager {
 
-    private const val ACCOUNT_SHARED_PREFERENCES = "account"
+    private val coroutineScope =
+        CoroutineScope(Dispatchers.IO + CoroutineName("AccountManagerCoroutine"))
 
-    private const val KEY_CURRENT_MICROSOFT_REFRESH_TOKEN = "MICROSOFT_REFRESH_TOKEN"
+    private val _accounts: MutableList<FullBedrockSession> = mutableStateListOf()
 
-    val accounts = mutableStateListOf<Account>()
+    val accounts: List<FullBedrockSession>
+        get() = _accounts
 
-    private var currentRefreshToken: String?
-        get() {
-            val sharedPreferences =
-                AppContext.instance.getSharedPreferences(
-                    ACCOUNT_SHARED_PREFERENCES,
-                    Context.MODE_PRIVATE
-                )
-            return sharedPreferences.getString(KEY_CURRENT_MICROSOFT_REFRESH_TOKEN, null)
-                ?.ifEmpty { null }
-        }
-        set(value) {
-            AppContext.instance.getSharedPreferences(
-                ACCOUNT_SHARED_PREFERENCES,
-                Context.MODE_PRIVATE
-            ).edit {
-                putString(KEY_CURRENT_MICROSOFT_REFRESH_TOKEN, value ?: "")
-            }
-        }
-
-    var currentAccount: Account? by mutableStateOf(null)
+    var selectedAccount: FullBedrockSession? by mutableStateOf(null)
         private set
 
-    fun selectAccount(account: Account?) {
-        currentAccount = account
-        if (account == null) {
-            currentRefreshToken = null
-        } else if (accounts.contains(account)) {
-            currentRefreshToken = account.refreshToken
-        }
-    }
-
-    private val storeFile = File(AppContext.instance.filesDir, "credentials.json")
-
-    private val gson = GsonBuilder()
-        .registerTypeAdapter(XboxDeviceInfo::class.java, DeviceInfoAdapter())
-        .create()
-
     init {
-        load()
-        selectAccount(currentRefreshToken?.let { t -> accounts.find { it.refreshToken == t } })
+        val fetchedAccounts = fetchAccounts()
+
+        _accounts.addAll(fetchedAccounts)
+        selectedAccount = fetchSelectedAccount()
     }
 
-    private fun load() {
-        accounts.clear()
-        if (!storeFile.exists()) {
-            currentRefreshToken = null
-            return
+    fun addAccount(fullBedrockSession: FullBedrockSession) {
+        _accounts.add(fullBedrockSession)
+
+        coroutineScope.launch {
+            val file = File(AppContext.instance.cacheDir, "accounts")
+            file.mkdirs()
+
+            val json = MinecraftAuth.BEDROCK_DEVICE_CODE_LOGIN
+                .toJson(fullBedrockSession)
+            file.resolve("${fullBedrockSession.mcChain.displayName}.json")
+                .writeText(AuthUtils.gson.toJson(json))
         }
-        accounts.addAll(gson.fromJson(storeFile.reader(Charsets.UTF_8), Array<Account>::class.java))
-        cleanupCurrentRefreshToken()
     }
 
-    fun save() {
-        storeFile.writeText(gson.toJson(accounts.toTypedArray(), Array<Account>::class.java))
+    fun containsAccount(fullBedrockSession: FullBedrockSession): Boolean {
+        return _accounts.find { it.mcChain.displayName == fullBedrockSession.mcChain.displayName } != null
     }
 
-    private fun cleanupCurrentRefreshToken() {
-        val current = currentRefreshToken
-        accounts.forEach {
-            if (it.refreshToken == current) {
-                return
+    fun removeAccount(fullBedrockSession: FullBedrockSession) {
+        _accounts.remove(fullBedrockSession)
+
+        coroutineScope.launch {
+            val file = File(AppContext.instance.cacheDir, "accounts")
+            file.mkdirs()
+
+            file.resolve("${fullBedrockSession.mcChain.displayName}.json")
+                .delete()
+        }
+    }
+
+    fun selectAccount(fullBedrockSession: FullBedrockSession?) {
+        this.selectedAccount = fullBedrockSession
+
+        coroutineScope.launch {
+            val file = File(AppContext.instance.cacheDir, "accounts")
+            file.mkdirs()
+
+            runCatching {
+                val selectedAccount = file.resolve("selectedAccount")
+                if (fullBedrockSession != null) {
+                    selectedAccount.writeText(fullBedrockSession.mcChain.displayName)
+                } else {
+                    selectedAccount.delete()
+                }
             }
         }
-        currentRefreshToken = null
     }
 
-    private class DeviceInfoAdapter : JsonSerializer<XboxDeviceInfo>,
-        JsonDeserializer<XboxDeviceInfo> {
+    private fun fetchAccounts(): List<FullBedrockSession> {
+        val file = File(AppContext.instance.cacheDir, "accounts")
+        file.mkdirs()
 
-        override fun serialize(
-            src: XboxDeviceInfo,
-            typeOf: Type?,
-            ctx: JsonSerializationContext?
-        ): JsonElement {
-            return JsonPrimitive(src.deviceType)
+        val accounts = ArrayList<FullBedrockSession>()
+        val listFiles = file.listFiles() ?: emptyArray()
+        for (child in listFiles) {
+            runCatching {
+                if (child.isFile && child.extension == "json") {
+                    val account = MinecraftAuth.BEDROCK_DEVICE_CODE_LOGIN
+                        .fromJson(JsonParser.parseString(child.readText()).asJsonObject)
+                    accounts.add(account)
+                }
+            }
         }
 
-        override fun deserialize(
-            json: JsonElement,
-            typeOf: Type?,
-            ctx: JsonDeserializationContext?
-        ): XboxDeviceInfo {
-            return XboxDeviceInfo.devices[json.asString] ?: XboxDeviceInfo.DEVICE_ANDROID
+        return accounts
+    }
+
+    private fun fetchSelectedAccount(): FullBedrockSession? {
+        val file = File(AppContext.instance.cacheDir, "accounts")
+        file.mkdirs()
+
+        val selectedAccount = file.resolve("selectedAccount")
+        if (!selectedAccount.exists() || selectedAccount.isDirectory) {
+            return null
         }
+
+        val displayName = selectedAccount.readText()
+        return accounts.find { it.mcChain.displayName == displayName }
     }
 
 }

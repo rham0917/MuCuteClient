@@ -29,7 +29,7 @@
     <string name="failed_to_launch_game">Failed to launch the game.</string>
     <string name="account">Account</string>
     <string name="add_account">Add Account</string>
-    <string name="fetch_account_failed">Fetch account failed</string>
+    <string name="fetch_account_failed">Fetch account failed: %s</string>
     <string name="delete">Delete</string>
     <string name="select">Select</string>
     <string name="unselect">Unselect</string>
@@ -51,6 +51,8 @@
     <string name="crash_happened">Crash Happened</string>
     <string name="cannot_back">A crash has occurred and you are not allowed to return. You can only restart the app.</string>
     <string name="effect">Effect</string>
-    <string name="login_in">Login in as %s</string>
+    <string name="login_in">Login in uses %s</string>
     <string name="fetch_account_successfully">Fetch account successfully</string>
+    <string name="xbox_device_code">Xbox device code</string>
+    <string name="refresh">Refresh</string>
 </resources>

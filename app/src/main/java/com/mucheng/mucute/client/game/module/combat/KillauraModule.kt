@@ -3,11 +3,11 @@ package com.mucheng.mucute.client.game.module.combat
 import com.mucheng.mucute.client.game.InterceptablePacket
 import com.mucheng.mucute.client.game.Module
 import com.mucheng.mucute.client.game.ModuleCategory
-import com.mucheng.mucute.client.game.entity.Entity
-import com.mucheng.mucute.client.game.entity.EntityUnknown
-import com.mucheng.mucute.client.game.entity.LocalPlayer
-import com.mucheng.mucute.client.game.entity.MobList
-import com.mucheng.mucute.client.game.entity.Player
+import io.atlantis.myths.entity.Entity
+import io.atlantis.myths.entity.EntityUnknown
+import io.atlantis.myths.entity.LocalPlayer
+import io.atlantis.myths.entity.MobList
+import io.atlantis.myths.entity.Player
 import org.cloudburstmc.math.vector.Vector3f
 import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
